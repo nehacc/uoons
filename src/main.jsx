@@ -24,7 +24,7 @@ import Test2 from './pages/Test2.jsx'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Homepage />,
   },
   {
     path: "/home",
