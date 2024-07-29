@@ -1,2 +1,1 @@
-# uoons
-React website of uoons
+see the Readme in previous directory.
