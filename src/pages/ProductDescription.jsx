@@ -29,7 +29,7 @@ const ProductDescription = () => {
   const addToRecentlyViewed = async () => {
     try {
       const response = await axios.post(
-        '${baseURL}/api/addRecentyViewedProduct',
+        '  const baseURL = "https://uoons.com/api/addRecentyViewedProduct',
         { product_id: pid },
         { headers: { 'Channel-Code': 'ANDROID', 'Auth': auth } }
       );
