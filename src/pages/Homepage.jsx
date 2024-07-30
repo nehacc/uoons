@@ -36,7 +36,7 @@ const Homepage = () => {
       try {
         const response = await axios.get('https://uoons.com/api/homepageData', {
           headers: {
-            'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+            'Content-Type': 'application/json',
             'Accept': '*/*',
             'channel-code': 'ANDROID'
           }
