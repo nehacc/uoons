@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import api from '../api';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Navbar from '../components/Navbar'
@@ -34,7 +34,7 @@ const Homepage = () => {
   useEffect(() => {
     const fetchHomePageData = async () => {
       try {
-        const response = await api.get('https://uoons.com/api/homepageData', {
+        const response = await api.get('api/homepageData', {
           headers: {
             'Content-Type': 'application/json',
             'Accept': '*/*',
