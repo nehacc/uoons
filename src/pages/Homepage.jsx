@@ -25,11 +25,11 @@ const Homepage = () => {
   const [HomePageData, setHomePageData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const baseURL = "https://uoons.com/";
   useEffect(() => {
     const fetchHomePageData = async () => {
       try {
-        const response = await axios.get('/api/homepageData', {
+        const response = await axios.get('${baseURL}/api/homepageData', {
           headers: {
             'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
             'Accept': '*/*',
