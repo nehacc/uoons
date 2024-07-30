@@ -25,11 +25,11 @@ const ProductDescription = () => {
   const [ProductData, setProductData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const baseURL = "https://uoons.com/";
   const addToRecentlyViewed = async () => {
     try {
       const response = await axios.post(
-        'api/addRecentyViewedProduct',
+        '${baseURL}/api/addRecentyViewedProduct',
         { product_id: pid },
         { headers: { 'Channel-Code': 'ANDROID', 'Auth': auth } }
       );
@@ -102,7 +102,7 @@ const ProductDescription = () => {
   const [showAllSpecs, setShowAllSpecs] = useState(false);
   const displayedSpecifications = showAllSpecs ? Object.entries(product.specifications) : Object.entries(product.specifications).slice(0, 4);
 
-  const baseURL = "https://uoons.com/";
+  //const baseURL = "https://uoons.com/";
 
   return (
     <>
