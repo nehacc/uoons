@@ -1,17 +1,11 @@
-// api.jsx
 import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || ''; // Will default to empty string if variable is not set
-
 const api = axios.create({
-  baseURL: baseURL,
+  baseURL: '/api', // Proxied path
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // If you need to send cookies with requests
+  withCredentials: true, // Include credentials in requests if needed
 });
-console.log('REACT_APP_API_BASE_URL:', import.meta.env.REACT_APP_API_BASE_URL);
 
-console.log('VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
-console.log('baseURL:', baseURL);
 export default api;
