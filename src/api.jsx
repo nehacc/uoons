@@ -1,14 +1,13 @@
-// api.jsx
 import axios from 'axios';
 
+const baseURL = process.env.REACT_APP_API_BASE_URL || 'https://uoons.com';
+
 const api = axios.create({
-  baseURL: import.meta.env.REACT_APP_API_BASE_URL, 
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
+  withCredentials: true, // This ensures cookies are sent with requests, if needed
 });
-
-
 
 export default api;
