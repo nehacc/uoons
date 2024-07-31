@@ -34,13 +34,7 @@ const Homepage = () => {
   useEffect(() => {
     const fetchHomePageData = async () => {
       try {
-        const response = await api.get('/api/homepageData', {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': '*/*',
-            'channel-code': 'ANDROID'
-          }
-        });
+        const response = await api.get('api/homepageData');
         setHomePageData(response.data);
         setLoading(false);
       } catch (err) {
