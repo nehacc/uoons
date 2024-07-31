@@ -27,14 +27,14 @@ const Homepage = () => {
   const [heading6, setheading6] = useState("SmartPhones & Tablets")
 
 
-    const [HomePageData, setHomePageData] = useState({})
+  const [HomePageData, setHomePageData] = useState({})
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchHomePageData = async () => {
       try {
-        const response = await api.get('/homepageData', {
+        const response = await api.get('api/homepageData', {
           headers: {
             'Content-Type': 'application/json',
             'Accept': '*/*',
@@ -77,11 +77,11 @@ const Homepage = () => {
     {loading?(<div>Loading...</div>):(<div className="bg-white duration-200">
       <Navbar />
       <Slideshow />
-      {/* <ProductsContainer heading={heading1} data={HomePageData.Data[3].items}/>
+      <ProductsContainer heading={heading1} data={HomePageData.Data[3].items}/>
       <ProductsContainer heading={headingA} data={HomePageData.Data[5].items}/>
       <ProductsContainer heading={headingB} data={HomePageData.Data[9].items}/>
       <ProductsContainer heading={heading2} data={HomePageData.Data[10].items}/>
-      <ProductsContainer heading={headingC} data={HomePageData.Data[11].items}/> */}
+      <ProductsContainer heading={headingC} data={HomePageData.Data[11].items}/>
 
 
 

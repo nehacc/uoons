@@ -1,11 +1,12 @@
+// api.jsx
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api', // Proxied path
+  baseURL: import.meta.env.VITE_API_URL, 
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // Include credentials in requests if needed
+  withCredentials: true,
 });
 
 export default api;
