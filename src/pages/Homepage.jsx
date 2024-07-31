@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api';
 
 import AOS from "aos";
 import "aos/dist/aos.css";
