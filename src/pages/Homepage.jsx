@@ -77,21 +77,7 @@ const Homepage = () => {
     {loading?(<div>Loading...</div>):(<div className="bg-white duration-200">
       <Navbar />
       <Slideshow />
-      <ProductsContainer heading={heading1} data={HomePageData.Data[3].items}/>
-      <ProductsContainer heading={headingA} data={HomePageData.Data[5].items}/>
-      <ProductsContainer heading={headingB} data={HomePageData.Data[9].items}/>
-      <ProductsContainer heading={heading2} data={HomePageData.Data[10].items}/>
-      <ProductsContainer heading={headingC} data={HomePageData.Data[11].items}/>
-
-
-
-      <ProductsContainerCopy heading={heading2}/>
-      <Banner />
-      <ProductsContainerMII heading={heading3}/>
-      <ProductsContainerCopy heading={heading4}/>
-      <BrandContainer />
-      <ProductsContainerCopy heading={heading5}/>
-      <ProductsContainerCopy heading={heading6}/> 
+      
       <Footer />
     </div>)}
     </>
