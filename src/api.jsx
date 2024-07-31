@@ -1,7 +1,7 @@
 // api.jsx
 import axios from 'axios';
 
-const baseURL = process.env.REACT_APP_API_BASE_URL || ''; // Will default to empty string if variable is not set
+const baseURL = import.meta.env.VITE_API_BASE_URL || ''; // Will default to empty string if variable is not set
 
 const api = axios.create({
   baseURL: baseURL,
