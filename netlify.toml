@@ -1,4 +1,4 @@
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/api*"
+  to = "https://uoons.com"
   status = 200
