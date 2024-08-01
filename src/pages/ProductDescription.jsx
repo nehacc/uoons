@@ -74,7 +74,7 @@ const ProductDescription = () => {
 const addToRecentlyViewed = async () => {
   try {
     const response = await axios.post(
-      'api/addRecentyViewedProduct',
+      '/addRecentyViewedProduct',
       {
         product_id: pid,
       },
