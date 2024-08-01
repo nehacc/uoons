@@ -1,5 +1,5 @@
 
-/*     https://uoons.com/api/:splat   200
+/api/*    https://uoons.com/api/:splat   200
 
 # Fallback to index.html for all other requests to handle React Router
-/*         /index.html   200
+/*       /index.html   200
