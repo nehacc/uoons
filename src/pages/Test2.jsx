@@ -1,27 +1,135 @@
-import React from 'react';
-import ImageMagnification from '../components/ImageMagnification';
+import React, { useRef, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { IoMdHeart } from "react-icons/io";
+import { MdAddShoppingCart } from "react-icons/md";
+import '../components/ProductsContainer.css';
 
-const productData = {
-  mainImage: "https://m.media-amazon.com/images/I/41e+MOmzCTL._SY300_SX300_.jpg",
-  thumbnailImages: [
-    "https://m.media-amazon.com/images/I/41e+MOmzCTL._SY300_SX300_.jpg",
-    "https://m.media-amazon.com/images/I/41e+MOmzCTL._SY300_SX300_.jpg",
-    "https://m.media-amazon.com/images/I/41e+MOmzCTL._SY300_SX300_.jpg"
-  ]
-};
+const ProductsContainer = (props) => {
+  const scrollRef = useRef(null);
 
-const App = () => {
+  useEffect(() => {
+    AOS.init({
+      offset: 100,
+      duration: 800,
+      easing: "ease-in-sine",
+      delay: 100,
+    });
+    AOS.refresh();
+  }, []);
+
+  const scroll = (direction) => {
+    const { current } = scrollRef;
+    if (current) {
+      if (direction === "left") {
+        current.scrollBy({ left: -200, behavior: "smooth" });
+      } else {
+        current.scrollBy({ left: 200, behavior: "smooth" });
+      }
+    }
+  };
+
+  const { data, heading } = props;
+
   return (
-    <div className="App flex flex-col items-center justify-center min-h-screen bg-gray-100 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Product Image Magnification</h1>
-      <div className="bg-white p-6 rounded-lg shadow-lg">
-        <ImageMagnification 
-          mainImage={productData.mainImage} 
-          thumbnailImages={productData.thumbnailImages} 
-        />
+    <div className="mt-14 mb-12">
+      <div className="container mx-auto">
+        {/* Header section */}
+        <div className="text-center mb-6 max-w-[600px] mx-auto">
+          <h1 className="text-3xl font-bold">{heading}</h1>
+          <p className="text-xs text-gray-400">
+            Explore our top-selling electronics with amazing discounts and offers.
+          </p>
+        </div>
+        {/* Body section */}
+        <div className="relative">
+          <div
+            ref={scrollRef}
+            className="flex flex-wrap py-2 rounded-lg shadow-xl justify-center gap-4 overflow-x-scroll scrollbar-hide"
+          >
+            {/* card section */}
+            {data.map((item) => (
+              <div
+                key={item.pid}
+                id="product-container"
+                className="border p-3 rounded-lg shadow-lg w-[200px] space-y-2 hover:shadow-2xl flex flex-col items-center relative overflow-hidden"
+                data-aos="fade-up"
+              >
+                <button
+                  id="like"
+                  className="absolute p-2 rounded-full text-lg bg-blue-50 right-[16px] top-[-40px] hover:top-[10px] duration-500 shadow-2xl border text-gray-600 hover:text-red-500"
+                >
+                  <IoMdHeart />
+                </button>
+                <img
+                  src={"https://uoons.com/" + item.product_images}
+                  alt="image"
+                  className="h-[120px] w-full object-contain rounded-md"
+                />
+                <div className="flex flex-col items-center">
+                  <h3
+                    id="title"
+                    className="font-semibold text-lg h-[55px] overflow-hidden text-center"
+                  >
+                    {item.product_name}
+                  </h3>
+                  <div className="flex items-center gap-1 text-yellow-500">
+                    <span>4</span>
+                    <FaStar />
+                    <span className="text-gray-500">(200 Reviews)</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <p className="text-lg font-bold text-primary">₹{item.product_sale_price}</p>
+                    <p className="line-through text-gray-500">₹{item.product_price}</p>
+                  </div>
+                  <p className="text-green-600">{item.discount}% off</p>
+                </div>
+                <div id="buy-Cart" className="hidden w-full justify-center gap-5">
+                  <a
+                    href="#_"
+                    className="relative rounded px-2 overflow-hidden group bg-orange-500 hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-orange-400 transition-all ease-out duration-300"
+                  >
+                    <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+                    <span className="relative text-sm">BUY NOW</span>
+                  </a>
+
+                  <a
+                    href="#_"
+                    className="relative flex items-center justify-center rounded px-2 overflow-hidden group bg-orange-500 hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-orange-400 transition-all ease-out duration-300"
+                  >
+                    <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+                    <span className="relative text-xl flex items-center"><MdAddShoppingCart /></span>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Scroll buttons for large screens */}
+          <div className="hidden lg:flex absolute top-1/2 transform -translate-y-1/2 w-full justify-between px-2">
+            <button
+              onClick={() => scroll("left")}
+              className="bg-white shadow-lg rounded-full p-2"
+            >
+              <FaChevronLeft />
+            </button>
+            <button
+              onClick={() => scroll("right")}
+              className="bg-white shadow-lg rounded-full p-2"
+            >
+              <FaChevronRight />
+            </button>
+          </div>
+        </div>
+        {/* view all button */}
+        <div className="flex justify-center">
+          <button className="text-center mt-10 cursor-pointer bg-orange-500 text-white py-1 px-5 rounded-md">
+            View All
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default App;
+export default ProductsContainer;

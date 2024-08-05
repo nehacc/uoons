@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import api from '../api';
+
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Navbar from '../components/Navbar'
@@ -12,8 +12,10 @@ import ProductsContainerMII from '../components/ProductsContainerMII';
 import Banner from '../components/Banner';
 import Footer from '../components/Footer'
 import BrandContainer from '../components/BrandContainer';
+import Test2 from '../pages/Test2'
 
-const Homepage = () => {
+const Homepage = (props) => {
+  const auth = props.auth;
 
   const [heading1, setheading1] = useState("Deal of The Day!")
   const [headingA, setheadingA] = useState("Recommended Products")
@@ -27,16 +29,16 @@ const Homepage = () => {
   const [heading6, setheading6] = useState("SmartPhones & Tablets")
 
 
-  const [HomePageData, setHomePageData] = useState({})
+    const [HomePageData, setHomePageData] = useState({})
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchHomePageData = async () => {
       try {
-        const response = await api.get('/gethomepageData', {
+        const response = await axios.get('/api/homepageData', {
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
             'Accept': '*/*',
             'channel-code': 'ANDROID'
           }
@@ -78,6 +80,7 @@ const Homepage = () => {
       <Navbar />
       <Slideshow />
       <ProductsContainer heading={heading1} data={HomePageData.Data[3].items}/>
+      {/* <Test2 heading={heading1} data={HomePageData.Data[3].items}/> */}
       <ProductsContainer heading={headingA} data={HomePageData.Data[5].items}/>
       <ProductsContainer heading={headingB} data={HomePageData.Data[9].items}/>
       <ProductsContainer heading={heading2} data={HomePageData.Data[10].items}/>

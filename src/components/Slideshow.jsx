@@ -15,8 +15,8 @@ const buttonStyleLeft = {
     background: "rgb(219,234,254)",
     color: "rgb(234, 88, 12)",
     borderRadius: "100%",
-    padding: "0.8rem",
-    left: "-25px"
+    
+    left: "-24px"
     
 };
 const buttonStyleRight = {
@@ -25,8 +25,7 @@ const buttonStyleRight = {
     background: "rgb(219,234,254)",
     color: "rgb(234, 88, 12)",
     borderRadius: "100%",
-    padding: "0.8rem",
-    right: "-25px"
+    right: "-24px"
     
 };
 
@@ -36,8 +35,8 @@ const proprietes = {
     infinite: true,
     indicators: true,
     arrows: true,
-    prevArrow: <button style={{ ...buttonStyleLeft }}><MdOutlineKeyboardArrowLeft className='sm:text-xl  md:text-2xl lg:text-3xl'/></button>,
-    nextArrow: <button style={{ ...buttonStyleRight }}><MdOutlineKeyboardArrowRight className='sm:text-xl  md:text-2xl lg:text-3xl'/></button>
+    prevArrow: <button style={{ ...buttonStyleLeft }}><MdOutlineKeyboardArrowLeft className=' p-1 text-4xl md:text-5xl lg:text-6xl'/></button>,
+    nextArrow: <button style={{ ...buttonStyleRight }}><MdOutlineKeyboardArrowRight className='p-1 text-4xl md:text-5xl lg:text-6xl'/></button>
 }
 
 
@@ -45,7 +44,7 @@ const proprietes = {
 
 const Slideshow = () => {
     return (
-        <div className="containerSlide w-[95%] px-2 mx-auto rounded-xl my-5">
+        <div className="containerSlide w-[95%] px-2 mx-auto rounded-xl mt-5">
             <Slide {...proprietes}>
                 <div className="each-slide rounded-2xl overflow-hidden">
                     <div>

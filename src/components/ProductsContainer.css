@@ -1,0 +1,13 @@
+#product-container:hover{
+    padding: 0.25rem 0.75rem;
+}
+#product-container:hover #like{
+    top: 10px;
+}
+#product-container:hover #title{
+    height: 27px;
+}
+#product-container:hover #buy-Cart{
+    display: flex;
+
+}
