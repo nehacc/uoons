@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-
 import {
   createBrowserRouter,
   RouterProvider,
@@ -21,11 +20,12 @@ import LoginSignup from './pages/LoginSignup.jsx'
 import HomepageAds from './pages/HomepageAds.jsx';
 import Test from './pages/Test.jsx';
 import Test2 from './pages/Test2.jsx'
+import Profile from './pages/Profile.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Homepage />,
+    element: <App />,
   },
   {
     path: "/home",
@@ -82,11 +82,15 @@ const router = createBrowserRouter([
   {
     path: "/ProductDescriptionTest",
     element: <ProductDescriptionTest />,
+  },
+  {
+    path: "/Profile",
+    element: <Profile />,
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>,
+  // </React.StrictMode>, 
 )
