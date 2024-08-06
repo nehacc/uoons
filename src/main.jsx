@@ -19,20 +19,20 @@ import AddToCart from './pages/AddToCart.jsx';
 import LoginSignup from './pages/LoginSignup.jsx'
 import HomepageAds from './pages/HomepageAds.jsx';
 import Test from './pages/Test.jsx';
-import Test2 from './pages/Test2.jsx'
 import Profile from './pages/Profile.jsx';
+import SpecificCategorieProduct from './components/SpecificCategorieProduct.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Homepage />,
   },
   {
     path: "/home",
     element: <Homepage />,
   },
   {
-    path: "/ProductList",
+    path: "/ProductList/:c_id",
     element: <ProductList />,
   },
   {
@@ -72,10 +72,6 @@ const router = createBrowserRouter([
     element: <Test />,
   },
   {
-    path: "/test2",
-    element: <Test2 />,
-  },
-  {
     path: "/ProductDescription",
     element: <ProductDescription />,
   },
@@ -86,6 +82,10 @@ const router = createBrowserRouter([
   {
     path: "/Profile",
     element: <Profile />,
+  },
+  {
+    path: "/scpText",
+    element: <SpecificCategorieProduct />,
   }
 ]);
 
