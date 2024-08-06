@@ -12,7 +12,6 @@ import ProductsContainerMII from '../components/ProductsContainerMII';
 import Banner from '../components/Banner';
 import Footer from '../components/Footer'
 import BrandContainer from '../components/BrandContainer';
-import Test2 from '../pages/Test2'
 
 const Homepage = (props) => {
   const auth = props.auth;
