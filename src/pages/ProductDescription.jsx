@@ -10,6 +10,7 @@ import FrequentlyBought from '../components/FrequentlyBought';
 import RatingsReview from '../components/RatingsReview';
 import FaqsProduct from '../components/FaqsProduct'
 import ImageMagnification from '../components/ImageMagnification';
+import Navbar from '../components/Navbar'
 
 
 
@@ -165,9 +166,10 @@ const baseURL = "https://uoons.com/";
     <>
     {loading?(<div>Loading...</div>):
     (
+     
       // main-body_Description 
       <div className="p-3 bg-white w-screen">
-        
+         <Navbar />
         {/* main-Section */}
         <div className="flex flex-col items-center lg:flex-row lg:items-start gap-6">
           {/* {console.log(ProductData.Data.pid)} */}
