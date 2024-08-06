@@ -7,9 +7,8 @@ import { IoMdHeart } from 'react-icons/io';
 import { MdAddShoppingCart } from 'react-icons/md';
 
 const SpecificCategorieProduct = (props) => {
-    // const cat_id = props.cat_id;
-    // for now:
-    const cat_id = 145;
+    const cat_id = props.c_id;
+    
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -53,12 +52,12 @@ const SpecificCategorieProduct = (props) => {
     }
 
     return (
-        <div className="flex flex-wrap py-2 rounded-lg justify-center gap-4">
+        <div className="flex flex-wrap py-2 rounded-lg justify-center gap-4 ">
             {data.map((item) => (
                 <div
                     key={item.pid}
                     id="product-container"
-                    className="border p-3 rounded-lg shadow-lg w-[200px] space-y-2 hover:shadow-2xl flex flex-col items-center relative overflow-hidden"
+                    className="border p-3 rounded-lg shadow-lg w-[200px] space-y-2 hover:shadow-2xl flex flex-col items-center relative overflow-hidden bg-white"
                     data-aos="fade-up"
                 >
                     <button
