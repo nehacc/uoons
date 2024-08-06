@@ -21,6 +21,7 @@ import HomepageAds from './pages/HomepageAds.jsx';
 import Test from './pages/Test.jsx';
 import Profile from './pages/Profile.jsx';
 import SpecificCategorieProduct from './components/SpecificCategorieProduct.jsx';
+import ToastContainer from './components/ToastContainer'
 
 const router = createBrowserRouter([
   {
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
   {
     path: "/scpText",
     element: <SpecificCategorieProduct />,
+  },
+  {
+    path: "ToastContainer",
+    element: <ToastContainer />
   }
 ]);
 

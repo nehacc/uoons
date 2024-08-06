@@ -4,7 +4,7 @@ import { IoIosArrowForward, IoIosHeart } from 'react-icons/io';
 import { HiLocationMarker } from 'react-icons/hi';
 import { RiDiscountPercentFill } from 'react-icons/ri';
 import { MdPayments } from 'react-icons/md';
-import Logo from '../assets/xlLogoUoons.png';
+import Logo from '../assets/uoonsLogoXl.png';
 import axios from 'axios';
 
 const Profile = () => {

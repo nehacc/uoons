@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import Logo from '../assets/xlLogoUoons.png'
+import Logo from '../assets/uoonsLogoXl.png'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { useNavigate } from 'react-router-dom';
+import UserSession from '../user';
+import { Link } from 'react-router-dom';
 
-const LoginSignup2 = () => {
+const LoginSignup = () => {
   const [loginForm, setIsLoginForm] = useState(true); // State to toggle between login and register forms
   const [otpFieldVisible, setOtpFieldVisible] = useState(false); // State to control the visibility of the OTP field
   const [message, setMessage] = useState(''); // State to store messages
   const [CurrentUserToken, setCurrentUserToken] = useState("1234") // to be used for every other request!!!
-  // const [otp, setotp] = useState(0)
 
   const [otpVerified, setotpVerified] = useState(false)
 
@@ -41,12 +42,7 @@ const LoginSignup2 = () => {
       const response = await axios.post('api/sendOTP ', formData, {
         headers: {
           'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-          // 'Content-Length': '<calculated when request is sent>',
-          // 'Host': '<calculated when request is sent>',
-          // 'User-Agent': 'PostmanRuntime/7.40.0',
           'Accept': '*/*',
-          // 'Accept-Encoding': 'gzip, deflate, br',
-          // 'Connection': 'keep-alive',
           'Channel-Code': 'ANDROID',
         },
       });
@@ -80,12 +76,7 @@ const LoginSignup2 = () => {
       const response = await axios.post('api/otpVerification', formData, {
         headers: {
           'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-          // 'Content-Length': '<calculated when request is sent>',
-          // 'Host': '<calculated when request is sent>',
-          // 'User-Agent': 'PostmanRuntime/7.40.0',
           'Accept': '*/*',
-          // 'Accept-Encoding': 'gzip, deflate, br',
-          // 'Connection': 'keep-alive',
           'Channel-Code': 'ANDROID',
           'Auth': CurrentUserToken
         },
@@ -119,7 +110,6 @@ const LoginSignup2 = () => {
 
   // Placeholder function for login handling
   const handleLogin = (data) => {
-    // console.log('Login Data:', data);
     if(!otpFieldVisible){
       handleGenerateOtp(data)
     }else{
@@ -129,6 +119,9 @@ const LoginSignup2 = () => {
 
   const loginUser = () => {
     if(otpVerified){
+      UserSession.setSession(true)
+      UserSession.setAuth(CurrentUserToken)
+      alert("session Started")
       navigate('/home')
     }else{
       alert("fill the form first!")
@@ -136,15 +129,39 @@ const LoginSignup2 = () => {
   }
   const registerUser = () => {
     if(otpVerified){
+      UserSession.setSession(true)
+      UserSession.setAuth(CurrentUserToken)
+      alert("session Started")
       navigate('/home')
     }else{
       alert("fill the form first!")
     }
   }
   
-
+  if( UserSession.getSession()){
+    return (
+    <>
+      <Navbar />
+      <div className="flex items-center justify-center my-9 bg-gray-100">
+      <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">You are already logged in</h2>
+        <p className="text-gray-600 mb-6">You can go back to the homepage to continue browsing.</p>
+        <Link
+          to="/home"
+          className="inline-block bg-blue-500 text-white px-6 py-2 rounded-full font-medium hover:bg-blue-600 transition duration-300"
+        >
+          Go to Homepage
+        </Link>
+      </div>
+    </div>
+    <Footer />
+    </>
+    )
+  }
+  else{
   return (
     <>
+    {console.log(UserSession.getSession())}
     <Navbar />
     <div className="bg-white rounded-lg shadow-lg hover:shadow-2xl p-8 relative z-20 w-[400px] mx-auto my-10">
       <img src={Logo} alt="uoonsLogo" className="mx-auto my-10" />
@@ -204,12 +221,12 @@ const LoginSignup2 = () => {
           </div>
           {otpFieldVisible && (
             <>
-              <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="otp">
-                  OTP
+              <div className="mb-6 flex items-center justify-center gap-2">
+                <label className="block text-gray-500 text-lg font-medium mb-2" htmlFor="otp">
+                  OTP:
                 </label>
                 <input
-                  className="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="shadow-sm w-[126px] appearance-none border rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                   id="otp"
                   type="text"
                   placeholder="Enter the OTP"
@@ -286,12 +303,12 @@ const LoginSignup2 = () => {
           </div>
           {otpFieldVisible && (
             <>
-              <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="otp">
+              <div className="mb-6 flex items-center justify-center gap-2">
+                <label className="block text-gray-500 text-lg font-medium mb-2" htmlFor="otp">
                   OTP
                 </label>
                 <input
-                  className="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="shadow-sm w-[126px] appearance-none border rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                   id="otp"
                   type="text"
                   placeholder="Enter the OTP"
@@ -330,6 +347,8 @@ const LoginSignup2 = () => {
     </>
 
   );
+}
+
 };
 
-export default LoginSignup2;
+export default LoginSignup;

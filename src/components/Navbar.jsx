@@ -1,9 +1,8 @@
 import React from "react";
-import Logo from "../assets/xlLogoUoons.png";
+import Logo from "../assets/uoonsLogoXl.png";
 import { BiSearchAlt } from "react-icons/bi";
 import { FaRegUser } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
-import { FaCaretDown } from "react-icons/fa";
 import { IoMdHeart } from "react-icons/io";
 import { useNavigate } from "react-router-dom"
 import ListComponentHome from "./ListComponentHome";
@@ -52,7 +51,7 @@ const Navbar = () => {
             </button>
             {/* Profile button */}
             <button
-              onClick={()=>navigate('/Profile')}
+              onClick={()=>navigate('/auth')}
               className="bg-orange-500 p-2 rounded-full text-xl text-white hover:scale-[1.1] duration-300"
             >
               <FaRegUser />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaApple, FaGooglePlay, FaWhatsapp, FaInstagram, FaTwitter, FaYoutube, FaLinkedin, FaBlogger, FaInstagramSquare, FaRegCopyright } from 'react-icons/fa';
 import { FiTruck, FiPhone, FiMessageCircle, FiGift } from 'react-icons/fi';
-import Logo from '../assets/xlLogoUoons.png';
+import Logo from '../assets/uoonsLogoXl.png';
 
 const Footer = () => {
   return (

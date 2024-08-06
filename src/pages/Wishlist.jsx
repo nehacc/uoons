@@ -3,13 +3,14 @@ import axios from 'axios';
 import { CiCircleRemove } from "react-icons/ci";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import UserSession from '../user';
 
 const WishList = (props) => {
   // const user_id = props.user_id;
   // const auth = props.auth;
   // for now:
   const user_id = 316;
-  const auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Ijc0MCIsInByb2ZpbGVpZCI6IjE5NzUyNzAwMzgiLCJuYW1lIjoiQWJoaXNoZWsgU2hhcm1hIiwiZW1haWwiOiJzaXRlbnR3ZWJAZ21haWwuY29tIiwibW9iaWxlX25vIjoiOTY5MTQwNzQ1NSIsImZ0b2tlbiI6ImFkZmxqamZhc2xkZmprYSIsIm90cCI6NjA1Mn0.e36R2OF9THNrMBB0b4VlDa-1G1Z0TuMGLEGhbbfRKSU";
+  // const auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Ijc0MCIsInByb2ZpbGVpZCI6IjE5NzUyNzAwMzgiLCJuYW1lIjoiQWJoaXNoZWsgU2hhcm1hIiwiZW1haWwiOiJzaXRlbnR3ZWJAZ21haWwuY29tIiwibW9iaWxlX25vIjoiOTY5MTQwNzQ1NSIsImZ0b2tlbiI6ImFkZmxqamZhc2xkZmprYSIsIm90cCI6NjA1Mn0.e36R2OF9THNrMBB0b4VlDa-1G1Z0TuMGLEGhbbfRKSU";
 
   const [wishlistData, setWishlistData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,7 +25,7 @@ const WishList = (props) => {
             'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
             'Accept': '*/*',
             'channel-code': 'ANDROID',
-            'auth': auth
+            'auth': UserSession.getAuth()
           }
         });
 
