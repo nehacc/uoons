@@ -41,7 +41,8 @@ const ProductsContainer = (props) => {
 
   const { data, heading } = props;
 
-  const addToWishlist = async (pid) => {
+  const addToWishlist = async (event, pid) => {
+    event.stopPropagation(); // Prevents the event from bubbling up to the div
     if (UserSession.getSession()) {
       // Add to Wishlist
       try {
@@ -74,7 +75,8 @@ const ProductsContainer = (props) => {
   }
   
 
-  const addToCart = async (pid) => {
+  const addToCart = async (event, pid) => {
+    event.stopPropagation(); // Prevents the event from bubbling up to the div
     if (UserSession.getSession()) {
       try {
         const response = await axios.post('/api/addItemToCart',
@@ -134,7 +136,7 @@ const ProductsContainer = (props) => {
               >
                 <button
                   id="like"
-                  onClick={()=>{addToWishlist(item.pid)}}
+                  onClick={(e)=>{addToWishlist(e, item.pid)}}
                   className="absolute p-2 rounded-full text-lg bg-blue-300 right-[16px] top-[-40px] hover:top-[10px] duration-500 shadow-2xl text-white hover:text-red-500"
                 >
                   <IoMdHeart />
@@ -172,7 +174,7 @@ const ProductsContainer = (props) => {
                   </a>
 
                   <a
-                    onClick={()=>{addToCart(item.pid)}}
+                    onClick={(e)=>{addToCart(e, item.pid)}}
                     className="relative flex items-center justify-center rounded p-2 py-1 overflow-hidden group bg-orange-500 hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-orange-400 transition-all ease-out duration-300"
                   >
                     <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
