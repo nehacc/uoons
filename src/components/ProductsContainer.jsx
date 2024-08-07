@@ -76,6 +76,7 @@ const ProductsContainer = (props) => {
   
 
   const addToCart = async (event, pid) => {
+    // hello
     event.stopPropagation(); // Prevents the event from bubbling up to the div
     if (UserSession.getSession()) {
       try {
