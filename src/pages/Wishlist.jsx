@@ -19,26 +19,33 @@ const WishList = (props) => {
 
   useEffect(() => {
     const fetchWishlistData = async () => {
-      try {
-        const response = await axios.get(`/api/getMyWishlist?user_id=${user_id}`, {
-          headers: {
-            'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-            'Accept': '*/*',
-            'channel-code': 'ANDROID',
-            'auth': UserSession.getAuth()
-          }
-        });
-
-        setWishlistData(response.data.Data);
-      } catch (err) {
-        setError('Failed to fetch wishlist data.');
-      } finally {
+      if (UserSession.getSession()) {
+        try {
+          const response = await axios.get(`/api/getMyWishlist`, {
+            headers: {
+              'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+              'Accept': '*/*',
+              'channel-code': 'ANDROID',
+              'auth': UserSession.getAuth()
+            }
+          });
+  
+          setWishlistData(response.data.Data);
+        } catch (err) {
+          setError('Failed to fetch wishlist data.');
+          toast.error('Error fetching wishlist data');
+        } finally {
+          setLoading(false);
+        }
+      } else {
         setLoading(false);
+        toast.info('Please log in to view your wishlist.');
       }
     };
-
+  
     fetchWishlistData();
-  }, [wishlistData]);
+  }, []);
+  
 
   const handleRemoveItem = async (pid) => {
     setRemoving(true);

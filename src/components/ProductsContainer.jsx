@@ -8,9 +8,12 @@ import { MdAddShoppingCart } from "react-icons/md";
 import '../components/ProductsContainer.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import userSession from '../user'
+import UserSession from "../user";
+import { useNavigate } from 'react-router-dom';
+
 
 const ProductsContainer = (props) => {
+  const navigate = useNavigate();
   const notify = (msg) => toast(msg);
 
   const scrollRef = useRef(null);
@@ -39,7 +42,7 @@ const ProductsContainer = (props) => {
   const { data, heading } = props;
 
   const addToWishlist = async (pid) => {
-    if (userSession.getSession) {
+    if (UserSession.getSession()) {
       // Add to Wishlist
       try {
         const response = await axios.post('/api/addItemToWishlist',
@@ -50,7 +53,7 @@ const ProductsContainer = (props) => {
             headers: {
               'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
               'Accept': '*/*',
-              'auth': userSession.getAuth(),
+              'auth': UserSession.getAuth(),
               'channel-code': 'ANDROID',
             }
           });
@@ -65,30 +68,43 @@ const ProductsContainer = (props) => {
         toast.error("An error occurred while adding the item to the wishlist");
       }
     }
+    else{
+      toast.info("Please log in to add items to your wishlist.");
+    }
   }
   
 
   const addToCart = async (pid) => {
-    try {
-      const response = await axios.post('/api/addItemToCart',
-        {
-          pid: pid,
-        }, 
-        {
-        headers: {
-          'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-          'Accept': '*/*',
-          'channel-code': 'ANDROID',
-          'auth': "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Ijc0MCIsInByb2ZpbGVpZCI6IjE5NzUyNzAwMzgiLCJuYW1lIjoiQWJoaXNoZWsgU2hhcm1hIiwiZW1haWwiOiJzaXRlbnR3ZWJAZ21haWwuY29tIiwibW9iaWxlX25vIjoiOTY5MTQwNzQ1NSIsImZ0b2tlbiI6ImFkZmxqamZhc2xkZmprYSIsIm90cCI6NjA1Mn0.e36R2OF9THNrMBB0b4VlDa-1G1Z0TuMGLEGhbbfRKSU"
+    if (UserSession.getSession()) {
+      try {
+        const response = await axios.post('/api/addItemToCart',
+          {
+            pid: pid,
+            qty: 1
+          }, 
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+              'Accept': '*/*',
+              'Channel-Code': 'ANDROID',
+              'auth': UserSession.getAuth(),
+            }
+          });
+        
+        // Check response status
+        if (response.data.status === 'success') {
+          toast.success("Product added to Cart");
         }
-      });
-      console.log('Response:', response.data);
-      alert("Added to Cart, item with pid "+ pid)
-    } catch (err) {
-      setError(err);
+      } catch (err) {
+        toast.error("An error occurred while adding the item to the cart");
+      }
+    } else {
+      toast.info("Please log in to add items to your cart.");
     }
+  }
   
-}
+  
+
   
 
   return (
@@ -110,6 +126,7 @@ const ProductsContainer = (props) => {
             {/* card section */}
             {data.map((item) => (
               <div
+                onClick={()=>{navigate(`/ProductDescription/${item.pid}`)}}
                 key={item.pid}
                 id="product-container"
                 className="border p-3 rounded-lg shadow-lg w-[200px] space-y-2 hover:shadow-2xl flex flex-col items-center relative overflow-hidden"

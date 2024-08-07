@@ -10,6 +10,11 @@ import FrequentlyBought from '../components/FrequentlyBought';
 import RatingsReview from '../components/RatingsReview';
 import FaqsProduct from '../components/FaqsProduct'
 import ImageMagnification from '../components/ImageMagnification';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import { useParams } from 'react-router-dom';
+import UserSession from '../user';
+
 
 
 
@@ -62,8 +67,9 @@ const product = {
 
 
 const ProductDescription = () => {
-  const pid = 242; // for now!
-  const auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Ijc0MCIsInByb2ZpbGVpZCI6IjE5NzUyNzAwMzgiLCJuYW1lIjoiQWJoaXNoZWsgU2hhcm1hIiwiZW1haWwiOiJzaXRlbnR3ZWJAZ21haWwuY29tIiwibW9iaWxlX25vIjoiOTY5MTQwNzQ1NSIsIm90cCI6ODc0M30.8xH2Twey-4AskGA3y-LSiPs-lmGGOo9NQTw3DkpgIRE"
+  // const pid = 242; // for now!
+  const pid = parseInt(useParams());
+  const auth = UserSession.getAuth();
 
   // Fetch Product Detail:
   const [ProductData, setProductData] = useState(null)
@@ -163,6 +169,7 @@ const displayedSpecifications = showAllSpecs ? Object.entries(product.specificat
 const baseURL = "https://uoons.com/";
   return (
     <>
+    <Navbar />
     {loading?(<div>Loading...</div>):
     (
       // main-body_Description 
@@ -455,6 +462,7 @@ const baseURL = "https://uoons.com/";
       </div>
     )
     }
+    <Footer />
     </>
   )
 }
