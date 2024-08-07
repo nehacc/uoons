@@ -119,8 +119,8 @@ const LoginSignup = () => {
 
   const loginUser = () => {
     if(otpVerified){
-      UserSession.setSession(true)
-      UserSession.setAuth(CurrentUserToken)
+      UserSession.setSession(true);
+      UserSession.setAuth(CurrentUserToken);
       alert("session Started")
       navigate('/home')
     }else{

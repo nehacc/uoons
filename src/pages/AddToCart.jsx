@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FiTruck, FiPhone, FiMessageCircle, FiGift } from 'react-icons/fi';
 import { FaCreditCard } from 'react-icons/fa';
 import Header from '../components/Navbar';
 import Footer from '../components/Footer';
-import { FaStar, FaStarHalfAlt, FaRegStar, FaTag, } from 'react-icons/fa';
+import { FaTag, } from 'react-icons/fa';
+import UserSession from '../user';
 
 
 const AddToCart = () => {
@@ -13,37 +13,47 @@ const AddToCart = () => {
   const [discount, setDiscount] = useState(0);
 
   useEffect(() => {
-    axios.get('/api/getMyCart',
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-          'Accept': '*/*',
-          'channel-code': 'ANDROID',
-          'auth': "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Ijc0MCIsInByb2ZpbGVpZCI6IjE5NzUyNzAwMzgiLCJuYW1lIjoiQWJoaXNoZWsgU2hhcm1hIiwiZW1haWwiOiJzaXRlbnR3ZWJAZ21haWwuY29tIiwibW9iaWxlX25vIjoiOTY5MTQwNzQ1NSIsImZ0b2tlbiI6ImFkZmxqamZhc2xkZmprYSIsIm90cCI6NjA1Mn0.e36R2OF9THNrMBB0b4VlDa-1G1Z0TuMGLEGhbbfRKSU"
+    const fetchCart = async () => {
+      if (UserSession.getSession()) {
+        try {
+          const response = await axios.get('/api/getMyCart', {
+            headers: {
+              'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+              'Accept': '*/*',
+              'channel-code': 'ANDROID',
+              'auth': UserSession.getAuth(),
+            }
+          });
+  
+          const cartItems = response.data.Data.items.map(item => ({
+            id: item.id,
+            userId: item.user_id,
+            pid: item.pid,
+            quantity: parseInt(item.qty),
+            name: item.product_name,
+            price: parseFloat(item.product_sale_price),
+            originalPrice: parseFloat(item.product_price),
+            images: [`https://uoons.com/${item.product_images}`], // Adjust the path to your actual image path
+            stock: item.product_stock,
+            isInStock: item.isInStock,
+            isCashOnDelivery: item.isCashOnDelivery,
+            discount: item.discount,
+            totalSalePrice: item.total_sale_price,
+            totalOrderAmount: item.total_order_amount,
+          }));
+          setCart(cartItems);
+        } catch (error) {
+          toast.error('Error fetching cart data');
+          console.error('Error fetching cart data:', error);
         }
+      } else {
+        toast.info('Please log in to view your cart.');
       }
-    ) // Adjust this URL to your actual API endpoint
-      .then(response => {
-        const cartItems = response.data.Data.items.map(item => ({
-          id: item.id,
-          userId: item.user_id,
-          pid: item.pid,
-          quantity: parseInt(item.qty),
-          name: item.product_name,
-          price: parseFloat(item.product_sale_price),
-          originalPrice: parseFloat(item.product_price),
-          images: [`https://uoons.com/${item.product_images}`], // Adjust the path to your actual image path
-          stock: item.product_stock,
-          isInStock: item.isInStock,
-          isCashOnDelivery: item.isCashOnDelivery,
-          discount: item.discount,
-          totalSalePrice: item.total_sale_price,
-          totalOrderAmount: item.total_order_amount,
-        }));
-        setCart(cartItems);
-      })
-      .catch(error => console.error('Error fetching cart data:', error));
+    };
+  
+    fetchCart();
   }, []);
+  
 
   const incrementQuantity = (index) => {
     const newCart = [...cart];

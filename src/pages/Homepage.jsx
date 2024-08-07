@@ -12,6 +12,7 @@ import Footer from '../components/Footer'
 import BrandContainer from '../components/BrandContainer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Test from '../pages/Test'
 import UserSession from '../user';
 
 
@@ -88,7 +89,10 @@ const Homepage = () => {
       <ProductsContainerCopy heading={headings.bestSeller}/>
       <BrandContainer />
       <ProductsContainerCopy heading={headings.recentlyViewed}/>
-      <ProductsContainerCopy heading={headings.smartphonesTablets}/> 
+      <ProductsContainerCopy heading={headings.smartphonesTablets}/>
+      <Test heading={HomePageData.Data[3].name} data={HomePageData.Data[3].items}/>
+
+      
       <Footer />
       <ToastContainer />
     </div>
