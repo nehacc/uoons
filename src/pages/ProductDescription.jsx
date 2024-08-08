@@ -18,6 +18,7 @@ import UserSession from '../user';
 
 
 
+
 const product = {
   specifications: {
     "Sales Package": "Laptop, Power Adaptor, User Guide, Warranty Documents",
@@ -172,9 +173,10 @@ const baseURL = "https://uoons.com/";
     <Navbar />
     {loading?(<div>Loading...</div>):
     (
+     
       // main-body_Description 
       <div className="p-3 bg-white w-screen">
-        
+         <Navbar />
         {/* main-Section */}
         <div className="flex flex-col items-center lg:flex-row lg:items-start gap-6">
           {/* {console.log(ProductData.Data.pid)} */}
