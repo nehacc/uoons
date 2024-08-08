@@ -129,7 +129,7 @@ const ProductsContainer = (props) => {
             {/* card section */}
             {data.map((item) => (
               <div
-                onClick={()=>{navigate(`/ProductDescription/${item.pid}`)}}
+                onClick={()=>{navigate(`/PdTest/${item.pid}`)}}
                 key={item.pid}
                 id="product-container"
                 className="border p-3 rounded-lg shadow-lg w-[200px] space-y-2 hover:shadow-2xl flex flex-col items-center relative overflow-hidden"
