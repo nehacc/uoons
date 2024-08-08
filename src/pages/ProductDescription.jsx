@@ -68,7 +68,7 @@ const product = {
 
 const ProductDescription = () => {
   // const pid = 242; // for now!
-  const pid = parseInt(useParams());
+  const pid = useParams();
   const auth = UserSession.getAuth();
 
   // Fetch Product Detail:
@@ -467,4 +467,7 @@ const baseURL = "https://uoons.com/";
   )
 }
 
-export default ProductDescription
+export default ProductDescription;
+
+
+

@@ -12,7 +12,11 @@ const ListComponentHome = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('api/getAllCategories');
+        const response = await axios.get('api/getAllCategories',{
+          headers:{
+            "Channel-Code": 'ANDROID'
+          }
+        });
         setCategories(response.data.Data.categories);
       } catch (error) {
         setError('Error fetching categories');

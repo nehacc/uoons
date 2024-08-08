@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       width: {
-        'custom': 'calc(100vw - 350px)',
+        'custom': 'calc(100vw - 550px)',
       },
       colors: {
         primary: "#fea928",

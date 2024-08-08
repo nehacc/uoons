@@ -22,6 +22,7 @@ import Test from './pages/Test.jsx';
 import Profile from './pages/Profile.jsx';
 import SpecificCategorieProduct from './components/SpecificCategorieProduct.jsx';
 import ToastContainer from './components/ToastContainer'
+import PdTest from './pages/PdTest.jsx'
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/ProductList/:c_id",
     element: <ProductList />,
+  },
+  {
+    path: "/PdTest/:p_id",
+    element: <PdTest />,
   },
   {
     path: "/Faq",
