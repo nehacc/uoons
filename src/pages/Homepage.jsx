@@ -95,6 +95,7 @@ const Homepage = () => {
       
       <Footer />
       <ToastContainer />
+      {console.log(UserSession.getAuth())}
     </div>
     </>
   )

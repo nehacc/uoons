@@ -23,6 +23,7 @@ import Profile from './pages/Profile.jsx';
 import SpecificCategorieProduct from './components/SpecificCategorieProduct.jsx';
 import ToastContainer from './components/ToastContainer'
 import PdTest from './pages/PdTest.jsx'
+import NewProfile from './pages/NewProfile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -96,7 +97,11 @@ const router = createBrowserRouter([
   {
     path: "ToastContainer",
     element: <ToastContainer />
-  }
+  },
+  {
+    path: "NewProfile",
+    element: <NewProfile />
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

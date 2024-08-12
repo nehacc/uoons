@@ -12,7 +12,7 @@ const ListComponentHome = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('api/getAllCategories',{
+        const response = await axios.get('/api/getAllCategories',{
           headers:{
             "Channel-Code": 'ANDROID'
           }

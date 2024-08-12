@@ -14,7 +14,6 @@ const AvailabilityChecker = ({ p_id }) => {
                 }
             });
             setAvailability(response.data);
-            alert("hello")
         } catch (error) {
             console.error('Error fetching availability:', error);
         }
