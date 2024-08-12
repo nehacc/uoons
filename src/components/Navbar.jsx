@@ -63,7 +63,7 @@ const Navbar = () => {
         </div>
       </div>
       {/* lower Navbar */}
-      <div data-aos="zoom-in" className="flex justify-center">
+      <div className="flex justify-center">
         <ul className="justify-center">
           
           <ListComponentHome/>

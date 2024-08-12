@@ -8,10 +8,12 @@ import { MdPayments } from 'react-icons/md';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import UserProfile from '../components/UserProfile';
+import UpdateProfile from '../components/UpdateProfile';
 
 const Profile = () => {
 
     const [activeSection, setActiveSection] = useState("profile")
+    const [p, setp] = useState(true)
 
     const handleSectionChange = (section) => {
         setActiveSection(section);
@@ -61,10 +63,8 @@ const Profile = () => {
 
                 {activeSection === 'profile' && (
                     <div className='w-full'>
-                    <div>
-                        <UserProfile />
-                    </div>
-                    <button>updateProfile</button>
+                    {p? <UserProfile />: <UpdateProfile />}
+                    <button onClick={()=> setp(!p)}>updateProfile</button>
                     </ div>
                 )}
 
