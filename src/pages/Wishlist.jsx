@@ -4,14 +4,10 @@ import { CiCircleRemove } from "react-icons/ci";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import UserSession from '../user';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const WishList = (props) => {
-  // const user_id = props.user_id;
-  // const auth = props.auth;
-  // for now:
-  const user_id = 316;
-  // const auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Ijc0MCIsInByb2ZpbGVpZCI6IjE5NzUyNzAwMzgiLCJuYW1lIjoiQWJoaXNoZWsgU2hhcm1hIiwiZW1haWwiOiJzaXRlbnR3ZWJAZ21haWwuY29tIiwibW9iaWxlX25vIjoiOTY5MTQwNzQ1NSIsImZ0b2tlbiI6ImFkZmxqamZhc2xkZmprYSIsIm90cCI6NjA1Mn0.e36R2OF9THNrMBB0b4VlDa-1G1Z0TuMGLEGhbbfRKSU";
-
+const WishList = () => {
   const [wishlistData, setWishlistData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,13 +19,12 @@ const WishList = (props) => {
         try {
           const response = await axios.get(`/api/getMyWishlist`, {
             headers: {
-              'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+              'Content-Type': 'application/json',
               'Accept': '*/*',
               'channel-code': 'ANDROID',
               'auth': UserSession.getAuth()
             }
           });
-  
           setWishlistData(response.data.Data);
         } catch (err) {
           setError('Failed to fetch wishlist data.');
@@ -42,29 +37,24 @@ const WishList = (props) => {
         toast.info('Please log in to view your wishlist.');
       }
     };
-  
     fetchWishlistData();
   }, []);
-  
 
   const handleRemoveItem = async (pid) => {
     setRemoving(true);
     try {
-      await axios.post("/api/removeWishlist",
-        { pid },
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-            'Accept': '*/*',
-            'channel-code': 'ANDROID',
-            'auth': auth
-          }
+      await axios.post("/api/removeWishlist", { pid }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+          'channel-code': 'ANDROID',
+          'auth': UserSession.getAuth()
         }
-      );
-      setWishlistData(wishlistData.filter(product => product.id !== pid));
-      alert(`Item with PID ${pid} removed from the wishlist`);
+      });
+      setWishlistData(prev => prev.filter(item => item.pid !== pid));
+      toast.success(`Item with PID ${pid} removed from the wishlist`);
     } catch (err) {
-      alert('Failed to remove item from wishlist.');
+      toast.error('Failed to remove item from wishlist.');
     } finally {
       setRemoving(false);
     }
@@ -80,6 +70,7 @@ const WishList = (props) => {
 
   return (
     <>
+      <ToastContainer />
       <Navbar />
       <div className="flex flex-col items-center bg-blue-100 py-8">
         <div className="w-[95%] relative">
@@ -99,7 +90,7 @@ const WishList = (props) => {
                       <div className="p-4 flex flex-col flex-grow">
                         <h3 className="text-xl font-semibold text-gray-800 mb-2">{product.product_name}</h3>
                         <div className="flex-grow"></div>
-                        <div id="priveAndRemove" className="flex justify-between items-center mt-2">
+                        <div id="priceAndRemove" className="flex justify-between items-center mt-2">
                           <div>
                             <span className="text-xl font-bold text-gray-900">₹{product.product_sale_price}</span>
                             <span className="text-gray-500 line-through ml-2">₹{product.product_price}</span>
@@ -107,7 +98,7 @@ const WishList = (props) => {
                           </div>
                           <button 
                             onClick={() => handleRemoveItem(product.pid)} 
-                            className={`text-red-500 hover:text-red-700 transition-colors ${removing ? 'opacity-50 cursor-not-allowed' : ''}`} 
+                            className={`text-red-500 hover:text-red-700 transition-colors ${removing ? 'animate-pulse opacity-50 cursor-not-allowed' : ''}`} 
                             disabled={removing}
                           >
                             <CiCircleRemove size={35} className="font-extrabold" />

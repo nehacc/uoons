@@ -34,7 +34,7 @@ const RatingFilter = () => {
             />
             <span className="ml-2 flex items-center text-gray-700">
               {[...Array(rating)].map((_, i) => (
-                <FaStar key={i} className="text-yellow-500" />
+                <FaStar key={i} className="text-yellow-400" />
               ))}
               {[...Array(5 - rating)].map((_, i) => (
                 <FaStar key={i} className="text-gray-300" />

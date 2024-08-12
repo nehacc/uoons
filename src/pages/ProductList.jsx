@@ -7,6 +7,8 @@ import SpecificCategorieProduct from '../components/SpecificCategorieProduct';
 import { useParams } from 'react-router-dom';
 import PriceFilter from '../components/PriceFilter';
 import RatingFilter from '../components/RatingsFilter';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ShopPage = () => {
   const { c_id } = useParams();
@@ -121,6 +123,7 @@ const ShopPage = () => {
           <SpecificCategorieProduct c_id={c_id} />
         </div>
       </div>
+      <ToastContainer />
       <Footer />
     </>
   );

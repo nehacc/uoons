@@ -35,8 +35,8 @@ const proprietes = {
     infinite: true,
     indicators: true,
     arrows: true,
-    prevArrow: <button style={{ ...buttonStyleLeft }}><MdOutlineKeyboardArrowLeft className=' p-1 text-4xl md:text-5xl lg:text-6xl'/></button>,
-    nextArrow: <button style={{ ...buttonStyleRight }}><MdOutlineKeyboardArrowRight className='p-1 text-4xl md:text-5xl lg:text-6xl'/></button>
+    prevArrow: <button style={{ ...buttonStyleLeft }}><MdOutlineKeyboardArrowLeft className=' p-1 text-5xl'/></button>,
+    nextArrow: <button style={{ ...buttonStyleRight }}><MdOutlineKeyboardArrowRight className='p-1 text-5xl'/></button>
 }
 
 
@@ -44,24 +44,24 @@ const proprietes = {
 
 const Slideshow = () => {
     return (
-        <div className="containerSlide w-[95%] px-2 mx-auto rounded-xl mt-5">
+        <div className="containerSlide w-[95%] px-2 mx-auto rounded-md mt-5">
             <Slide {...proprietes}>
-                <div className="each-slide rounded-2xl overflow-hidden">
+                <div className="each-slide rounded-md overflow-hidden">
                     <div>
                         <img src={img1} alt="img1"/>
                     </div>
                 </div>
-                <div className="each-slide rounded-2xl overflow-hidden">
+                <div className="each-slide rounded-md overflow-hidden">
                     <div>
                         <img src={img2} alt="img2" />
                     </div>
                 </div>
-                <div className="each-slide rounded-2xl overflow-hidden">
+                <div className="each-slide rounded-md overflow-hidden">
                     <div>
                         <img src={img3} alt="img3" />
                     </div>
                 </div>
-                <div className="each-slide rounded-2xl overflow-hidden">
+                <div className="each-slide rounded-md overflow-hidden">
                     <div>
                         <img src={img4} alt="img4" />
                     </div>
