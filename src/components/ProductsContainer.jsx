@@ -132,7 +132,7 @@ const ProductsContainer = (props) => {
                 onClick={() => { navigate(`/PdTest/${item.pid}`) }}
                 key={item.pid}
                 id="product-container"
-                className="border p-3 rounded-lg shadow-lg w-[200px] space-y-2 hover:shadow-2xl flex flex-col items-center relative overflow-hidden"
+                className="cursor-pointer border p-3 rounded-lg shadow-lg w-[200px] space-y-2 hover:shadow-2xl flex flex-col items-center relative overflow-hidden"
                 data-aos="fade-up"
               >
                 <button
@@ -167,6 +167,10 @@ const ProductsContainer = (props) => {
                 </div>
                 <div id="buy-Cart" className="hidden w-full justify-center gap-5">
                   <a
+                    onClick={(e) => { 
+                      e.stopPropagation();
+                      navigate(`/Checkout/${item.pid}`) }}
+
                     href="#_"
                     className="relative rounded p-2 py-1 overflow-hidden group bg-orange-500 hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-orange-400 transition-all ease-out duration-300"
                   >
