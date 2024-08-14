@@ -45,6 +45,10 @@ const router = createBrowserRouter([
     element: <PdTest />,
   },
   {
+    path: "/Checkout/:p_id",
+    element: <Checkout />,
+  },
+  {
     path: "/Faq",
     element: <Faq />,
   },

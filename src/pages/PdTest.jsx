@@ -20,12 +20,16 @@ import FrequentlyBought from '../components/FrequentlyBought';
 import RatingsReview from '../components/RatingsReview';
 import FaqsProduct from '../components/FaqsProduct'
 import ProductsContainer from '../components/ProductsContainer';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
 
 
 const PdTest = () => {
+  const navigate = useNavigate();
+
   const notify = (msg) => toast(msg);
 
     const { p_id } = useParams();
@@ -215,7 +219,9 @@ const PdTest = () => {
                                 </div>
                                 <div className="flex gap-4 text-lg">
                                     <a
-                                        href="#_"
+                                        onClick={(e) => { 
+                                            e.stopPropagation();
+                                            navigate(`/Checkout/${productData.Data.pid}`) }}
                                         className="relative flex items-center justify-center rounded-lg p-3 overflow-hidden group bg-gradient-to-r from-orange-500 to-orange-400 text-white hover:from-orange-600 hover:to-orange-500 hover:ring-4 hover:ring-orange-300 transition-all ease-out duration-300"
                                     >
                                         <span className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
