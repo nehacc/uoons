@@ -93,7 +93,7 @@ const Checkout = () => {
 
   const handlePayment = async () => {
     const options = {
-      key: 'rzp_test_o5ELWlFriahY3J',
+      key: 'rzp_test_RIrpiyDJHDsnpS',
       amount: getTotalPrice() * 100,
       currency: 'INR',
       name: 'UOONS',
@@ -104,6 +104,7 @@ const Checkout = () => {
         console.log(response.razorpay_order_id);
         console.log(response.razorpay_signature);
         alert('Payment Successful');
+        // navigate buddy!!!
       },
       prefill: {
         name: addresses[selectedAddressIndex].bname,
@@ -114,7 +115,7 @@ const Checkout = () => {
         address: `${addresses[selectedAddressIndex].baddress1}, ${addresses[selectedAddressIndex].baddress2}, ${addresses[selectedAddressIndex].bcity}, ${addresses[selectedAddressIndex].bstate}, ${addresses[selectedAddressIndex].bcountry} - ${addresses[selectedAddressIndex].bpincode}`,
       },
       theme: {
-        color: '#F37254',
+        color: "white",
       },
     };
 
@@ -176,7 +177,7 @@ const Checkout = () => {
                         <p>{`${address.bcountry} - ${address.bpincode}`}</p>
                       </div>
                     ))}
-                    <Button variant="outlined" onClick={handleNext}>
+                    <Button variant="contained" onClick={handleNext}>
                       Next
                     </Button>
                   </div>
@@ -198,7 +199,7 @@ const Checkout = () => {
                       <label className="font-semibold">Phone: </label>
                       <span>{selectedAddress.bmobile_no}</span>
                     </div>
-                    <Button variant="outlined" onClick={handleNext}>
+                    <Button variant="contained" onClick={handleNext}>
                       Next
                     </Button>
                   </div>
