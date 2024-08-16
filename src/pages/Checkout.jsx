@@ -5,66 +5,143 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useParams } from 'react-router-dom';
 import UserSession from '../user';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
 
 const Checkout = () => {
   const { p_id } = useParams();
 
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('debitCreditCard');
-  const [product, setProduct] = useState(null); // State to store product data
-  const [isLoading, setIsLoading] = useState(true); // Loading state
-  const [address, setAddress] = useState(null); // State to store address data
+  const [activeStep, setActiveStep] = useState(0);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Online');
+  const [productData, setProductData] = useState(null);
+  const [isProductDataLoading, setIsProductDataLoading] = useState(true);
+  const [isAddressLoading, setIsAddressLoading] = useState(true);
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
+
+  const steps = ['Select Address', 'Review Contact Info', 'Choose Payment Method'];
 
   useEffect(() => {
-    // Fetch product data from API
     const fetchProductData = async () => {
       try {
         const response = await axios.get(`/api/productDetail?pid=${p_id}`, {
           headers: {
-            'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-            'Accept': '*/*',
+            'Content-Type': 'multipart/form-data',
+            Accept: '*/*',
             'channel-code': 'ANDROID',
-            'auth': UserSession.getAuth(),
+            auth: UserSession.getAuth(),
           },
         });
-        setProduct(response.data.Data); // Assuming the product data is in response.data.Data
-        setIsLoading(false);
+        setProductData(response.data.Data);
+        setIsProductDataLoading(false);
       } catch (error) {
         console.error('Error fetching product data:', error);
+        setIsProductDataLoading(false);
       }
     };
 
-    // Fetch address data from API
     const fetchAddressData = async () => {
       try {
         const response = await axios.get('/api/getUserAddress', {
           headers: {
             'Content-Type': 'application/json',
-            'Accept': '*/*',
+            Accept: '*/*',
             'channel-code': 'ANDROID',
-            'auth': "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Ijc0MCIsInByb2ZpbGVpZCI6IjE5NzUyNzAwMzgiLCJuYW1lIjoiQWJoaXNoZWsgU2hhcm1hIiwiZW1haWwiOiJzaXRlbnR3ZWJAZ21haWwuY29tIiwibW9iaWxlX25vIjoiOTY5MTQwNzQ1NSIsImZ0b2tlbiI6ImFkZmxqamZhc2xkZmprYSIsIm90cCI6NjA1Mn0.e36R2OF9THNrMBB0b4VlDa-1G1Z0TuMGLEGhbbfRKSU",
+            auth: UserSession.getAuth(),
           },
         });
-        setAddress(response.data.Data[0]); // Assuming the address data is in response.data.Data[0]
+        setAddresses(response.data.Data);
+        setIsAddressLoading(false);
       } catch (error) {
         console.error('Error fetching address data:', error);
+        setIsAddressLoading(false);
       }
+    };
+
+    const loadRazorpayScript = (src) => {
+      return new Promise((resolve) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = () => resolve(true);
+        script.onerror = () => resolve(false);
+        document.body.appendChild(script);
+      });
     };
 
     fetchProductData();
     fetchAddressData();
-  }, []);
+    loadRazorpayScript('https://checkout.razorpay.com/v1/checkout.js');
+  }, [p_id]);
 
-  const handlePaymentMethodChange = (method) => {
-    setSelectedPaymentMethod(method);
-  };
+  const handleNext = () => setActiveStep((prevStep) => prevStep + 1);
+  const handleBack = () => setActiveStep((prevStep) => prevStep - 1);
+
+  const handlePaymentMethodChange = (method) => setSelectedPaymentMethod(method);
+  const handleAddressSelection = (index) => setSelectedAddressIndex(index);
 
   const getTotalPrice = () => {
-    return product ? parseFloat(product.product_sale_price) + parseFloat(product.shipping_charges || 0) : 0;
+    if (!productData) return 0;
+    const productPrice = parseFloat(productData.product_sale_price);
+    const shippingCharges = parseFloat(productData.shipping_charges || 0);
+    return productPrice + shippingCharges;
   };
 
-  if (isLoading || !address) {
-    return <div>Loading...</div>; // Display loading state
+  const handlePayment = async () => {
+    const options = {
+      key: 'rzp_test_RIrpiyDJHDsnpS',
+      amount: getTotalPrice() * 100,
+      currency: 'INR',
+      name: 'UOONS',
+      description: 'Product Purchase Test',
+      image: 'https://uoons.com/assets/front/img/logo.png',
+      handler: function (response) {
+        console.log(response.razorpay_payment_id);
+        console.log(response.razorpay_order_id);
+        console.log(response.razorpay_signature);
+        alert('Payment Successful');
+        // navigate buddy!!!
+      },
+      prefill: {
+        name: addresses[selectedAddressIndex].bname,
+        email: addresses[selectedAddressIndex].bemail,
+        contact: addresses[selectedAddressIndex].bmobile_no,
+      },
+      notes: {
+        address: `${addresses[selectedAddressIndex].baddress1}, ${addresses[selectedAddressIndex].baddress2}, ${addresses[selectedAddressIndex].bcity}, ${addresses[selectedAddressIndex].bstate}, ${addresses[selectedAddressIndex].bcountry} - ${addresses[selectedAddressIndex].bpincode}`,
+      },
+      theme: {
+        color: "white",
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+
+    rzp.on('payment.failed', (response) => {
+      console.error(response.error);
+      alert('Payment Failed. Please try again.');
+    });
+  };
+
+  const handleSubmitOrder = () => {
+    if (selectedPaymentMethod === 'Online') {
+      handlePayment();
+    } else {
+      console.log('Placing COD order...');
+      // Add functionality to handle COD order placement
+    }
+  };
+
+  if (isProductDataLoading || isAddressLoading) {
+    return <div>Loading...</div>;
   }
+
+  const selectedAddress = addresses[selectedAddressIndex];
 
   return (
     <>
@@ -72,106 +149,133 @@ const Checkout = () => {
       <div className="flex flex-col items-center bg-blue-100 py-8">
         <div className="w-[95%] relative">
           <div className="flex flex-col gap-3 lg:flex-row w-full p-4 sm:p-6 bg-white rounded-2xl shadow-lg">
-            <div className="bg-white rounded-lg shadow-lg p-6 w-full lg:w-3/4">
-              <h2 className="text-3xl font-bold mb-4">Product Checkout</h2>
-
-              <div className="mb-6">
-                <h3 className="text-xl font-bold">Shipping Address</h3>
-                <p>{`${address.saddress1}, ${address.saddress2}, ${address.scity}, ${address.sstate}, ${address.scountry} - ${address.spincode}`}</p>
-                <button className="mt-2 text-blue-600">Change</button>
+            <div className="flex flex-col w-full space-y-6">
+              <div className="mb-4">
+                <Stepper activeStep={activeStep} alternativeLabel>
+                  {steps.map((label, index) => (
+                    <Step key={index}>
+                      <StepLabel>{label}</StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
               </div>
-
-              <div className="mb-6">
-                <h3 className="text-xl font-bold">Contact Info</h3>
-                <div className="mb-2">
-                  <label className="block font-bold">Email *</label>
-                  <input type="email" className="w-full p-2 border rounded-md" value={address.semail} readOnly />
-                </div>
-                <div className="mb-2">
-                  <label className="block font-bold">Mobile Number *</label>
-                  <input type="tel" className="w-full p-2 border rounded-md" value={address.smobile_no} readOnly />
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <h3 className="text-xl font-bold">Payment Method</h3>
-                <div className="mb-4">
-                  <input
-                    type="radio"
-                    id="cashOnDelivery"
-                    name="paymentMethod"
-                    value="cashOnDelivery"
-                    checked={selectedPaymentMethod === 'cashOnDelivery'}
-                    onChange={() => handlePaymentMethodChange('cashOnDelivery')}
-                  />
-                  <label htmlFor="cashOnDelivery" className="ml-2">Cash on Delivery</label>
-                </div>
-                <div className="mb-4">
-                  <input
-                    type="radio"
-                    id="debitCreditCard"
-                    name="paymentMethod"
-                    value="debitCreditCard"
-                    checked={selectedPaymentMethod === 'debitCreditCard'}
-                    onChange={() => handlePaymentMethodChange('debitCreditCard')}
-                  />
-                  <label htmlFor="debitCreditCard" className="ml-2">Debit/Credit Card</label>
-                  {selectedPaymentMethod === 'debitCreditCard' && (
-                    <div className="mt-2">
-                      <input type="text" className="w-full p-2 mb-2 border rounded-md" placeholder="Card Number" />
-                      <div className="flex justify-between">
-                        <input type="text" className="w-1/2 p-2 mr-2 border rounded-md" placeholder="MM / YYYY" />
-                        <input type="text" className="w-1/2 p-2 ml-2 border rounded-md" placeholder="CVV" />
+              {activeStep === 0 && (
+                <div className="bg-white p-4 rounded-lg shadow-md">
+                  <h3 className="text-lg font-semibold mb-2">Select Delivery Address</h3>
+                  <div className="flex flex-col gap-4">
+                    {addresses.map((address, index) => (
+                      <div
+                        key={index}
+                        className={`p-4 border rounded-md cursor-pointer ${
+                          selectedAddressIndex === index ? 'border-blue-500' : 'border-gray-300'
+                        }`}
+                        onClick={() => handleAddressSelection(index)}
+                      >
+                        <h4 className="text-lg font-semibold">{address.bname}</h4>
+                        <p>{`${address.baddress1}, ${address.baddress2}`}</p>
+                        <p>{`${address.bcity}, ${address.bstate}`}</p>
+                        <p>{`${address.bcountry} - ${address.bpincode}`}</p>
                       </div>
+                    ))}
+                    <Button variant="contained" onClick={handleNext}>
+                      Next
+                    </Button>
+                  </div>
+                </div>
+              )}
+              {activeStep === 1 && (
+                <div className="bg-white p-4 rounded-lg shadow-md">
+                  <h3 className="text-lg font-semibold mb-2">Review Contact Info</h3>
+                  <div className="flex flex-col gap-4">
+                    <div>
+                      <label className="font-semibold">Name: </label>
+                      <span>{selectedAddress.bname}</span>
                     </div>
-                  )}
+                    <div>
+                      <label className="font-semibold">Email: </label>
+                      <span>{selectedAddress.bemail}</span>
+                    </div>
+                    <div>
+                      <label className="font-semibold">Phone: </label>
+                      <span>{selectedAddress.bmobile_no}</span>
+                    </div>
+                    <Button variant="contained" onClick={handleNext}>
+                      Next
+                    </Button>
+                  </div>
                 </div>
-                <div className="mb-4">
-                  <input
-                    type="radio"
-                    id="netBanking"
-                    name="paymentMethod"
-                    value="netBanking"
-                    checked={selectedPaymentMethod === 'netBanking'}
-                    onChange={() => handlePaymentMethodChange('netBanking')}
-                  />
-                  <label htmlFor="netBanking" className="ml-2">Net Banking</label>
+              )}
+              {activeStep === 2 && (
+                <div className="bg-white p-4 rounded-lg shadow-md">
+                  <h3 className="text-lg font-semibold mb-2">Choose Payment Method</h3>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={selectedPaymentMethod === 'Online'}
+                          onChange={() => handlePaymentMethodChange('Online')}
+                        />
+                      }
+                      label={
+                        <div className="flex items-center space-x-2">
+                          <FiCreditCard />
+                          <span>Online Payment</span>
+                        </div>
+                      }
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={selectedPaymentMethod === 'COD'}
+                          onChange={() => handlePaymentMethodChange('COD')}
+                        />
+                      }
+                      label="Cash on Delivery"
+                    />
+                  </FormGroup>
+                  <div className='w-fit flex gap-5 items-center'>
+                    <Button variant="contained" color="primary" onClick={handleSubmitOrder}>
+                      {selectedPaymentMethod === 'Online' ? 'Make Payment' : 'Place Order'}
+                    </Button>
+                    <Button variant="outlined" onClick={handleBack}>
+                      Back
+                    </Button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
-
-            <div className="flex flex-col lg:w-1/4 bg-white rounded-lg shadow-lg p-6">
+            
+            <div className="w-full bg-gray-50 p-4 rounded-lg shadow-md">
+            <div className="flex flex-col bg-white rounded-lg shadow-lg p-6 mb-4">
               <h3 className="text-2xl font-bold mb-4">Order Details</h3>
               <div className="flex gap-5 items-center mb-4">
                 <img
-                  src={"https://uoons.com/" + product.product_images}
-                  alt={product.product_name}
+                  src={`https://uoons.com/${productData.product_images}`}
+                  alt={productData.product_name}
                   className="w-[100px] h-[100px] object-scale-down rounded-lg"
                 />
                 <div>
-                  <h4 className="font-bold text-lg">{product.product_name}</h4>
-                  <p className="text-gray-600">{product.brand}</p>
-                  <p className="text-lg font-bold">₹{product.product_sale_price}</p>
+                  <h4 className="font-bold text-lg">{productData.product_name}</h4>
+                  <div className="flex flex-row items-center gap-3 mt-3">
+                    <h6 className="text-2xl font-semibold">₹{productData.product_sale_price}</h6>
+                    <span className="line-through text-gray-500">₹{productData.product_price}</span>
+                  </div>
                 </div>
               </div>
-              <div className="mb-4">
-                <h3 className="text-xl font-bold">Summary</h3>
-                <div className="flex justify-between mb-2">
-                  <span>Subtotal</span>
-                  <span>₹{product.product_sale_price}</span>
-                </div>
-                <div className="flex justify-between mb-2">
-                  <span>Estimated Delivery & Handling</span>
-                  <span>₹{product.shipping_charges || 0}</span>
-                </div>
-                <div className="flex justify-between font-bold text-lg">
-                  <span>Total</span>
-                  <span>₹{getTotalPrice()}</span>
-                </div>
+            </div>
+              <h3 className="text-lg font-semibold mb-4">Order Summary</h3>
+              <div className="flex justify-between mb-2">
+                <span>Product:</span>
+                <span>₹{productData.product_sale_price}</span>
               </div>
-              <button className="mt-6 flex mx-auto items-center px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-md shadow-md text-lg">
-                <FiCreditCard className="mr-2" /> Make Payment
-              </button>
+              <div className="flex justify-between mb-2">
+                <span>Shipping:</span>
+                <span>₹{productData.shipping_charges || 'Free'}</span>
+              </div>
+              <div className="flex justify-between font-semibold text-lg">
+                <span>Total:</span>
+                <span>₹{getTotalPrice()}</span>
+              </div>
             </div>
           </div>
         </div>

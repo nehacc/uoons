@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { FaUser, FaEnvelope, FaPhone, FaHome, FaBoxOpen, FaHandsHelping } from 'react-icons/fa';
-import { IoIosArrowForward, IoIosHeart } from 'react-icons/io';
+import React, { useState } from 'react';
+import { FaUser, FaBoxOpen, FaHandsHelping } from 'react-icons/fa';
+import { IoIosHeart } from 'react-icons/io';
 import { HiLocationMarker } from 'react-icons/hi';
 import { RiDiscountPercentFill } from 'react-icons/ri';
 import { MdPayments } from 'react-icons/md';
+import { IoIosNotifications } from "react-icons/io";
 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -22,7 +23,7 @@ const Profile = () => {
 
     return (
         <><Navbar />
-        <div className='container border border-black'>
+        <div className='container my-8'>
             <div className='w-full flex gap-5'>
                 {/* sidebar */}
                 <div className="flex flex-col items-center bg-white shadow-lg rounded-2xl p-4 space-y-3 md:text-lg">
@@ -34,11 +35,11 @@ const Profile = () => {
                         className="object-cover w-full h-full"
                     />
                     </div>
-                    <p className="mt-2 text-lg font-semibold text-gray-800">nameof</p>
+                    <p className="mt-2 text-lg font-semibold text-gray-800">nameofUser</p>
                 </div>
                 {[
                     { label: 'Your Profile', icon: FaUser, section: 'profile' },
-                    { label: 'All Notifications', icon: null, section: 'notifications' },
+                    { label: 'All Notifications', icon: IoIosNotifications, section: 'notifications' },
                     { label: 'Wishlist', icon: IoIosHeart, section: 'wishlist' },
                     { label: 'My Orders', icon: FaBoxOpen, section: 'orders' },
                     { label: 'Manage Address', icon: HiLocationMarker, section: 'address' },
@@ -64,7 +65,11 @@ const Profile = () => {
                 {activeSection === 'profile' && (
                     <div className='w-full'>
                     {p? <UserProfile />: <UpdateProfile />}
-                    <button onClick={()=> setp(!p)}>updateProfile</button>
+                    <div className='flex justify-center mt-5'>
+                        <a onClick={()=> setp(!p)} class="px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm">
+                        updateProfile
+                        </a>
+                    </div>
                     </ div>
                 )}
 

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { FaUser, FaEnvelope, FaPhone, FaRegAddressCard, FaBirthdayCake } from 'react-icons/fa';
-import UserSession from '../user'
 
 const UpdateProfile = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -11,14 +10,25 @@ const UpdateProfile = () => {
   useEffect(() => {
     axios.get('/api/getUserDetails', {
         headers: {
-            auth: UserSession.getAuth(),
+            auth: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEzNjcwIiwicHJvZmlsZWlkIjoiNDE2MDkyOTU5IiwibmFtZSI6IiIsImVtYWlsIjoiIiwibW9iaWxlX25vIjoiOTE2NTEzOTc0NyIsImZ0b2tlbiI6IjEyMzQiLCJvdHAiOjIwOTksIm90cFZlcmlmaWVkIjpmYWxzZX0.wT5_V2xyPTyYCFGZ0mHYo3LdV5kheFgW8PYWlnQczLo",
             "Channel-Code": "ANDROID"
         }
-    })  // Replace with your API endpoint
+    })
       .then(response => {
         if (response.data.status === 'success') {
-          setUserData(response.data.Data[0]);
-          reset(response.data.Data[0]);  // Pre-fill the form with existing data
+          const data = response.data.Data[0];
+          setUserData(data);
+          // Pre-fill the form with the fetched data
+          reset({
+            name: data.name,
+            email: data.email,
+            mobile_no: data.mobile_no,
+            dob: data.dob !== '0000-00-00' ? data.dob : '', // Handle invalid DOB
+            address: data.address,
+            city: data.city,
+            state: data.state,
+            pin_code: data.pin_code,
+          });
         }
       })
       .catch(error => {
@@ -27,10 +37,12 @@ const UpdateProfile = () => {
   }, [reset]);
 
   const onSubmit = data => {
-    axios.post('/api/saveUserDetails', data, {headers: {
-        auth: UserSession.getAuth(),
+    axios.post('/api/saveUserDetails', data, {
+      headers: {
+        auth: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEzNjcwIiwicHJvZmlsZWlkIjoiNDE2MDkyOTU5IiwibmFtZSI6IiIsImVtYWlsIjoiIiwibW9iaWxlX25vIjoiOTE2NTEzOTc0NyIsImZ0b2tlbiI6IjEyMzQiLCJvdHAiOjIwOTksIm90cFZlcmlmaWVkIjpmYWxzZX0.wT5_V2xyPTyYCFGZ0mHYo3LdV5kheFgW8PYWlnQczLo",
         "Channel-Code": "ANDROID"
-    }})
+      }
+    })
       .then(response => {
         if (response.data.status === 'success') {
           alert('Profile updated successfully!');
@@ -52,7 +64,7 @@ const UpdateProfile = () => {
   }
 
   return (
-    <div className="max-w-3xl mx-auto mt-20 p-8 bg-white shadow-2xl rounded-3xl">
+    <div className="w-full mx-auto p-8 bg-white shadow-2xl rounded-3xl">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Update Profile</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <ProfileInput label="Name" icon={<FaUser />} {...register('name')} />

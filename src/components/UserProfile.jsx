@@ -9,7 +9,7 @@ const UserProfile = () => {
   useEffect(() => {
     axios.get('/api/getUserDetails',{
         headers: {
-            auth: UserSession.getAuth(),
+            auth: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEzNjcwIiwicHJvZmlsZWlkIjoiNDE2MDkyOTU5IiwibmFtZSI6IiIsImVtYWlsIjoiIiwibW9iaWxlX25vIjoiOTE2NTEzOTc0NyIsImZ0b2tlbiI6IjEyMzQiLCJvdHAiOjIwOTksIm90cFZlcmlmaWVkIjpmYWxzZX0.wT5_V2xyPTyYCFGZ0mHYo3LdV5kheFgW8PYWlnQczLo",
             "Channel-Code": "ANDROID"
         }
     })  // Replace with your API endpoint
@@ -32,10 +32,10 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="mx-auto mt-20 p-8 bg-gradient-to-r from-blue-100 to-purple-100 shadow-2xl rounded-3xl">
+    <div className="w-full p-8 bg-gradient-to-r from-blue-100 to-purple-100 shadow-2xl rounded-3xl">
       <div className="flex items-center space-x-6">
         <img 
-          src={userData.profile || 'https://via.placeholder.com/150'} 
+          src={'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png'} 
           alt="User Profile" 
           className="w-32 h-32 rounded-full shadow-lg border-4 border-white" 
         />
