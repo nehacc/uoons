@@ -6,6 +6,8 @@ import Footer from '../components/Footer';
 import UserSession from '../user';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const AddToCart = () => {
   const [cart, setCart] = useState([]);
@@ -55,6 +57,21 @@ const AddToCart = () => {
   
     fetchCart();
   }, []);
+
+
+  const navigate = useNavigate();
+
+const handleBuyNow = () => {
+  // Get all product IDs from the cart
+  const productIds = cart.map(item => item.pid);
+
+  // Convert the array of product IDs into a comma-separated string
+  const pidsString = productIds.join(',');
+
+  // Navigate to the Checkout page with the formatted p_id string
+  navigate(`/Checkout/${pidsString}`);
+};
+
 
   const getTotalPrice = () => {
     return cart.reduce((total, product) => total + product.price * product.quantity, 0);
@@ -167,8 +184,8 @@ const AddToCart = () => {
                     Apply
                   </button>
                 </div>
-                <button className="mt-6 flex mx-auto items-center px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-md shadow-md text-lg">
-                  <FaCreditCard className="mr-2" /> Buy Now
+                <button onClick={handleBuyNow} className="mt-6 flex mx-auto items-center px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-md shadow-md text-lg">
+                  <FaCreditCard className="mr-2" /> Buy All
                 </button>
               </div>
             </div>

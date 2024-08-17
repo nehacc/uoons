@@ -26,6 +26,7 @@ import PdTest from './pages/PdTest.jsx'
 import NewProfile from './pages/NewProfile.jsx';
 import Checkout from './pages/Checkout.jsx'
 import Checkout1 from './pages/Checkout1.jsx'
+import CheckoutMulti from './pages/CheckoutMulti.jsx'
 
 const router = createBrowserRouter([
   {
@@ -44,9 +45,13 @@ const router = createBrowserRouter([
     path: "/PdTest/:p_id",
     element: <PdTest />,
   },
+  // {
+  //   path: "/Checkout/:p_id",
+  //   element: <Checkout />,
+  // },
   {
     path: "/Checkout/:p_id",
-    element: <Checkout />,
+    element: <CheckoutMulti />,
   },
   {
     path: "/Faq",

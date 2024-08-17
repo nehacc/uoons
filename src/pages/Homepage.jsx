@@ -73,6 +73,7 @@ const Homepage = () => {
   return (
     <>
     <div className="bg-white duration-200">
+      <button onClick={()=>{UserSession.resetSession()}}>Logout!</button>
       <Navbar />
       <Slideshow />
       <ProductsContainer heading={HomePageData.Data[3].name} data={HomePageData.Data[3].items}/>
@@ -96,6 +97,7 @@ const Homepage = () => {
       <Footer />
       <ToastContainer />
       {console.log(UserSession.getAuth())}
+
     </div>
     </>
   )
