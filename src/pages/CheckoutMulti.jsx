@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
+import InsertUserAddress from '../components/InsertNewAddress';
 
 const Checkout = () => {
   const { p_id } = useParams();
@@ -25,9 +26,16 @@ const Checkout = () => {
   const [addresses, setAddresses] = useState([]);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
 
+  const [showAddressForm, setShowAddressForm] = useState(false);
+
+
   const steps = ['Select Address', 'Review Contact Info', 'Choose Payment Method'];
 
   useEffect(() => {
+    fetchProductData();
+    fetchAddressData();
+    loadRazorpayScript('https://checkout.razorpay.com/v1/checkout.js');
+  }, []);
     const fetchProductData = async () => {
       try {
         const responses = await Promise.all(
@@ -79,16 +87,18 @@ const Checkout = () => {
       });
     };
 
-    fetchProductData();
-    fetchAddressData();
-    loadRazorpayScript('https://checkout.razorpay.com/v1/checkout.js');
-  }, []);
+    
 
   const handleNext = () => setActiveStep((prevStep) => prevStep + 1);
   const handleBack = () => setActiveStep((prevStep) => prevStep - 1);
 
   const handlePaymentMethodChange = (method) => setSelectedPaymentMethod(method);
   const handleAddressSelection = (index) => setSelectedAddressIndex(index);
+
+  const handleAddressFormSubmit = () => {
+    setShowAddressForm(false);
+    fetchAddressData(); // Refresh the address list
+  };
 
   const getTotalPrice = () => {
     if (productsData.length === 0) return 0;
@@ -169,26 +179,30 @@ const Checkout = () => {
               </div>
               {activeStep === 0 && (
                 <div className="bg-white p-4 rounded-lg shadow-md">
-                  <h3 className="text-lg font-semibold mb-2">Select Delivery Address</h3>
-                  <div className="flex flex-col gap-4">
-                    {addresses.map((address, index) => (
-                      <div
-                        key={index}
-                        className={`p-4 border rounded-md cursor-pointer ${
-                          selectedAddressIndex === index ? 'border-blue-500' : 'border-gray-300'
-                        }`}
-                        onClick={() => handleAddressSelection(index)}
-                      >
-                        <h4 className="text-lg font-semibold">{address.bname}</h4>
-                        <p>{`${address.baddress1}, ${address.baddress2}`}</p>
-                        <p>{`${address.bcity}, ${address.bstate}`}</p>
-                        <p>{`${address.bcountry} - ${address.bpincode}`}</p>
-                      </div>
-                    ))}
-                    <Button variant="contained" onClick={handleNext}>
-                      Next
-                    </Button>
-                  </div>
+                  {showAddressForm ? (
+                    <InsertUserAddress onSuccess={handleAddressFormSubmit}/>
+                    ) : (
+                    <>
+                        <h3 className="text-lg font-semibold mb-2">Select Delivery Address</h3>
+                        <div className="flex flex-col gap-4">
+                        {addresses.map((address, index) => (
+                            <div
+                            key={index}
+                            className={`p-4 border rounded-md cursor-pointer ${selectedAddressIndex === index ? 'border-blue-500' : 'border-gray-300'}`}
+                            onClick={() => handleAddressSelection(index)}
+                            >
+                            <h4 className="text-lg font-semibold">{address.bname}</h4>
+                            <p>{`${address.baddress1}, ${address.baddress2}`}</p>
+                            <p>{`${address.bcity}, ${address.bstate}`}</p>
+                            <p>{`${address.bcountry} - ${address.bpincode}`}</p>
+                            </div>
+                        ))}
+                        <Button variant='outlined' onClick={() => setShowAddressForm(true)}>Enter New Address</Button>
+                        <Button variant="contained" onClick={handleNext}>Next</Button>
+                        </div>
+                    </>
+                    )}
+
                 </div>
               )}
               {activeStep === 1 && (
