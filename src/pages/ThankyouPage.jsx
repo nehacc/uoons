@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
-import { useParams, useLocation } from 'react-router-dom';
+import { FiCheckCircle } from 'react-icons/fi';
+import { MdOutlineShoppingCart } from 'react-icons/md';
+import { RiTruckLine } from 'react-icons/ri';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import UserSession from '../user';
 import Confetti from 'react-confetti';
-import { FiCheckCircle } from 'react-icons/fi';
 
 const ThankYouPage = () => {
   const { p_id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const [productDetails, setProductDetails] = useState(null);
 
   const { paymentId, orderId, signature } = location.state || {};
@@ -31,6 +34,14 @@ const ThankYouPage = () => {
     fetchProductDetails();
   }, [p_id]);
 
+  const handleTrackOrder = () => {
+    navigate(`/track-order/${p_id}`);
+  };
+
+  const handleContinueShopping = () => {
+    navigate('/home');
+  };
+
   if (!productDetails) {
     return <div>Loading...</div>;
   }
@@ -46,8 +57,8 @@ const ThankYouPage = () => {
           <FiCheckCircle size={80} className="text-green-500 animate-bounce" />
         </div>
         
-        <h1 className="text-4xl font-extrabold text-green-500 mb-6">Thank You for Your Purchase!</h1>
-        <p className="text-lg text-gray-600 mb-10">We're excited to get your order to you. Below are the details of your purchase.</p>
+        <h1 className="text-4xl font-extrabold text-green-500 mb-4">Thank You for Your Purchase!</h1>
+        <p className="text-lg text-gray-600 mb-6">We're excited to get your order to you. Below are the details of your purchase.</p>
         
         <div className="order-summary mb-10">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">Order Summary</h2>
@@ -64,8 +75,8 @@ const ThankYouPage = () => {
             <p className="text-lg"><strong>Order ID:</strong> {productDetails.pid}</p>
             <p className="text-lg"><strong>Product Name:</strong> {productDetails.product_name}</p>
             <div className='flex gap-7'>
-              <p className="text-lg"><strong>Amount Paid:</strong> 	₹ {productDetails.product_sale_price}</p>
-              <p className="text-lg"><strong>You Saved:</strong> 	₹ {productDetails.product_price - productDetails.product_sale_price}</p>
+              <p className="text-lg"><strong>Amount Paid:</strong> ₹ {productDetails.product_sale_price}</p>
+              <p className="text-lg"><strong>You Saved:</strong> ₹ {productDetails.product_price - productDetails.product_sale_price}</p>
             </div>
           </div>
         </div>
@@ -77,6 +88,25 @@ const ThankYouPage = () => {
           <p className="text-lg text-gray-700"><strong>Signature:</strong> {signature}</p>
           <p className="text-lg text-gray-700 mt-4">Estimated Delivery Date: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
           <p className="text-lg text-gray-600 mt-2">If you have any questions, feel free to contact our <span className='text-blue-500 underline cursor-pointer'>support team.</span> We're here to help!</p>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="action-buttons mt-10 flex justify-center space-x-6">
+          <button
+            onClick={handleTrackOrder}
+            className="bg-blue-600 text-white py-2 px-6 rounded-lg flex items-center hover:bg-blue-700 transition ease-in-out duration-200"
+          >
+            <RiTruckLine className="mr-2" size={24} />
+            Track Your Order
+          </button>
+
+          <button
+            onClick={handleContinueShopping}
+            className="bg-green-600 text-white py-2 px-6 rounded-lg flex items-center hover:bg-green-700 transition ease-in-out duration-200"
+          >
+            <MdOutlineShoppingCart className="mr-2" size={24} />
+            Continue Shopping
+          </button>
         </div>
 
         <div className="social-media flex justify-center space-x-6 mt-10">
