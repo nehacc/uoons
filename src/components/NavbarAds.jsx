@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react';
 const Navbar = () => {
   return (
     <nav className='w-full sticky top-[0px] h-20 z-30 bg-white flex justify-between items-center px-3'>
+      <div className='mx-auto'>
         {/* brand */}
       <div>
       <img src="/Uoons_Ads_logo.png" alt="Uoons-Ads Logo" className='w-56'/>
@@ -19,6 +20,7 @@ const Navbar = () => {
         <span className="relative">Sign in / Register</span>
         </span>
       </a>
+      </div>
       </div>
     </nav>
   )
