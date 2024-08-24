@@ -18,7 +18,7 @@ const FAQSection = (props) => {
     // Fetch FAQ data from the API
     const fetchFAQs = async () => {
       try {
-        const response = await axios.get(`api/fetchAllQuestionAnswers?pid=${pid}`, {
+        const response = await axios.get(`/api/fetchAllQuestionAnswers?pid=${pid}`, {
             headers: {
               'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
               'Accept': '*/*',
@@ -52,7 +52,7 @@ const FAQSection = (props) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'api/postYourQuestion',
+        '/api/postYourQuestion',
         formData,
         {
           headers: {
@@ -76,7 +76,7 @@ const FAQSection = (props) => {
   const handleLikeUnlike = async (questionId, action) => {
     try {
       const response = await axios.post(
-        'api/likeUnlikeQuestion',
+        '/api/likeUnlikeQuestion',
         {
           question_id: questionId,
           action: action,
