@@ -8,6 +8,7 @@ export default {
     extend: {
       width: {
         'custom': 'calc(100vw - 550px)',
+        'custom2': 'calc(100vw - 300px)',
       },
       colors: {
         primary: "#fea928",
