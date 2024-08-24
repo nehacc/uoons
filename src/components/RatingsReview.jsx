@@ -5,7 +5,7 @@ import UserSession from '../user';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
-const RatingsReviews = ({ pid, rating = { total: 0, rating: 0 }, reviews = [] }) => {
+const RatingsReviews = ({ pid, rating = { total: 0, rating: 0 }, reviews = [], fetchProductData }) => {
   const [selectedRating, setSelectedRating] = useState(0);
   const { register, handleSubmit, reset } = useForm();
 
@@ -35,6 +35,10 @@ const RatingsReviews = ({ pid, rating = { total: 0, rating: 0 }, reviews = [] })
       alert('Review submitted successfully!');
       reset(); // Reset the form after submission
       setSelectedRating(0); // Reset the star rating
+
+      // Call fetchProductData to reload the product data after review submission
+      fetchProductData();
+
     } catch (error) {
       console.error('Error:', error);
       alert('There was an error submitting your review. Please try again.');
