@@ -3,7 +3,7 @@ import { FiCreditCard } from 'react-icons/fi';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import UserSession from '../user';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -15,6 +15,7 @@ import FormGroup from '@mui/material/FormGroup';
 import InsertUserAddress from '../components/InsertNewAddress';
 
 const Checkout = () => {
+  const navigate = useNavigate();
   const { p_id } = useParams();
   const productIds = p_id.split(',');
 
@@ -123,6 +124,14 @@ const Checkout = () => {
         console.log(response.razorpay_signature);
         alert('Payment Successful');
         // navigate buddy!!!
+         // Pass the additional information as state
+        navigate(`/ThankyouPage/${p_id}`, {
+          state: {
+            paymentId: response.razorpay_payment_id,
+            orderId: response.razorpay_order_id,
+            signature: response.razorpay_signature,
+          },
+        });
       },
       prefill: {
         name: addresses[selectedAddressIndex].bname,
