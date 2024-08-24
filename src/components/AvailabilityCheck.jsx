@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaMapMarkerAlt, FaCheckCircle, FaDollarSign, FaTruck, FaBoxOpen } from 'react-icons/fa';
 
@@ -8,16 +8,25 @@ const AvailabilityChecker = ({ p_id }) => {
 
     const handleCheckAvailability = async () => {
         try {
-            const response = await axios.get(`api/productLocationAvailability?pincode=${pincode}&pid=${p_id}`, {
+            const response = await axios.get(`/api/productLocationAvailability?pincode=${pincode}&pid=${p_id}`, {
                 headers: {
                     'Channel-Code': 'ANDROID'
                 }
             });
-            setAvailability(response.data);
+            console.log('API Response:', response.data); // Log the entire response to check its structure
+            
+            // Access the nested Data property
+            setAvailability(response.data.Data);
         } catch (error) {
             console.error('Error fetching availability:', error);
         }
     };
+
+    useEffect(() => {
+        if (availability) {
+            console.log('Updated Availability:', availability.isServiceable); // Should print true or false correctly
+        }
+    }, [availability]);
 
     return (
         <div className="mt-1 p-6 bg-white shadow-lg rounded-lg w-fit">
@@ -43,12 +52,13 @@ const AvailabilityChecker = ({ p_id }) => {
                     <h3 className="text-lg font-semibold text-gray-700 mb-2">Availability Details</h3>
                     <ul className="space-y-2">
                         <li className="flex items-center gap-2">
+                            {console.log('Rendering isServiceable:', availability.isServiceable)}
                             <FaCheckCircle className={availability.isServiceable ? 'text-green-600' : 'text-red-600'} />
                             <span>{availability.isServiceable ? 'Serviceable' : 'Not Serviceable'}</span>
                         </li>
                         <li className="flex items-center gap-2">
                             <FaDollarSign className="text-gray-600" />
-                            <span>Shipping Charge: ${availability.shippingCharge}</span>
+                            <span>Shipping Charge: {availability.shippingCharge}</span>
                         </li>
                         <li className="flex items-center gap-2">
                             <FaTruck className="text-gray-600" />
