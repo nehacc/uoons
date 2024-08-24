@@ -309,7 +309,8 @@ const PdTest = () => {
                                 </div>
                                 
                                 <FrequentlyBought />
-                                <RatingsReview />
+                                {/* { pid, rating = { total: 0, rating: 0 }, reviews = []  */}
+                                <RatingsReview pid={p_id} rating={productData.Data.rating} reviews={productData.Data.reviews}/>
                                 <FaqsProduct pid={p_id} auth={UserSession.getAuth()}/>
                                    
 
@@ -332,3 +333,4 @@ const PdTest = () => {
 };
 
 export default PdTest;
+
