@@ -37,7 +37,7 @@ const Homepage = () => {
   useEffect(() => {
     const fetchHomePageData = async () => {
       try {
-        const response = await axios.get('/homepageData', {
+        const response = await axios.get('/api/homepageData', {
           headers: {
             'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
             'Accept': '*/*',
