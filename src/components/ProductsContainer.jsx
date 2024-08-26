@@ -102,7 +102,7 @@ const ProductsContainer = (props) => {
       <div className="container mx-auto relative">
         {/* Header section */}
         <div className="text-center mb-6 max-w-[600px] mx-auto">
-          <h1 className="text-3xl font-bold text-orange-500">{heading}</h1>
+          <h1 className="text-3xl font-bold text-orange-600">{heading}</h1>
           <p className="text-xs text-gray-400">
             Explore our top-selling electronics with amazing discounts and offers.
           </p>

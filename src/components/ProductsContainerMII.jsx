@@ -1,121 +1,204 @@
-import React from "react";
-import { FaStar } from "react-icons/fa6";
 
-const ProductsData = [
-  {
-    id: 1,
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCp5hpvUIKMFTXxnxrqUpboMObXDY7XoH7SA&s",
-    title: "Gaming Laptop",
-    rating: 4.8,
-    reviews: 120,
-    price: "₹1500",
-    offerPrice: "₹1200",
-    discountPercentage: "20% off",
-    aosDelay: "0",
-  },
-  {
-    id: 2,
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCp5hpvUIKMFTXxnxrqUpboMObXDY7XoH7SA&s",
-    title: "Smartphone",
-    rating: 4.6,
-    reviews: 200,
-    price: "₹800",
-    offerPrice: "₹650",
-    discountPercentage: "18.75% off",
-    aosDelay: "200",
-  },
-  {
-    id: 3,
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCp5hpvUIKMFTXxnxrqUpboMObXDY7XoH7SA&s",
-    title: "Wireless Head",
-    rating: 4.7,
-    reviews: 150,
-    price: "₹200",
-    offerPrice: "₹150",
-    discountPercentage: "25% off",
-    aosDelay: "400",
-  },
-  {
-    id: 4,
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCp5hpvUIKMFTXxnxrqUpboMObXDY7XoH7SA&s",
-    title: "Smartwatch",
-    rating: 4.5,
-    reviews: 180,
-    price: "₹250",
-    offerPrice: "₹200",
-    discountPercentage: "20% off",
-    aosDelay: "600",
-  },
-  {
-    id: 5,
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCp5hpvUIKMFTXxnxrqUpboMObXDY7XoH7SA&s",
-    title: "Digital Camera",
-    rating: 4.4,
-    reviews: 100,
-    price: "₹500",
-    offerPrice: "₹400",
-    discountPercentage: "20% off",
-    aosDelay: "800",
-  },
-];
+
+import React, { useState, useRef, useEffect } from "react";
+import axios from 'axios';
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { FaStar } from "react-icons/fa";
+import { IoMdHeart } from "react-icons/io";
+import { FaCartPlus } from "react-icons/fa";
+import '../components/ProductsContainer.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import UserSession from "../user";
+import { useNavigate } from 'react-router-dom';
+import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight, MdAddShoppingCart } from "react-icons/md";
 
 const ProductsContainer = (props) => {
+  const navigate = useNavigate();
+  const notify = (msg) => toast(msg);
+
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const containerRef = useRef(null);
+
+  const handleScroll = (scrollAmount) => {
+    const newScrollPosition = scrollPosition + scrollAmount;
+    setScrollPosition(newScrollPosition);
+    containerRef.current.scrollTo({ left: newScrollPosition, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    AOS.init({
+      offset: 100,
+      duration: 800,
+      easing: "ease-in-sine",
+      delay: 100,
+    });
+    AOS.refresh();
+  }, []);
+
+  const { data, heading } = props;
+
+  const addToWishlist = async (event, pid) => {
+    event.stopPropagation();
+    if (UserSession.getSession()) {
+      try {
+        const response = await axios.post('/api/addItemToWishlist',
+          {
+            pid: pid,
+          }, 
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+              'Accept': '*/*',
+              'auth': UserSession.getAuth(),
+              'channel-code': 'ANDROID',
+            }
+          });
+  
+        if (response.data.status === 'success') {
+          toast.success("Product added to Wishlist");
+        } else if (response.data.status === 'failure' && response.data.message === 'Item is already added to wishlist') {
+          toast.info("Item is already added to your wishlist");
+        }
+      } catch (err) {
+        toast.error("An error occurred while adding the item to the wishlist");
+      }
+    }
+    else{
+      toast.info("Please log in to add items to your wishlist.");
+    }
+  }
+  
+  const addToCart = async (event, pid) => {
+    event.stopPropagation();
+    if (UserSession.getSession()) {
+      try {
+        const response = await axios.post('/api/addItemToCart',
+          {
+            pid: pid,
+            qty: 1
+          }, 
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+              'Accept': '*/*',
+              'Channel-Code': 'ANDROID',
+              'auth': UserSession.getAuth(),
+            }
+          });
+        
+        if (response.data.status === 'success') {
+          toast.success("Product added to Cart");
+        }
+      } catch (err) {
+        toast.error("An error occurred while adding the item to the cart");
+      }
+    } else {
+      toast.info("Please log in to add items to your cart.");
+    }
+  }
+
   return (
-    <div className="mt-14 mb-12 relative pt-5">
-      <div class="h-full w-full absolute z-[-1000px] bg-gradient-to-t from-green-300 via-transparent to-orange-300">
-      </div>
-      <div className="container">
+    <div className="mt-7 mb-12 py-5 bg-gradient-to-t from-green-300 via-transparent to-orange-300">
+      <div className="container mx-auto relative">
         {/* Header section */}
-        <div className="text-center mb-10 max-w-[600px] mx-auto">
-          {/* <p data-aos="fade-up" className="text-sm text-primary">
-            Top Selling Products for you
-          </p> */}
-          <h1 data-aos="fade-up" className="text-3xl font-bold">
-            {props.heading}
+        <div className="text-center mb-6 max-w-[600px] mx-auto">
+          <h1 className="text-3xl font-bold text-orange-600 underline underline-offset-4 decoration-2 decoration-yellow-500">
+            {heading}
           </h1>
-          <p data-aos="fade-up" className="text-xs text-gray-400">
+
+          <p className="text-xs text-gray-400">
             Explore our top-selling electronics with amazing discounts and offers.
           </p>
         </div>
+        {/* Scroll buttons for large screens */}
+        <button
+          className="z-30 absolute top-1/2 transform -translate-y-1/2 left-0 p-[0.1rem] sm:p-[0.4rem] text-[3rem] border-[5px] border-white bg-blue-100 text-orange-600 rounded-full"
+          onClick={() => handleScroll(-300)}
+        >
+          <MdOutlineKeyboardArrowLeft />
+        </button>
+        <button
+          className="z-30 absolute top-1/2 transform -translate-y-1/2 right-0 p-[0.1rem] sm:p-[0.4rem] text-[3rem] border-[5px] border-white bg-blue-100 text-orange-600 rounded-full"
+          onClick={() => handleScroll(300)}
+        >
+          <MdOutlineKeyboardArrowRight />
+        </button>
         {/* Body section */}
-        <div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 place-items-center gap-5">
+        <div ref={containerRef}className="relative w-full overflow-x-scroll flex flex-col ">
+          
+          <div
+            className="flex py-2 w-fit rounded-lg justify-center gap-6 overflow-x-scroll scrollbar-hide"
+          >
             {/* card section */}
-            {ProductsData.map((data) => (
+            {data.map((item) => (
               <div
+                onClick={() => { navigate(`/PdTest/${item.pid}`) }}
+                key={item.pid}
+                id="product-container"
+                className=" bg-white cursor-pointer border p-3 rounded-lg shadow-lg w-[200px] space-y-2 hover:shadow-2xl flex flex-col items-center relative overflow-hidden"
                 data-aos="fade-up"
-                data-aos-delay={data.aosDelay}
-                key={data.id}
-                className="border p-4 rounded-lg shadow-lg w-[200px] space-y-2 bg-white hover:shadow-2xl"
               >
+                <button
+                  id="like"
+                  onClick={(e) => { addToWishlist(e, item.pid) }}
+                  className="absolute p-2 rounded-full text-lg bg-blue-300 right-[16px] top-[-40px] hover:top-[10px] duration-500 shadow-2xl text-white hover:text-red-500"
+                >
+                  <IoMdHeart />
+                </button>
                 <img
-                  src={data.img}
-                  alt={data.title}
+                  src={"https://uoons.com/" + item.product_images}
+                  alt="image"
                   className="h-[120px] w-full object-contain rounded-md"
                 />
-                <div>
-                  <h3 className="font-semibold text-lg h-15 overflow-hidden">{data.title}</h3>
+                <div className="flex flex-col items-center">
+                  <h3
+                    id="title"
+                    className="font-semibold text-lg h-[55px] overflow-hidden text-center "
+                  >
+                    {item.product_name}
+                  </h3>
                   <div className="flex items-center gap-1 text-yellow-500">
+                    <span>4</span>
                     <FaStar />
-                    <span>{data.rating}</span>
-                    <span className="text-gray-500">({data.reviews} Reviews)</span>
+                    <span className="text-gray-500">(200 Reviews)</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <p className="text-lg font-bold text-primary">{data.offerPrice}</p>
-                    <p className="line-through text-gray-500">{data.price}</p>
+                    <p className="text-lg font-bold text-primary">₹{item.product_sale_price}</p>
+                    <p className="line-through text-gray-500">₹{item.product_price}</p>
                   </div>
-                  
-                  <p className="text-green-600">{data.discountPercentage}</p>
+                  <p className="text-green-600">{item.discount}% off</p>
+                </div>
+                <div id="buy-Cart" className="hidden w-full justify-center gap-5">
+                  <a
+                    onClick={(e) => { 
+                      e.stopPropagation();
+                      navigate(`/Checkout/${item.pid}`) }}
+
+                    className="relative rounded p-2 py-1 overflow-hidden group bg-orange-500 hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-orange-400 transition-all ease-out duration-300"
+                  >
+                    <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+                    <span className="relative text-sm font-bold">BUY NOW</span>
+                  </a>
+
+                  <a
+                    onClick={(e) => { addToCart(e, item.pid) }}
+                    className="relative flex items-center justify-center rounded p-2 py-1 overflow-hidden group bg-orange-500 hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-orange-400 transition-all ease-out duration-300"
+                  >
+                    <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+                    <span className="relative text-xl flex items-center"><FaCartPlus /></span>
+                  </a>
                 </div>
               </div>
             ))}
           </div>
-          {/* view all button */}
-          <div className="flex justify-center">
-            <button className="text-center mt-10 cursor-pointer bg-orange-500 text-white py-1 px-5 rounded-md z-50">
-              View All
-            </button>
-          </div>
+        </div>
+        {/* view all button */}
+        <div className="flex justify-center">
+          <button className="text-center mt-10 cursor-pointer bg-blue-100 text-orange-600 font-bold py-1 px-5 rounded-md">
+            View All
+          </button>
         </div>
       </div>
     </div>

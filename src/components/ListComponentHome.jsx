@@ -46,7 +46,7 @@ const ListComponentHome = () => {
   }
 
   return (
-    <ul className="w-full category-list container flex flex-wrap gap-4 gap-y-0">
+    <ul className="w-full category-list container flex justify-center items-center flex-wrap gap-4 gap-y-0">
       {categories.map(category => (
         <li key={category.c_id} className="group relative cursor-pointer">
           <button 

@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Range, getTrackBackground } from 'react-range';
 
-const PriceFilter = () => {
+const PriceFilter = ({ onPriceChange }) => {
   const [values, setValues] = useState([100, 1000]);
   const MIN = 0;
-  const MAX = 2000;
+  const MAX = 5000;
+
+  // Call the callback whenever the values change
+  useEffect(() => {
+    if (onPriceChange) {
+      onPriceChange(values);
+    }
+  }, [values, onPriceChange]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`Filtering products between	₹${values[0]} and	₹${values[1]}`);
+    if (onPriceChange) {
+      onPriceChange(values);
+    }
+    console.log(`Filtering products between ₹${values[0]} and ₹${values[1]}`);
   };
 
   return (
@@ -64,7 +74,9 @@ const PriceFilter = () => {
             </div>
           )}
         />
-        
+        <button type="submit" className="mt-4 bg-blue-500 text-white py-2 px-4 rounded">
+          Apply Filter
+        </button>
       </form>
     </div>
   );
