@@ -3,11 +3,11 @@ import { Icon } from '@iconify/react';
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white py-12 border-t-2 border-gray-700">
+    <footer className="bg-black text-white py-12 border-t-2 border-white">
       <div className="container mx-auto text-center">
         {/* Logo */}
         <div className="mb-6">
-          <img src="../../Uoons_Ads_logo.png" alt="Uoons-Ads Logo" className="w-56 mx-auto my-4" />
+          <img src="/Uoons_Ads_logo.png" alt="Uoons-Ads Logo" className="w-56 mx-auto my-4" />
         </div>
 
         {/* Tagline */}
@@ -36,7 +36,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <p className="text-gray-400 mb-8">
-          Copyright ©2021 <a href="https://foolishdeveloper.com" className="text-orange-600 hover:text-orange-400 transition duration-300">UoonsAds</a>
+          Copyright ©2021 <a href="" className="text-orange-600 hover:text-orange-400 transition duration-300">UoonsAds</a>
         </p>
 
         {/* Navigation Links */}

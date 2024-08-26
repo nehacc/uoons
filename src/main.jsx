@@ -4,7 +4,6 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import App from './App.jsx'
 import './index.css'
 import Homepage from './pages/Homepage.jsx';
 import ProductList from './pages/ProductList.jsx'
@@ -27,6 +26,7 @@ import NewProfile from './pages/NewProfile.jsx';
 import Checkout from './pages/Checkout.jsx'
 import Checkout1 from './pages/Checkout1.jsx'
 import CheckoutMulti from './pages/CheckoutMulti.jsx'
+import ThankYouPage from './pages/ThankyouPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <Homepage />,
+  },
+  {
+    path: "/home2",
+    element: <HomepageAds />,
   },
   {
     path: "/ProductList/:c_id",
@@ -52,6 +56,10 @@ const router = createBrowserRouter([
   {
     path: "/Checkout/:p_id",
     element: <CheckoutMulti />,
+  },
+  {
+    path: "/ThankyouPage/:p_id",
+    element: <ThankYouPage />,
   },
   {
     path: "/Faq",

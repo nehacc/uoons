@@ -14,7 +14,7 @@ const BrandsData = [
 const BrandContainer = () => {
   return (
     <div className="mt-14 mb-12">
-      <div className="container">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header section */}
         <div className="text-center mb-10 max-w-[600px] mx-auto">
           <h1 data-aos="fade-up" className="text-3xl font-bold">
@@ -28,12 +28,12 @@ const BrandContainer = () => {
             {BrandsData.map((brand) => (
               <div
                 key={brand.id}
-                className="flex justify-center items-center w-full h-[250px] p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition duration-300"
+                className="flex justify-center items-center w-full max-w-xs p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition duration-300"
               >
                 <img
                   src={brand.img}
                   alt={`Brand ${brand.id}`}
-                  className="max-h-full max-w-full object-contain"
+                  className="h-24 w-auto object-contain"
                 />
               </div>
             ))}

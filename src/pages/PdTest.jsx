@@ -58,27 +58,29 @@ const PdTest = () => {
         }
     };
 
+    const fetchProductData = async () => {
+      try {
+          const response = await axios.get(`/api/productDetail?pid=${p_id}`, {
+              headers: {
+                  'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+                  'Accept': '*/*',
+                  'channel-code': 'ANDROID',
+                  'auth': UserSession.getAuth(),
+              },
+          });
+          setProductData(response.data);
+          addToRecentlyViewed(p_id);
+          setLoading(false);
+          setsimilarProductData(response.data.Data.similar_products)
+      } catch (err) {
+          setError(err);
+          setLoading(false);
+      }
+  };
+
     // Fetching the product data
     useEffect(() => {
-        const fetchProductData = async () => {
-            try {
-                const response = await axios.get(`/api/productDetail?pid=${p_id}`, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-                        'Accept': '*/*',
-                        'channel-code': 'ANDROID',
-                        'auth': UserSession.getAuth(),
-                    },
-                });
-                setProductData(response.data);
-                addToRecentlyViewed(p_id);
-                setLoading(false);
-                setsimilarProductData(response.data.Data.similar_products)
-            } catch (err) {
-                setError(err);
-                setLoading(false);
-            }
-        };
+      
         fetchProductData();
     }, [p_id]); // Added p_id as a dependency
 
@@ -309,7 +311,8 @@ const PdTest = () => {
                                 </div>
                                 
                                 <FrequentlyBought />
-                                <RatingsReview />
+                                {/* { pid, rating = { total: 0, rating: 0 }, reviews = []  */}
+                                <RatingsReview pid={p_id} rating={productData.Data.rating} reviews={productData.Data.reviews} fetchProductData={fetchProductData}/>
                                 <FaqsProduct pid={p_id} auth={UserSession.getAuth()}/>
                                    
 
@@ -332,3 +335,4 @@ const PdTest = () => {
 };
 
 export default PdTest;
+
