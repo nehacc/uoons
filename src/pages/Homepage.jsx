@@ -30,7 +30,7 @@ const Homepage = () => {
   useEffect(() => {
     const fetchHomePageData = async () => {
       try {
-        const response = await axios.get('/api/homepageData', {
+        const response = await axios.get('api/homepageData', {
           headers: {
             'Accept': '*/*',
             'channel-code': 'ANDROID'
