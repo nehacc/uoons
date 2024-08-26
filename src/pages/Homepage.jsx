@@ -44,9 +44,11 @@ const Homepage = () => {
             'channel-code': 'ANDROID'
           }
         });
+        console.log('data');
         setHomePageData(response.data);
         setLoading(false);
       } catch (err) {
+        console.log('neha');
         setError(err);
         setLoading(false);
       }
