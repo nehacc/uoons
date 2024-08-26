@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import { FaThLarge, FaList, FaStar } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import SpecificCategorieProduct from '../components/SpecificCategorieProduct';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { FaThLarge, FaList } from 'react-icons/fa';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import Navbar from '../components/Navbar';
+import LowerNavbar from '../components/LowerNavbar'
 import Footer from '../components/Footer';
-import SpecificCategorieProduct from '../components/SpecificCategorieProduct';
 import { useParams } from 'react-router-dom';
 import PriceFilter from '../components/PriceFilter';
 import RatingFilter from '../components/RatingsFilter';
@@ -13,21 +17,63 @@ import 'react-toastify/dist/ReactToastify.css';
 const ShopPage = () => {
   const { c_id } = useParams();
 
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    AOS.init();
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(`/api/getAllProductsByCategories?cat_id=${c_id}`, {
+                headers: {
+                    'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+                    'Accept': '*/*',
+                    'channel-code': 'ANDROID',
+                },
+            });
+            setData(response.data.Data.products);
+        } catch (err) {
+            setError('Failed to fetch data.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    fetchData();
+}, [c_id]);
+
+
+  // filters
   const [showBrands, setShowBrands] = useState(true);
   const [showColors, setShowColors] = useState(true);
+  const [priceRange, setPriceRange] = useState([0, 2000]);
   const [viewType, setViewType] = useState('grid');
-  const [sortOption, setSortOption] = useState('Best Sellers');
-  const [showCount, setShowCount] = useState('12');
+  const [sortOption, setSortOption] = useState('');
+  const [showCount, setShowCount] = useState('50');
+
+  const handlePriceChange = (newRange) => {
+    setPriceRange(newRange);
+    console.log('Selected price range:', newRange);
+    // You can also trigger filtering logic based on the new price range here
+  };
 
   
+  if (loading) {
+    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  }
 
+  if (error) {
+      return <div className="flex justify-center items-center h-screen">{error}</div>;
+  }
   return (
     <>
       <Navbar />
+      <LowerNavbar />
       <div className="bg-blue-50 flex">
 
         {/* Sidebar */}
-        <aside className="w-64 bg-white p-4 shadow-lg rounded-lg">
+        <aside className="w-64 bg-white p-4 shadow-lg n ">
           <h2 className="text-xl font-bold mb-6">Filter By</h2>
 
           {/* Brand Filter */}
@@ -71,15 +117,15 @@ const ShopPage = () => {
           </div>
 
           {/* Price Filter */}
-          <PriceFilter />
+          <PriceFilter onPriceChange={handlePriceChange} />
 
           {/* Ratings Filter */}
           <RatingFilter  />
         </aside>
 
         {/* Product Grid */}
-        <div className=" p-8 w-full overflow-hidden">
-          <div className=" md:flex justify-between items-center mb-6">
+        <div className="py-8 px-4 w-full overflow-hidden">
+          <div className="flex flex-col gap-3 items-start md:flex-row md:justify-between mb-6">
             <h1 className="text-3xl font-bold text-gray-800">Products</h1>
             <div className="flex items-center">
               <FaThLarge
@@ -95,14 +141,15 @@ const ShopPage = () => {
               <div className="flex items-center ml-4">
                 <span className="mr-2">Sort by:</span>
                 <select
-                  className="border border-gray-300 rounded p-1"
+                  className="border border-gray-300 rounded p-1 outline-0"
                   value={sortOption}
                   onChange={(e) => setSortOption(e.target.value)}
                 >
-                  <option>Best Sellers</option>
-                  <option>Price: Low to High</option>
-                  <option>Price: High to Low</option>
-                  <option>Top Rated</option>
+                  {/* <option>Best Sellers</option> */}
+                  <option value="">Default</option>
+                  <option value="asc">Price: Low to High</option>
+                  <option value="desc">Price: High to Low</option>
+                  {/* <option>Top Rated</option> */}
                 </select>
               </div>
               <div className="flex items-center ml-4">
@@ -112,15 +159,16 @@ const ShopPage = () => {
                   value={showCount}
                   onChange={(e) => setShowCount(e.target.value)}
                 >
-                  <option>12</option>
-                  <option>24</option>
-                  <option>36</option>
-                  <option>48</option>
+                  <option value="1">1</option>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="50">50</option>
                 </select>
               </div>
             </div>
           </div>
-          <SpecificCategorieProduct c_id={c_id} />
+          <SpecificCategorieProduct data={data} sortOrder={sortOption} limit={showCount} priceRange={priceRange}/>
+          {/* <SpecificCategorieProduct data={data}  /> */}
         </div>
       </div>
       <ToastContainer />

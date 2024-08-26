@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Logo from '../assets/uoonsLogoXl.png'
 import Navbar from '../components/Navbar'
+import LowerNavbar from '../components/LowerNavbar';
 import Footer from '../components/Footer'
 import { useNavigate } from 'react-router-dom';
 import UserSession from '../user';
@@ -163,6 +164,7 @@ const LoginSignup = () => {
     <>
     {console.log(UserSession.getSession())}
     <Navbar />
+    <LowerNavbar />
     <div className="bg-white rounded-lg shadow-lg hover:shadow-2xl p-8 relative z-20 w-[400px] mx-auto my-10">
       <img src={Logo} alt="uoonsLogo" className="mx-auto my-10" />
 

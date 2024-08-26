@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Test from '../pages/Test'
 import UserSession from '../user';
+import LowerNavbar from '../components/LowerNavbar';
 
 
 
@@ -73,8 +74,8 @@ const Homepage = () => {
   return (
     <>
     <div className="bg-white duration-200">
-      <button onClick={()=>{UserSession.resetSession()}}>Logout!</button>
       <Navbar />
+      <LowerNavbar />
       <Slideshow />
       <ProductsContainer heading={HomePageData.Data[3].name} data={HomePageData.Data[3].items}/>
       <ProductsContainer heading={HomePageData.Data[5].name} data={HomePageData.Data[5].items}/>
@@ -83,16 +84,15 @@ const Homepage = () => {
       <ProductsContainer heading={HomePageData.Data[11].name} data={HomePageData.Data[11].items}/>
 
 
-
-      <ProductsContainerCopy heading={headings.newArrival}/>
+      {/* additional */}
+      <ProductsContainer heading={headings.newArrival} data={HomePageData.Data[3].items}/>
       <Banner />
-      <ProductsContainerMII heading={headings.madeInIndia}/>
-      <ProductsContainerCopy heading={headings.bestSeller}/>
-      <BrandContainer />
-      <ProductsContainerCopy heading={headings.recentlyViewed}/>
-      <ProductsContainerCopy heading={headings.smartphonesTablets}/>
-      <Test heading={HomePageData.Data[3].name} data={HomePageData.Data[3].items}/>
+      <ProductsContainerMII heading={headings.madeInIndia} data={HomePageData.Data[3].items}/>
+      <ProductsContainer heading={headings.bestSeller} data={HomePageData.Data[3].items}/>
 
+      <BrandContainer />
+      <ProductsContainer heading={headings.recentlyViewed} data={HomePageData.Data[3].items}/>
+      <ProductsContainer heading={headings.smartphonesTablets} data={HomePageData.Data[3].items}/>
       
       <Footer />
       <ToastContainer />
