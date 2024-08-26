@@ -81,7 +81,7 @@ const ProductDescription = () => {
 const addToRecentlyViewed = async () => {
   try {
     const response = await axios.post(
-      'api/addRecentyViewedProduct',
+      '/api/addRecentyViewedProduct',
       {
         product_id: pid,
       },
@@ -131,7 +131,7 @@ const addToRecentlyViewed = async () => {
   const [pincode, setPincode] = useState(455001);
   const [availability, setAvailability] = useState(null);
   const handleCheckAvailability = async () => {
-    const response = await fetch(`api/productLocationAvailability?pincode=${pincode}&pid=${pid}`, {
+    const response = await fetch(`/api/productLocationAvailability?pincode=${pincode}&pid=${pid}`, {
       method: 'GET',
       headers: {
         'Channel-Code': 'ANDROID'

@@ -57,12 +57,12 @@ const AvailabilityChecker = ({ p_id }) => {
                             <span>{availability.isServiceable ? 'Serviceable' : 'Not Serviceable'}</span>
                         </li>
                         <li className="flex items-center gap-2">
-                            <FaDollarSign className="text-gray-600" />
+                        <span className="text-gray-600">₹</span>
                             <span>Shipping Charge: {availability.shippingCharge}</span>
                         </li>
                         <li className="flex items-center gap-2">
                             <FaTruck className="text-gray-600" />
-                            <span>Expected Delivery: {availability.expDeliveryTime}</span>
+                            <span> {availability.expDeliveryTime}</span>
                         </li>
                         <li className="flex items-center gap-2">
                             <FaBoxOpen className="text-gray-600" />
