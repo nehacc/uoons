@@ -47,6 +47,7 @@ const Homepage = () => {
         setHomePageData(response.data);
         setLoading(false);
       } catch (err) {
+        console.log('error');
         setError(err);
         setLoading(false);
       }
