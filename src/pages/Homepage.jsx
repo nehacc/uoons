@@ -3,18 +3,16 @@ import axios from 'axios';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Navbar from '../components/Navbar'
+import LowerNavbar from '../components/LowerNavbar';
 import Slideshow from '../components/Slideshow';
 import ProductsContainer from '../components/ProductsContainer';
-import ProductsContainerCopy from '../components/ProductsContainerCopy';
 import ProductsContainerMII from '../components/ProductsContainerMII';
 import Banner from '../components/Banner';
 import Footer from '../components/Footer'
 import BrandContainer from '../components/BrandContainer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Test from '../pages/Test'
 import UserSession from '../user';
-import LowerNavbar from '../components/LowerNavbar';
 
 
 
@@ -97,7 +95,6 @@ const Homepage = () => {
       
       <Footer />
       <ToastContainer />
-      {console.log(UserSession.getAuth())}
 
     </div>
     </>
