@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
+import LowerNavbar from '../components/LowerNavbar'
 import Footer from '../components/Footer';
 import { useParams } from 'react-router-dom';
 import UserSession from '../user';
@@ -140,6 +141,7 @@ const PdTest = () => {
     return (
         <>
             <Navbar />
+            <LowerNavbar />
             {error && <p>Error loading product data.</p>}
             {loading?(<div>Loading...</div>):(
                 // main-body_Description 
@@ -158,7 +160,7 @@ const PdTest = () => {
                         {/* main-description */}
                         <div className='flex items-start'>
                             {/* mid-section */}
-                            <div className="flex flex-col p-4 gap-2 border border-black lg:w-custom">
+                            <div className="flex flex-col p-4 gap-2 lg:w-custom">
                                 {/* headings */}
                                 <div>
                                     <span className="text-grey-100 font-semibold">Brand-Name</span>
@@ -313,7 +315,7 @@ const PdTest = () => {
                                 <FrequentlyBought />
                                 {/* { pid, rating = { total: 0, rating: 0 }, reviews = []  */}
                                 <RatingsReview pid={p_id} rating={productData.Data.rating} reviews={productData.Data.reviews} fetchProductData={fetchProductData}/>
-                                <FaqsProduct pid={p_id} auth={UserSession.getAuth()}/>
+                                <FaqsProduct pid={p_id} auth={UserSession.getAuth()}  fetchProductData={fetchProductData}/>
                                    
 
                             </div>
