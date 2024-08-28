@@ -184,98 +184,77 @@ const Checkout = () => {
                 </div>
               )}
               {activeStep === 1 && (
-                <div className="bg-white p-4 rounded-lg shadow-md">
-                  <h3 className="text-lg font-semibold mb-2">Review Contact Info</h3>
-                  <div className="flex flex-col gap-4">
-                    <div>
-                      <label className="font-semibold">Name: </label>
-                      <span>{selectedAddress.bname}</span>
-                    </div>
-                    <div>
-                      <label className="font-semibold">Email: </label>
-                      <span>{selectedAddress.bemail}</span>
-                    </div>
-                    <div>
-                      <label className="font-semibold">Phone: </label>
-                      <span>{selectedAddress.bmobile_no}</span>
-                    </div>
-                    <Button variant="contained" onClick={handleNext}>
-                      Next
-                    </Button>
-                  </div>
-                </div>
-              )}
-              {activeStep === 2 && (
-                <div className="bg-white p-4 rounded-lg shadow-md">
-                  <h3 className="text-lg font-semibold mb-2">Choose Payment Method</h3>
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={selectedPaymentMethod === 'Online'}
-                          onChange={() => handlePaymentMethodChange('Online')}
-                        />
-                      }
-                      label={
-                        <div className="flex items-center space-x-2">
-                          <FiCreditCard />
-                          <span>Online Payment</span>
-                        </div>
-                      }
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={selectedPaymentMethod === 'COD'}
-                          onChange={() => handlePaymentMethodChange('COD')}
-                        />
-                      }
-                      label="Cash on Delivery"
-                    />
-                  </FormGroup>
-                  <div className='w-fit flex gap-5 items-center'>
-                    <Button variant="contained" color="primary" onClick={handleSubmitOrder}>
-                      {selectedPaymentMethod === 'Online' ? 'Make Payment' : 'Place Order'}
-                    </Button>
-                    <Button variant="outlined" onClick={handleBack}>
-                      Back
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
-            
-            <div className="w-full bg-gray-50 p-4 rounded-lg shadow-md">
-            <div className="flex flex-col bg-white rounded-lg shadow-lg p-6 mb-4">
-              <h3 className="text-2xl font-bold mb-4">Order Details</h3>
-              <div className="flex gap-5 items-center mb-4">
-                <img
-                  src={`https://uoons.com/${productData.product_images}`}
-                  alt={productData.product_name}
-                  className="w-[100px] h-[100px] object-scale-down rounded-lg"
-                />
-                <div>
-                  <h4 className="font-bold text-lg">{productData.product_name}</h4>
-                  <div className="flex flex-row items-center gap-3 mt-3">
-                    <h6 className="text-2xl font-semibold">₹{productData.product_sale_price}</h6>
-                    <span className="line-through text-gray-500">₹{productData.product_price}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-              <h3 className="text-lg font-semibold mb-4">Order Summary</h3>
-              <div className="flex justify-between mb-2">
-                <span>Product:</span>
-                <span>₹{productData.product_sale_price}</span>
-              </div>
-              <div className="flex justify-between mb-2">
-                <span>Shipping:</span>
-                <span>₹{productData.shipping_charges || 'Free'}</span>
-              </div>
-              <div className="flex justify-between font-semibold text-lg">
-                <span>Total:</span>
-                <span>₹{getTotalPrice()}</span>
-              </div>
+  <div className="bg-white p-4 rounded-lg shadow-md">
+    <h3 className="text-lg font-semibold mb-2">Review Contact Info</h3>
+    <div className="flex flex-col gap-4">
+      <div>
+        <label className="font-semibold">Name: </label>
+        <span>{selectedAddress.bname}</span>
+      </div>
+      <div>
+        <label className="font-semibold">Email: </label>
+        <span>{selectedAddress.bemail}</span>
+      </div>
+      <div>
+        <label className="font-semibold">Phone: </label>
+        <span>{selectedAddress.bmobile_no}</span>
+      </div>
+      <div className="w-fit flex gap-5 items-center">
+        {/* {activeStep > 0 && ( */}
+          <Button variant="outlined" onClick={handleBack}>
+            Back
+          </Button>
+        {/* // )} */}
+        <Button variant="contained" onClick={handleNext}>
+          Next
+        </Button>
+      </div>
+    </div>
+  </div>
+)}
+
+{activeStep === 2 && (
+  <div className="bg-white p-4 rounded-lg shadow-md">
+    <h3 className="text-lg font-semibold mb-2">Choose Payment Method</h3>
+    <FormGroup>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={selectedPaymentMethod === 'Online'}
+            onChange={() => handlePaymentMethodChange('Online')}
+          />
+        }
+        label={
+          <div className="flex items-center space-x-2">
+            <FiCreditCard />
+            <span>Online Payment</span>
+          </div>
+        }
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={selectedPaymentMethod === 'COD'}
+            onChange={() => handlePaymentMethodChange('COD')}
+          />
+        }
+        label="Cash on Delivery"
+      />
+    </FormGroup>
+    <div className="w-fit flex gap-5 items-center">
+      {activeStep > 0 && (
+        <Button variant="outlined" onClick={handleBack}>
+          Back
+        </Button>
+      )}
+      <Button variant="contained" color="primary" onClick={handleSubmitOrder}>
+        {selectedPaymentMethod === 'Online' ? 'Make Payment' : 'Place Order'}
+      </Button>
+    </div>
+  </div>
+)}
+
+
             </div>
           </div>
         </div>

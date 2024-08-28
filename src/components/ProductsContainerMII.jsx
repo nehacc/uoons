@@ -171,16 +171,20 @@ const ProductsContainer = (props) => {
                   <p className="text-green-600">{item.discount}% off</p>
                 </div>
                 <div id="buy-Cart" className="hidden w-full justify-center gap-5">
-                  <a
-                    onClick={(e) => { 
-                      e.stopPropagation();
-                      navigate(`/Checkout/${item.pid}`) }}
-
-                    className="relative rounded p-2 py-1 overflow-hidden group bg-orange-500 hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-orange-400 transition-all ease-out duration-300"
-                  >
-                    <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-                    <span className="relative text-sm font-bold">BUY NOW</span>
-                  </a>
+                <a
+                  onClick={(e) => { 
+                    e.stopPropagation();
+                    if (UserSession.getSession()) {
+                      navigate(`/Checkout/${item.pid}`);
+                    } else {
+                      toast.info("Please log in to proceed with the purchase.");
+                    }
+                  }}
+                  className="relative rounded p-2 py-1 overflow-hidden group bg-orange-500 hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-orange-400 transition-all ease-out duration-300"
+                >
+                  <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+                  <span className="relative text-sm font-bold">BUY NOW</span>
+                </a>
 
                   <a
                     onClick={(e) => { addToCart(e, item.pid) }}
@@ -195,11 +199,11 @@ const ProductsContainer = (props) => {
           </div>
         </div>
         {/* view all button */}
-        <div className="flex justify-center">
+        {/* <div className="flex justify-center">
           <button className="text-center mt-10 cursor-pointer bg-blue-100 text-orange-600 font-bold py-1 px-5 rounded-md">
             View All
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
