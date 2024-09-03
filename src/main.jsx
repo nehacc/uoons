@@ -27,6 +27,7 @@ import Checkout from './pages/Checkout.jsx'
 import Checkout1 from './pages/Checkout1.jsx'
 import CheckoutMulti from './pages/CheckoutMulti.jsx'
 import ThankYouPage from './pages/ThankyouPage.jsx';
+import ProductListSearch from './pages/ProductListSearch.jsx'
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
   {
     path: "/ProductList/:c_id",
     element: <ProductList />,
+  },
+  {
+    path: "/ProductListSearch",
+    element: <ProductListSearch />,
   },
   {
     path: "/PdTest/:p_id",

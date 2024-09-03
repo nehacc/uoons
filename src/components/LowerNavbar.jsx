@@ -4,7 +4,7 @@ import ListComponentHome from "./ListComponentHome";
 
 const LowerNavbar = () => {
   return (
-    <div className='shadow-md bg-white duration-200'>
+    <div className='relative shadow-md bg-white duration-200'>
       {/* lower Navbar */}
       <div className="flex justify-center items-center">
           

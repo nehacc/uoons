@@ -6,10 +6,10 @@ import { FaCartShopping } from "react-icons/fa6";
 import { IoMdHeart } from "react-icons/io";
 import { useNavigate } from "react-router-dom"
 import UserSession from "../user";
-import { FaBoxOpen } from 'react-icons/fa';
+import { FaUser, FaBoxOpen, FaSignOutAlt, FaSignInAlt, FaUserPlus } from 'react-icons/fa';
 
-import { FaUser, FaCog, FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
-import { ToastContainer, toast } from 'react-toastify';
+
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -17,12 +17,21 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   // for a button
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const logout = () => {
     UserSession.resetSession()
     toast.info("You're succesfully logged out!");
   }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      search()
+    }
+  };
+  const search = () => {
+    navigate('/ProductListSearch')
+  }
+  
   
 
 
@@ -45,8 +54,9 @@ const Navbar = () => {
                 type="text"
                 placeholder="Search your favorite products and brands"
                 className="w-[400px] lg:w-[500px] lg:hover:w-[550px] transition-all duration-300 rounded-full border-none px-4 py-2 shadow-lg focus:outline-none focus:ring-1 focus:ring-orange-600"
+                onKeyDown={handleKeyDown}
               />
-              <button className="absolute top-1/2 right-0 w-10 h-10 bg-orange-600 text-white rounded-full flex items-center justify-center transform -translate-y-1/2">
+              <button onClick={search} className="absolute top-1/2 right-0 w-10 h-10 bg-orange-600 text-white rounded-full flex items-center justify-center transform -translate-y-1/2">
                 <BiSearchAlt className="text-xl" />
               </button>
             </div>
@@ -79,69 +89,82 @@ const Navbar = () => {
             >
               <FaCartShopping className="text-xl" />
             </button>
-
-           {/* Profile button */}
-           <div
-              className="relative"
-              onMouseEnter={() => setDropdownOpen(true)}
-              onMouseLeave={() => setDropdownOpen(false)}
-            >
+           
+            {/* Profile button */}
+            <div className="relative">
               {/* Profile button */}
               <button
-                onClick={() => navigate(UserSession.getSession() ? '/profile' : '/auth')}
-                className="bg-orange-600 w-10 h-10 p-2 rounded-full text-white flex items-center justify-center shadow-lg hover:scale-110 transform duration-300"
+                onClick={() => navigate(UserSession.getAuth() ? '/profile' : '/auth')}
+                className="z-10 bg-orange-600 w-10 h-10 p-2 rounded-full text-white flex items-center justify-center shadow-lg hover:scale-110 transform duration-300 relative"
+                onMouseEnter={()=>setIsDropdownOpen(true)}
               >
                 <FaUser className="text-xl" />
               </button>
 
               {/* Dropdown */}
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-2xl z-10 animate-fadeIn">
-                  <div className="py-3 px-4 bg-orange-50 rounded-t-lg border-b border-gray-200 flex items-center">
-                    <FaUserCircle className="text-orange-600 text-2xl mr-2" />
-                    <div>
-                      <p className="text-sm text-gray-600">Welcome</p>
-                      <p className="font-semibold text-gray-800">
-                        {UserSession.getSession() ? 'userName' : 'Guest'}
-                      </p>
-                    </div>
-                  </div>
+                <div
+                  className="absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded-lg shadow-2xl z-10 animate-fadeIn"
+                  onMouseLeave={()=>setIsDropdownOpen(false)}
+                >
+                  
                   <ul className="text-gray-700">
-                    <li>
-                      <button
-                        onClick={() => navigate('/profile')}
-                        className="flex items-center w-full text-left px-4 py-3 hover:bg-orange-100 transition-colors duration-300"
-                      >
-                        <FaUser className="mr-3 text-orange-600" />
-                        My Profile
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => navigate('/NaN')}
-                        className="flex items-center w-full text-left px-4 py-3 hover:bg-orange-100 transition-colors duration-300"
-                      >
-                        
-                        <FaBoxOpen className="mr-3 text-orange-600" />
-                        My Orders
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={logout}
-                        className="flex items-center w-full text-left px-4 py-3 hover:bg-orange-100 transition-colors duration-300"
-                      >
-                        <FaSignOutAlt className="mr-3 text-orange-600" />
-                        Logout
-                      </button>
-                    </li>
+                    {UserSession.getAuth() ? (
+                      <>
+                        <li>
+                          <button
+                            onClick={() => navigate('/profile')}
+                            className="flex items-center w-full text-left px-4 py-3 hover:bg-orange-100 transition-colors duration-300"
+                          >
+                            <FaUser className="mr-3 text-orange-600" />
+                            My Profile
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            onClick={() => navigate('/orders')}
+                            className="flex items-center w-full text-left px-4 py-3 hover:bg-orange-100 transition-colors duration-300"
+                          >
+                            <FaBoxOpen className="mr-3 text-orange-600" />
+                            My Orders
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            onClick={logout}
+                            className="flex items-center w-full text-left px-4 py-3 hover:bg-orange-100 transition-colors duration-300"
+                          >
+                            <FaSignOutAlt className="mr-3 text-orange-600" />
+                            Logout
+                          </button>
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        <li>
+                          <button
+                            onClick={() => navigate('/auth?mode=login')}
+                            className="flex items-center w-full text-left px-4 py-3 hover:bg-orange-100 transition-colors duration-300"
+                          >
+                            <FaSignInAlt className="mr-3 text-orange-600" />
+                            Login
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            onClick={() => navigate('/auth?mode=register')}
+                            className="flex items-center w-full text-left px-4 py-3 hover:bg-orange-100 transition-colors duration-300"
+                          >
+                            <FaUserPlus className="mr-3 text-orange-600" />
+                            Register
+                          </button>
+                        </li>
+                      </>
+                    )}
                   </ul>
                 </div>
               )}
-            </div>
-
-
-            
+            </div>        
             </div>
           </div>
         </div>
