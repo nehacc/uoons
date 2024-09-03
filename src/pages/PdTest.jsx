@@ -53,7 +53,7 @@ const PdTest = () => {
                     },
                 }
             );
-            alert("Recently Viewed Added");
+            // alert("Recently Viewed Added");
         } catch (error) {
             console.error('Error adding to recently viewed:', error);
         }
@@ -83,6 +83,7 @@ const PdTest = () => {
     useEffect(() => {
       
         fetchProductData();
+        fetchBrandName();
     }, [p_id]); // Added p_id as a dependency
 
     const baseURL = "https://uoons.com/";
@@ -138,6 +139,41 @@ const PdTest = () => {
             };
         };
 
+
+        const [brandName, setBrandName] = useState('');
+        const whatBrand = async (id) => {
+            try {
+                const response = await axios.post(
+                    `/api/getBrandNameById?Brand_id=${id}`,
+                    {
+                        headers: {
+                            'Channel-Code': 'ANDROID',
+                            // 'auth': UserSession.getAuth(),
+                        },
+                    }
+                );
+        
+                if (response.data && response.data.status === "success") {
+                    return response.data.data.name; // Return the brand name
+                } else {
+                    console.error('Failed to retrieve brand name:', response.data.message);
+                    return null; // Return null if there's an issue
+                }
+            } catch (error) {
+                console.error('Error retrieving brand name:', error);
+                return null; // Return null if an error occurs
+            }
+        };
+        const fetchBrandName = async () => {
+            const name = await whatBrand(productData.Data.brand);
+            setBrandName(name || ''); // Set the brand name or an empty string if none is found
+        };
+        
+
+        
+        
+        
+
     return (
         <>
             <Navbar />
@@ -163,7 +199,7 @@ const PdTest = () => {
                             <div className="flex flex-col p-4 gap-2 lg:w-custom">
                                 {/* headings */}
                                 <div>
-                                    <span className="text-grey-100 font-semibold">Brand-Name</span>
+                                    <span className="text-grey-100 font-semibold">{brandName}</span>
                                     <h1 className="text-3xl font-bold ">{productData.Data.product_name}</h1>
                                 </div>
                                 {/* ratings */}

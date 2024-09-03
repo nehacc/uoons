@@ -13,6 +13,8 @@ import BrandContainer from '../components/BrandContainer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserSession from '../user';
+import PriceStore from '../components/PriceStore.jsx';
+import AdvertisementData from '../components/AdvertisementData.jsx'
 
 
 
@@ -77,7 +79,9 @@ const Homepage = () => {
       <LowerNavbar />
       <Slideshow />
       <ProductsContainer heading={HomePageData.Data[3].name} data={HomePageData.Data[3].items}/>
+      <PriceStore priceStoreData={HomePageData.Data[2]}/>
       <ProductsContainer heading={HomePageData.Data[5].name} data={HomePageData.Data[5].items}/>
+      <AdvertisementData />
       <ProductsContainer heading={HomePageData.Data[9].name} data={HomePageData.Data[9].items}/>
       <ProductsContainer heading={HomePageData.Data[10].name} data={HomePageData.Data[10].items}/>
       <ProductsContainer heading={HomePageData.Data[11].name} data={HomePageData.Data[11].items}/>

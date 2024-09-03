@@ -48,7 +48,7 @@ const ListComponentHome = () => {
   return (
     <ul className="w-full category-list container flex justify-center items-center flex-wrap gap-4 gap-y-0">
       {categories.map(category => (
-        <li key={category.c_id} className="group relative cursor-pointer">
+        <li key={category.c_id} className="group cursor-pointer">
           <button 
             className="flex items-center gap-2 py-2 hover:text-orange-600 focus:outline-none" 
             onClick={() => handleCategoryClick(category.c_id)}
@@ -60,13 +60,16 @@ const ListComponentHome = () => {
             <FaCaretDown className="transition-all duration-200 group-hover:rotate-180" />
           </button>
           {category.sub_categories.length > 0 && (
-            <div id={`sub-category-list-${category.c_id}`} className="absolute z-50 border hidden group-hover:block w-48 rounded-md bg-white p-2 text-black shadow-md">
-              <ul>
+            <div 
+              id={`sub-category-list-${category.c_id}`} 
+              className="absolute left-0 right-0 z-50 border hidden group-hover:flex w-screen justify-center items-center rounded-md bg-white p-2 text-black shadow-md"
+            >
+              <ul className="w-full category-list container grid grid-cols-3 justify-center items-center gap-2">
                 {category.sub_categories.map(subCategory => (
                   subCategory.show === "1" && (
                     <li 
                       key={subCategory.c_id} 
-                      className="py-1 hover:text-orange-600 cursor-pointer" 
+                      className="py-1 hover:text-orange-600 cursor-pointer text-center" 
                       onClick={() => handleSubCategoryClick(subCategory.c_id)}
                     >
                       {subCategory.category}
@@ -74,9 +77,9 @@ const ListComponentHome = () => {
                   )
                 ))}
               </ul>
-              <button className="cursor-pointer text-blue-700 py-1 ml-auto">
+              {/* <button className="cursor-pointer text-blue-700 py-1 ml-auto">
                 View All
-              </button>
+              </button> */}
             </div>
           )}
         </li>
