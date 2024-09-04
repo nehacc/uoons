@@ -122,7 +122,7 @@ const Navbar = () => {
                         </li>
                         <li>
                           <button
-                            onClick={() => navigate('/orders')}
+                            onClick={() => navigate('/MyOrders2')}
                             className="flex items-center w-full text-left px-4 py-3 hover:bg-orange-100 transition-colors duration-300"
                           >
                             <FaBoxOpen className="mr-3 text-orange-600" />

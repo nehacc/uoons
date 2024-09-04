@@ -348,7 +348,7 @@ const PdTest = () => {
                                     </div>
                                 </div>
                                 
-                                <FrequentlyBought />
+                                <FrequentlyBought pids={productData.Data.freqvently_bought}/>
                                 {/* { pid, rating = { total: 0, rating: 0 }, reviews = []  */}
                                 <RatingsReview pid={p_id} rating={productData.Data.rating} reviews={productData.Data.reviews} fetchProductData={fetchProductData}/>
                                 <FaqsProduct pid={p_id} auth={UserSession.getAuth()}  fetchProductData={fetchProductData}/>

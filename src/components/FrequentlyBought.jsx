@@ -1,26 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaShoppingCart, FaCreditCard, FaTags } from 'react-icons/fa';
+import axios from 'axios';
+import UserSession from "../user";
 
-const frequentlyBoughtTogether = [
-  {
-    name: "USB Optical Mouse, USB 2.0 - Black",
-    image: "https://m.media-amazon.com/images/I/51nifWngl-L._SX679_.jpg",
-    price: 149
-  },
-  {
-    name: "Gaming Chair from Rekart, RGC-08 PU + PVC Black Frame",
-    image: "https://m.media-amazon.com/images/I/51nifWngl-L._SX679_.jpg",
-    price: 9985
-  },
-  {
-    name: "HP 15-DA3001TU Laptop",
-    image: "https://m.media-amazon.com/images/I/51nifWngl-L._SX679_.jpg",
-    price: 35499
-  }
-];
+const FrequentlyBought = ({ pids }) => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const FrequentlyBought = () => {
-  const totalPrice = frequentlyBoughtTogether.reduce((total, item) => total + item.price, 0);
+  useEffect(() => {
+    const fetchProductData = async (pid) => {
+      try {
+        const response = await axios.get(`/api/productDetail?pid=${pid}`, {
+          headers: {
+            'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+            'Accept': '*/*',
+            'channel-code': 'ANDROID',
+            'auth': UserSession.getAuth(),
+          },
+        });
+        return response.data.Data; // Assuming the product data is within `Data`
+      } catch (err) {
+        setError(err);
+        return null;
+      }
+    };
+
+    const loadProducts = async () => {
+      setLoading(true);
+      const fetchedProducts = await Promise.all(pids.map(pid => fetchProductData(pid)));
+      setProducts(fetchedProducts.filter(product => product !== null));
+      setLoading(false);
+    };
+
+    loadProducts();
+  }, [pids]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading products: {error.message}</div>;
+
+  const totalPrice = products.reduce((total, item) => total + item.product_sale_price, 0);
   const discount = 1000; // Discount offer
   const discountedPrice = totalPrice - discount;
 
@@ -28,19 +47,19 @@ const FrequentlyBought = () => {
     <div className='bg-white p-8 rounded-lg shadow-lg w-full my-8 mx-auto'>
       <h2 className='font-bold text-3xl mb-8 text-center text-gray-800'>Frequently Bought Together</h2>
       <div className='flex flex-col lg:flex-row items-center justify-center gap-8'>
-        {frequentlyBoughtTogether.map((item, index) => (
-          <React.Fragment key={index}>
+        {products.map((item, index) => (
+          <React.Fragment key={item.pid}>
             <div className='flex flex-col items-center text-center p-6 mx-2 bg-gray-50 rounded-md shadow-sm w-60'>
               <img 
-                src={item.image} 
-                alt={item.name}
+                src={"https://uoons.com/" + item.product_images[0]} 
+                alt={item.product_name}
                 className='w-32 h-32 object-cover mb-4 rounded-md'
               />
-              <h3 className='font-bold text-lg h-[84px] overflow-hidden'>{item.name}</h3>
+              <h3 className='font-bold text-lg h-[84px] overflow-hidden'>{item.product_name}</h3>
               {item.description && <p className='text-sm text-gray-500'>{item.description}</p>}
-              <p className='text-green-700 font-bold text-xl mt-2'>Rs. {item.price}</p>
+              <p className='text-green-700 font-bold text-xl mt-2'>Rs. {item.product_sale_price}</p>
             </div>
-            {index < frequentlyBoughtTogether.length - 1 && <span className='text-3xl font-bold mx-4 text-gray-600'>+</span>}
+            {index < products.length - 1 && <span className='text-3xl font-bold mx-4 text-gray-600'>+</span>}
           </React.Fragment>
         ))}
       </div>
