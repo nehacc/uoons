@@ -27,11 +27,20 @@ import Checkout from './pages/Checkout.jsx'
 import Checkout1 from './pages/Checkout1.jsx'
 import CheckoutMulti from './pages/CheckoutMulti.jsx'
 import ThankYouPage from './pages/ThankyouPage.jsx';
+import ProductListSearch from './pages/ProductListSearch.jsx'
+import MyOrders from './pages/MyOrders.jsx';
+import MyOrders2 from './pages/MyOrders2.jsx';
+import OrderDetails from './pages/OrderDetails.jsx';
+import Test345 from './pages/Test345.jsx'
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Homepage />,
+  },
+  {
+    path: "/test345",
+    element: <Test345 />,
   },
   {
     path: "/home",
@@ -44,6 +53,11 @@ const router = createBrowserRouter([
   {
     path: "/ProductList/:c_id",
     element: <ProductList />,
+  },
+  
+  {
+    path: "/ProductListSearch",
+    element: <ProductListSearch />,
   },
   {
     path: "/PdTest/:p_id",
@@ -128,6 +142,18 @@ const router = createBrowserRouter([
   {
     path: "Checkout1",
     element: <Checkout1 />
+  },
+  {
+    path: "MyOrders",
+    element: <MyOrders />
+  },
+  {
+    path: "MyOrders2",
+    element: <MyOrders2 />
+  },
+  {
+    path: "/order-details/:orderId",
+    element: <OrderDetails />
   },
 ]);
 

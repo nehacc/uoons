@@ -14,24 +14,26 @@ const FAQSection = (props) => {
     product_id: pid,
   });
 
-  useEffect(() => {
-    // Fetch FAQ data from the API
-    const fetchFAQs = async () => {
-      try {
-        const response = await axios.get(`/api/fetchAllQuestionAnswers?pid=${pid}`, {
-            headers: {
-              'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-              'Accept': '*/*',
-              'channel-code': 'ANDROID'
-            }
-          });
-        if (response.data.status === 'success') {
-          setFaqs(response.data.Data);
-        }
-      } catch (error) {
-        console.error('Error fetching FAQ data:', error);
+
+  // Fetch FAQ data from the API
+  const fetchFAQs = async () => {
+    try {
+      const response = await axios.get(`/api/fetchAllQuestionAnswers?pid=${pid}`, {
+          headers: {
+            'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+            'Accept': '*/*',
+            'channel-code': 'ANDROID'
+          }
+        });
+      if (response.data.status === 'success') {
+        setFaqs(response.data.Data);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching FAQ data:', error);
+    }
+  };
+  useEffect(() => {
+    
 
     fetchFAQs();
   }, []);
@@ -67,11 +69,16 @@ const FAQSection = (props) => {
         alert('Question posted successfully!');
         setShowForm(false); // Hide the form after submission
         setFormData({ ...formData, question: '' }); // Reset the form
+  
+        // Reload the FAQs after successful submission
+        fetchFAQs(); // This will re-fetch and reload the FAQs
       }
     } catch (error) {
       console.error('Error posting question:', error);
     }
   };
+  
+  
 
   const handleLikeUnlike = async (questionId, action) => {
     try {

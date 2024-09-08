@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
+import LowerNavbar from '../components/LowerNavbar'
 import Footer from '../components/Footer';
 import { useParams } from 'react-router-dom';
 import UserSession from '../user';
@@ -21,7 +22,6 @@ import RatingsReview from '../components/RatingsReview';
 import FaqsProduct from '../components/FaqsProduct'
 import ProductsContainer from '../components/ProductsContainer';
 import { useNavigate } from 'react-router-dom';
-// hello
 
 
 
@@ -53,7 +53,7 @@ const PdTest = () => {
                     },
                 }
             );
-            alert("Recently Viewed Added");
+            // alert("Recently Viewed Added");
         } catch (error) {
             console.error('Error adding to recently viewed:', error);
         }
@@ -83,6 +83,7 @@ const PdTest = () => {
     useEffect(() => {
       
         fetchProductData();
+        // fetchBrandName();
     }, [p_id]); // Added p_id as a dependency
 
     const baseURL = "https://uoons.com/";
@@ -138,9 +139,45 @@ const PdTest = () => {
             };
         };
 
+
+        // const [brandName, setBrandName] = useState('');
+        // const whatBrand = async (id) => {
+        //     try {
+        //         const response = await axios.post(
+        //             `/api/getBrandNameById?Brand_id=${id}`,
+        //             {
+        //                 headers: {
+        //                     'Channel-Code': 'ANDROID',
+        //                     // 'auth': UserSession.getAuth(),
+        //                 },
+        //             }
+        //         );
+        
+        //         if (response.data && response.data.status === "success") {
+        //             return response.data.data.name; // Return the brand name
+        //         } else {
+        //             console.error('Failed to retrieve brand name:', response.data.message);
+        //             return null; // Return null if there's an issue
+        //         }
+        //     } catch (error) {
+        //         console.error('Error retrieving brand name:', error);
+        //         return null; // Return null if an error occurs
+        //     }
+        // };
+        // const fetchBrandName = async () => {
+        //     const name = await whatBrand(productData.Data.brand);
+        //     setBrandName(name || ''); // Set the brand name or an empty string if none is found
+        // };
+        
+
+        
+        
+        
+
     return (
         <>
             <Navbar />
+            <LowerNavbar />
             {error && <p>Error loading product data.</p>}
             {loading?(<div>Loading...</div>):(
                 // main-body_Description 
@@ -159,10 +196,10 @@ const PdTest = () => {
                         {/* main-description */}
                         <div className='flex items-start'>
                             {/* mid-section */}
-                            <div className="flex flex-col p-4 gap-2 border border-black lg:w-custom">
+                            <div className="flex flex-col p-4 gap-2 lg:w-custom">
                                 {/* headings */}
                                 <div>
-                                    <span className="text-grey-100 font-semibold">Brand-Name</span>
+                                    {/* <span className="text-grey-100 font-semibold">{brandName}</span> */}
                                     <h1 className="text-3xl font-bold ">{productData.Data.product_name}</h1>
                                 </div>
                                 {/* ratings */}
@@ -311,10 +348,11 @@ const PdTest = () => {
                                     </div>
                                 </div>
                                 
-                                <FrequentlyBought />
+                                {productData.Data.freq_prod && <FrequentlyBought freq_prod={productData.Data.freq_prod}/>}
+                                
                                 {/* { pid, rating = { total: 0, rating: 0 }, reviews = []  */}
                                 <RatingsReview pid={p_id} rating={productData.Data.rating} reviews={productData.Data.reviews} fetchProductData={fetchProductData}/>
-                                <FaqsProduct pid={p_id} auth={UserSession.getAuth()}/>
+                                <FaqsProduct pid={p_id} auth={UserSession.getAuth()}  fetchProductData={fetchProductData}/>
                                    
 
                             </div>
@@ -322,6 +360,7 @@ const PdTest = () => {
                     </div>
                 </div>
             )}
+            
             <div className="bg-white duration-200">
                 <ProductsContainer className='bg-white' heading={"Similar Products"} data={similarProductData}/>
             </div>

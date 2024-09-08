@@ -26,9 +26,7 @@ const Checkout = () => {
   const [isAddressLoading, setIsAddressLoading] = useState(true);
   const [addresses, setAddresses] = useState([]);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
-
   const [showAddressForm, setShowAddressForm] = useState(false);
-
 
   const steps = ['Select Address', 'Review Contact Info', 'Choose Payment Method'];
 
@@ -37,58 +35,57 @@ const Checkout = () => {
     fetchAddressData();
     loadRazorpayScript('https://checkout.razorpay.com/v1/checkout.js');
   }, []);
-    const fetchProductData = async () => {
-      try {
-        const responses = await Promise.all(
-          productIds.map((id) =>
-            axios.get(`/api/productDetail?pid=${id}`, {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-                Accept: '*/*',
-                'channel-code': 'ANDROID',
-                auth: UserSession.getAuth(),
-              },
-            })
-          )
-        );
-        const data = responses.map(response => response.data.Data);
-        setProductsData(data);
-        setIsProductDataLoading(false);
-      } catch (error) {
-        console.error('Error fetching product data:', error);
-        setIsProductDataLoading(false);
-      }
-    };
 
-    const fetchAddressData = async () => {
-      try {
-        const response = await axios.get('/api/getUserAddress', {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: '*/*',
-            'channel-code': 'ANDROID',
-            auth: UserSession.getAuth(),
-          },
-        });
-        setAddresses(response.data.Data);
-        setIsAddressLoading(false);
-      } catch (error) {
-        console.error('Error fetching address data:', error);
-        setIsAddressLoading(false);
-      }
-    };
+  const fetchProductData = async () => {
+    try {
+      const responses = await Promise.all(
+        productIds.map((id) =>
+          axios.get(`/api/productDetail?pid=${id}`, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              Accept: '*/*',
+              'channel-code': 'ANDROID',
+              auth: UserSession.getAuth(),
+            },
+          })
+        )
+      );
+      const data = responses.map((response) => response.data.Data);
+      setProductsData(data);
+      setIsProductDataLoading(false);
+    } catch (error) {
+      console.error('Error fetching product data:', error);
+      setIsProductDataLoading(false);
+    }
+  };
 
-    const loadRazorpayScript = (src) => {
-      return new Promise((resolve) => {
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = () => resolve(true);
-        script.onerror = () => resolve(false);
-        document.body.appendChild(script);
+  const fetchAddressData = async () => {
+    try {
+      const response = await axios.get('/api/getUserAddress', {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: '*/*',
+          'channel-code': 'ANDROID',
+          auth: UserSession.getAuth(),
+        },
       });
-    };
+      setAddresses(response.data.Data);
+      setIsAddressLoading(false);
+    } catch (error) {
+      console.error('Error fetching address data:', error);
+      setIsAddressLoading(false);
+    }
+  };
 
-    
+  const loadRazorpayScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
 
   const handleNext = () => setActiveStep((prevStep) => prevStep + 1);
   const handleBack = () => setActiveStep((prevStep) => prevStep - 1);
@@ -123,8 +120,6 @@ const Checkout = () => {
         console.log(response.razorpay_order_id);
         console.log(response.razorpay_signature);
         alert('Payment Successful');
-        // navigate buddy!!!
-         // Pass the additional information as state
         navigate(`/ThankyouPage/${p_id}`, {
           state: {
             paymentId: response.razorpay_payment_id,
@@ -142,7 +137,7 @@ const Checkout = () => {
         address: `${addresses[selectedAddressIndex].baddress1}, ${addresses[selectedAddressIndex].baddress2}, ${addresses[selectedAddressIndex].bcity}, ${addresses[selectedAddressIndex].bstate}, ${addresses[selectedAddressIndex].bcountry} - ${addresses[selectedAddressIndex].bpincode}`,
       },
       theme: {
-        color: "white",
+        color: 'white',
       },
     };
 
@@ -189,29 +184,37 @@ const Checkout = () => {
               {activeStep === 0 && (
                 <div className="bg-white p-4 rounded-lg shadow-md">
                   {showAddressForm ? (
-                    <InsertUserAddress onSuccess={handleAddressFormSubmit}/>
-                    ) : (
+                    <InsertUserAddress onSuccess={handleAddressFormSubmit} />
+                  ) : (
                     <>
-                        <h3 className="text-lg font-semibold mb-2">Select Delivery Address</h3>
-                        <div className="flex flex-col gap-4">
+                      <h3 className="text-lg font-semibold mb-2">Select Delivery Address</h3>
+                      <div className="flex flex-col gap-4">
                         {addresses.map((address, index) => (
-                            <div
+                          <div
                             key={index}
-                            className={`p-4 border rounded-md cursor-pointer ${selectedAddressIndex === index ? 'border-blue-500' : 'border-gray-300'}`}
+                            className={`p-4 border rounded-md cursor-pointer ${
+                              selectedAddressIndex === index ? 'border-blue-500' : 'border-gray-300'
+                            }`}
                             onClick={() => handleAddressSelection(index)}
-                            >
+                          >
                             <h4 className="text-lg font-semibold">{address.bname}</h4>
                             <p>{`${address.baddress1}, ${address.baddress2}`}</p>
                             <p>{`${address.bcity}, ${address.bstate}`}</p>
                             <p>{`${address.bcountry} - ${address.bpincode}`}</p>
-                            </div>
+                          </div>
                         ))}
-                        <Button variant='outlined' onClick={() => setShowAddressForm(true)}>Enter New Address</Button>
-                        <Button variant="contained" onClick={handleNext}>Next</Button>
+                        <Button variant="outlined" onClick={() => setShowAddressForm(true)}>
+                          Enter New Address
+                        </Button>
+                        <div className="flex justify-between mt-4">
+                          <div></div>
+                          <Button variant="contained" onClick={handleNext}>
+                            Next
+                          </Button>
                         </div>
+                      </div>
                     </>
-                    )}
-
+                  )}
                 </div>
               )}
               {activeStep === 1 && (
@@ -230,9 +233,14 @@ const Checkout = () => {
                       <label className="font-semibold">Phone: </label>
                       <span>{selectedAddress.bmobile_no}</span>
                     </div>
-                    <Button variant="contained" onClick={handleNext}>
-                      Next
-                    </Button>
+                    <div className="flex justify-between mt-4">
+                      <Button variant="outlined" onClick={handleBack}>
+                        Back
+                      </Button>
+                      <Button variant="contained" onClick={handleNext}>
+                        Next
+                      </Button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -264,38 +272,38 @@ const Checkout = () => {
                       label="Cash on Delivery"
                     />
                   </FormGroup>
-                  <div className='w-fit flex gap-5 items-center'>
-                    <Button variant="contained" color="primary" onClick={handleSubmitOrder}>
-                      {selectedPaymentMethod === 'Online' ? 'Make Payment' : 'Place Order'}
-                    </Button>
+                  <div className="flex justify-between mt-4">
                     <Button variant="outlined" onClick={handleBack}>
                       Back
+                    </Button>
+                    <Button variant="contained" color="primary" onClick={handleSubmitOrder}>
+                      {selectedPaymentMethod === 'Online' ? 'Make Payment' : 'Place Order'}
                     </Button>
                   </div>
                 </div>
               )}
             </div>
-            
+
             <div className="w-full bg-gray-50 p-4 rounded-lg shadow-md">
-            <div className="flex flex-col bg-white rounded-lg shadow-lg p-6 mb-4">
-              <h3 className="text-2xl font-bold mb-4">Order Details</h3>
-              {productsData.map((product, index) => (
-                <div key={index} className="flex gap-5 items-center mb-4">
-                  <img
-                    src={`https://uoons.com/${product.product_images}`}
-                    alt={product.product_name}
-                    className="w-[100px] h-[100px] object-scale-down rounded-lg"
-                  />
-                  <div>
-                    <h4 className="font-bold text-lg">{product.product_name}</h4>
-                    <div className="flex flex-row items-center gap-3 mt-3">
-                      <h6 className="text-2xl font-semibold">₹{product.product_sale_price}</h6>
-                      <span className="line-through text-gray-500">₹{product.product_price}</span>
+              <div className="flex flex-col bg-white rounded-lg shadow-lg p-6 mb-4">
+                <h3 className="text-2xl font-bold mb-4">Order Details</h3>
+                {productsData.map((product, index) => (
+                  <div key={index} className="flex gap-5 items-center mb-4">
+                    <img
+                      src={`https://uoons.com/${product.product_images}`}
+                      alt={product.product_name}
+                      className="w-[100px] h-[100px] object-scale-down rounded-lg"
+                    />
+                    <div>
+                      <h4 className="font-bold text-lg">{product.product_name}</h4>
+                      <div className="flex flex-row items-center gap-3 mt-3">
+                        <h6 className="text-2xl font-semibold">₹{product.product_sale_price}</h6>
+                        <span className="line-through text-gray-500">₹{product.product_price}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
               <h3 className="text-lg font-semibold mb-4">Order Summary</h3>
               <div className="flex justify-between mb-2">
                 <span>Products:</span>

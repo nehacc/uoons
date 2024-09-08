@@ -3,19 +3,19 @@ import axios from 'axios';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Navbar from '../components/Navbar'
+import LowerNavbar from '../components/LowerNavbar';
 import Slideshow from '../components/Slideshow';
 import ProductsContainer from '../components/ProductsContainer';
-import ProductsContainerCopy from '../components/ProductsContainerCopy';
 import ProductsContainerMII from '../components/ProductsContainerMII';
 import Banner from '../components/Banner';
-import Footer from '../components/Footer'
+// import Footer from '../components/Footer'
 import BrandContainer from '../components/BrandContainer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Test from '../pages/Test'
 import UserSession from '../user';
-import LowerNavbar from '../components/LowerNavbar';
-//hello
+import PriceStore from '../components/PriceStore.jsx';
+import AdvertisementData from '../components/AdvertisementData.jsx'
+import Test345 from '../pages/Test345.jsx'
 
 
 
@@ -80,7 +80,9 @@ const Homepage = () => {
       <LowerNavbar />
       <Slideshow />
       <ProductsContainer heading={HomePageData.Data[3].name} data={HomePageData.Data[3].items}/>
+      <PriceStore priceStoreData={HomePageData.Data[2]}/>
       <ProductsContainer heading={HomePageData.Data[5].name} data={HomePageData.Data[5].items}/>
+      <AdvertisementData />
       <ProductsContainer heading={HomePageData.Data[9].name} data={HomePageData.Data[9].items}/>
       <ProductsContainer heading={HomePageData.Data[10].name} data={HomePageData.Data[10].items}/>
       <ProductsContainer heading={HomePageData.Data[11].name} data={HomePageData.Data[11].items}/>
@@ -96,9 +98,9 @@ const Homepage = () => {
       <ProductsContainer heading={headings.recentlyViewed} data={HomePageData.Data[3].items}/>
       <ProductsContainer heading={headings.smartphonesTablets} data={HomePageData.Data[3].items}/>
       
-      <Footer />
+      {/* <Footer /> */}
+      <Test345 />
       <ToastContainer />
-      {console.log(UserSession.getAuth())}
 
     </div>
     </>

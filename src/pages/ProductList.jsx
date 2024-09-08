@@ -13,6 +13,7 @@ import PriceFilter from '../components/PriceFilter';
 import RatingFilter from '../components/RatingsFilter';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DiscountFilter from '../components/DiscountFilter';
 
 const ShopPage = () => {
   const { c_id } = useParams();
@@ -58,6 +59,12 @@ const ShopPage = () => {
     // You can also trigger filtering logic based on the new price range here
   };
 
+  const [selectedDiscounts, setSelectedDiscounts] = useState([]);
+
+  const handleDiscountChange = (discounts) => {
+    setSelectedDiscounts(discounts);
+  };
+
   
   if (loading) {
     return <div className="flex justify-center items-center h-screen">Loading...</div>;
@@ -77,7 +84,7 @@ const ShopPage = () => {
           <h2 className="text-xl font-bold mb-6">Filter By</h2>
 
           {/* Brand Filter */}
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <h3
               className="font-semibold mb-2 flex items-center cursor-pointer"
               onClick={() => setShowBrands(!showBrands)}
@@ -94,10 +101,10 @@ const ShopPage = () => {
                 ))}
               </ul>
             )}
-          </div>
+          </div> */}
 
           {/* Color Filter */}
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <h3
               className="font-semibold mb-2 flex items-center cursor-pointer"
               onClick={() => setShowColors(!showColors)}
@@ -114,13 +121,16 @@ const ShopPage = () => {
                 ))}
               </ul>
             )}
-          </div>
+          </div> */}
 
           {/* Price Filter */}
           <PriceFilter onPriceChange={handlePriceChange} />
 
+          {/* Discount Filter */}
+          <DiscountFilter onDiscountChange={handleDiscountChange} />
+
           {/* Ratings Filter */}
-          <RatingFilter  />
+          {/* <RatingFilter  /> */}
         </aside>
 
         {/* Product Grid */}
@@ -128,7 +138,7 @@ const ShopPage = () => {
           <div className="flex flex-col gap-3 items-start md:flex-row md:justify-between mb-6">
             <h1 className="text-3xl font-bold text-gray-800">Products</h1>
             <div className="flex items-center">
-              <FaThLarge
+              {/* <FaThLarge
                 className={`text-gray-500 mx-2 cursor-pointer ${viewType === 'grid' ? 'text-blue-500' : ''}`}
                 onClick={() => setViewType('grid')}
                 aria-label="Grid view"
@@ -137,7 +147,7 @@ const ShopPage = () => {
                 className={`text-gray-500 mx-2 cursor-pointer ${viewType === 'list' ? 'text-blue-500' : ''}`}
                 onClick={() => setViewType('list')}
                 aria-label="List view"
-              />
+              /> */}
               <div className="flex items-center ml-4">
                 <span className="mr-2">Sort by:</span>
                 <select
@@ -155,7 +165,7 @@ const ShopPage = () => {
               <div className="flex items-center ml-4">
                 <span className="mr-2">Show:</span>
                 <select
-                  className="border border-gray-300 rounded p-1"
+                  className="border border-gray-300 rounded p-1 outline-0"
                   value={showCount}
                   onChange={(e) => setShowCount(e.target.value)}
                 >
@@ -167,7 +177,7 @@ const ShopPage = () => {
               </div>
             </div>
           </div>
-          <SpecificCategorieProduct data={data} sortOrder={sortOption} limit={showCount} priceRange={priceRange}/>
+          <SpecificCategorieProduct data={data} sortOrder={sortOption} limit={showCount} priceRange={priceRange}  selectedDiscount={selectedDiscounts}/>
           {/* <SpecificCategorieProduct data={data}  /> */}
         </div>
       </div>
