@@ -32,10 +32,12 @@ const PriceStore = ({ priceStoreData }) => {
             <div
               key={item.id}
               onClick={() => handlePriceRangeClick(item.under)}
+
               className="cursor-pointer border p-6 rounded-lg shadow-lg w-[300px] hover:shadow-2xl flex flex-col items-center relative overflow-hidden bg-blue-100"
               data-aos="fade-up"
             >
               <img src="/sampleUnder.jpg" alt="" />
+
               <h3 className="text-xl font-semibold text-gray-800">{item.title}</h3>
               <p className="mt-2 text-sm text-gray-600">Explore products under Rs. {item.under}</p>
             </div>

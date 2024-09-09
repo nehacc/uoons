@@ -1,90 +1,67 @@
-import React from 'react';
-import { FaCartPlus } from 'react-icons/fa';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import UserSession from '../user';
+
+import React, { useState, useEffect } from 'react';
+import { FaShoppingCart, FaCreditCard, FaTags } from 'react-icons/fa';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import UserSession from "../user";
 
+const FrequentlyBought = ({ pids }) => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const FrequentlyBoughtTogether = ({ freq_prod }) => {
-
-  const navigate = useNavigate();
-
-  const totalSalePrice = freq_prod.reduce(
-    (acc, product) => acc + parseFloat(product.product_sale_price),
-    0
-  );
-
-  // Function to add individual products to cart
-  const addToCart = async (pid) => {
-    if (UserSession.getSession()) {
+  useEffect(() => {
+    const fetchProductData = async (pid) => {
       try {
-        const response = await axios.post('/api/addItemToCart', {
-          pid: pid,
-          qty: 1
-        }, {
+        const response = await axios.get(`/api/productDetail?pid=${pid}`, {
           headers: {
             'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
             'Accept': '*/*',
-            'Channel-Code': 'ANDROID',
+            'channel-code': 'ANDROID',
             'auth': UserSession.getAuth(),
-          }
+          },
         });
-
-        if (response.data.status === 'success') {
-          toast.success("Product added to Cart");
-        }
+        return response.data.Data; // Assuming the product data is within `Data`
       } catch (err) {
-        toast.error("An error occurred while adding the item to the cart");
+        setError(err);
+        return null;
       }
-    } else {
-      toast.info("Please log in to add items to your cart.");
-    }
-  };
-  // Add all products to cart
-  const addAllToCart = () => {
-    freq_prod.forEach(product => {
-      addToCart(product.pid);
-    });
-  };
+    };
 
+    const loadProducts = async () => {
+      setLoading(true);
+      const fetchedProducts = await Promise.all(pids.map(pid => fetchProductData(pid)));
+      setProducts(fetchedProducts.filter(product => product !== null));
+      setLoading(false);
+    };
 
-  const handleBuyNow = () => {
-      const productIds = freq_prod.map(item => item.pid);
-      const pidsString = productIds.join(',');
-  
-      navigate(`/Checkout/${pidsString}`);
-  };
+    loadProducts();
+  }, [pids]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading products: {error.message}</div>;
+
+  const totalPrice = products.reduce((total, item) => total + item.product_sale_price, 0);
+  const discount = 1000; // Discount offer
+  const discountedPrice = totalPrice - discount;
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md max-w-7xl mx-auto mt-10">
-      <ToastContainer />
-      <h2 className="text-3xl font-bold text-orange-600 mb-6 text-center">Frequently Bought Together</h2>
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {freq_prod.map((product) => (
-          <div key={product.pid} 
-          // onClick={() => { navigate(`/PdTest/${product.pid}`) }}
-          
-          className="border p-4 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300">
-            <img
-              src={"https://uoons.com/"+product.product_images}
-              alt={product.product_name}
-              className="w-full h-64 object-contain rounded-md mb-4"
-            />
-            <h3 className="text-xl font-semibold text-gray-800">{product.product_name}</h3>
-            {/* <p className="text-gray-500 text-sm mt-1">
-              {product.product_description.replace(/<\/?[^>]+(>|$)/g, '')}
-            </p> */}
-            <div className="mt-4">
-              <span className="text-2xl font-bold text-green-600">₹{product.product_sale_price}</span>
-              {product.discount && (
-                <span className="text-sm text-gray-500 line-through ml-2">₹{product.product_price}</span>
-              )}
+    <div className='bg-white p-8 rounded-lg shadow-lg w-full my-8 mx-auto'>
+      <h2 className='font-bold text-3xl mb-8 text-center text-gray-800'>Frequently Bought Together</h2>
+      <div className='flex flex-col lg:flex-row items-center justify-center gap-8'>
+        {products.map((item, index) => (
+          <React.Fragment key={item.pid}>
+            <div className='flex flex-col items-center text-center p-6 mx-2 bg-gray-50 rounded-md shadow-sm w-60'>
+              <img 
+                src={"https://uoons.com/" + item.product_images[0]} 
+                alt={item.product_name}
+                className='w-32 h-32 object-cover mb-4 rounded-md'
+              />
+              <h3 className='font-bold text-lg h-[84px] overflow-hidden'>{item.product_name}</h3>
+              {item.description && <p className='text-sm text-gray-500'>{item.description}</p>}
+              <p className='text-green-700 font-bold text-xl mt-2'>Rs. {item.product_sale_price}</p>
             </div>
-            <div className="text-sm text-blue-600 mt-1">{product.discount}% Off</div>
-          </div>
+            {index < products.length - 1 && <span className='text-3xl font-bold mx-4 text-gray-600'>+</span>}
+          </React.Fragment>
         ))}
       </div>
 
