@@ -22,7 +22,6 @@ import RatingsReview from '../components/RatingsReview';
 import FaqsProduct from '../components/FaqsProduct'
 import ProductsContainer from '../components/ProductsContainer';
 import { useNavigate } from 'react-router-dom';
-// hello
 
 
 
@@ -84,7 +83,9 @@ const PdTest = () => {
     useEffect(() => {
       
         fetchProductData();
+
         fetchBrandName();
+
     }, [p_id]); // Added p_id as a dependency
 
     const baseURL = "https://uoons.com/";
@@ -141,6 +142,7 @@ const PdTest = () => {
         };
 
 
+
         const [brandName, setBrandName] = useState('');
         const whatBrand = async (id) => {
             try {
@@ -169,6 +171,7 @@ const PdTest = () => {
             const name = await whatBrand(productData.Data.brand);
             setBrandName(name || ''); // Set the brand name or an empty string if none is found
         };
+
         
 
         
@@ -200,7 +203,9 @@ const PdTest = () => {
                             <div className="flex flex-col p-4 gap-2 lg:w-custom">
                                 {/* headings */}
                                 <div>
+
                                     <span className="text-grey-100 font-semibold">{brandName}</span>
+
                                     <h1 className="text-3xl font-bold ">{productData.Data.product_name}</h1>
                                 </div>
                                 {/* ratings */}
@@ -349,7 +354,9 @@ const PdTest = () => {
                                     </div>
                                 </div>
                                 
+
                                 <FrequentlyBought pids={productData.Data.freqvently_bought}/>
+
                                 {/* { pid, rating = { total: 0, rating: 0 }, reviews = []  */}
                                 <RatingsReview pid={p_id} rating={productData.Data.rating} reviews={productData.Data.reviews} fetchProductData={fetchProductData}/>
                                 <FaqsProduct pid={p_id} auth={UserSession.getAuth()}  fetchProductData={fetchProductData}/>
@@ -360,6 +367,7 @@ const PdTest = () => {
                     </div>
                 </div>
             )}
+            
             <div className="bg-white duration-200">
                 <ProductsContainer className='bg-white' heading={"Similar Products"} data={similarProductData}/>
             </div>

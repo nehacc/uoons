@@ -8,13 +8,15 @@ import Slideshow from '../components/Slideshow';
 import ProductsContainer from '../components/ProductsContainer';
 import ProductsContainerMII from '../components/ProductsContainerMII';
 import Banner from '../components/Banner';
-import Footer from '../components/Footer'
+// import Footer from '../components/Footer'
 import BrandContainer from '../components/BrandContainer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserSession from '../user';
 import PriceStore from '../components/PriceStore.jsx';
 import AdvertisementData from '../components/AdvertisementData.jsx'
+import Test345 from '../pages/Test345.jsx'
+
 
 
 
@@ -97,7 +99,8 @@ const Homepage = () => {
       <ProductsContainer heading={headings.recentlyViewed} data={HomePageData.Data[3].items}/>
       <ProductsContainer heading={headings.smartphonesTablets} data={HomePageData.Data[3].items}/>
       
-      <Footer />
+      {/* <Footer /> */}
+      <Test345 />
       <ToastContainer />
 
     </div>

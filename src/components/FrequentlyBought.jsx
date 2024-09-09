@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { FaShoppingCart, FaCreditCard, FaTags } from 'react-icons/fa';
 import axios from 'axios';
@@ -63,20 +64,32 @@ const FrequentlyBought = ({ pids }) => {
           </React.Fragment>
         ))}
       </div>
-      <div className='flex flex-col items-center justify-between mt-8'>
-        <h3 className='font-bold text-2xl mb-4 text-gray-800'>Special Offer:</h3>
-        <div className='bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6 w-full max-w-lg'>
-          <p className='font-bold text-lg flex items-center'><FaTags className='mr-2' /> Buy all three and save Rs. 1000!</p>
-        </div>
-        <h3 className='font-bold text-2xl mb-2 text-gray-800'>Price for all three:</h3>
-        <span className='font-bold text-2xl text-gray-500 mb-4 line-through'>Rs. {totalPrice}</span>
-        <span className='font-bold text-3xl text-green-700 mb-6'>Rs. {discountedPrice}</span>
-        <div className='flex items-center gap-6'>
-          <button className='bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded-md flex items-center gap-2'>
-            <FaShoppingCart /> Add all three to cart
+
+      {/* Summary and Action Buttons */}
+      <div className="border-t-2 mt-6 pt-6 flex flex-col items-center">
+        <p className="text-lg font-semibold text-gray-700">
+          Total: <span className="font-bold text-green-600">₹{totalSalePrice}</span>
+        </p>
+        <p className="text-lg text-orange-500 font-bold mt-1">
+          Buy all together and save ₹1000!
+        </p>
+        <p className="text-2xl text-green-600 font-bold">
+          Final Price: ₹{totalSalePrice - 1000}
+        </p>
+
+        <div className="flex space-x-4 mt-6">
+          <button
+            onClick={addAllToCart}
+            className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded shadow-lg hover:shadow-2xl flex items-center space-x-2 transition-all duration-300"
+          >
+            <FaCartPlus />
+            <span>Add All to Cart</span>
           </button>
-          <button className='bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-md flex items-center gap-2'>
-            <FaCreditCard /> Buy all together
+          <button
+            onClick={handleBuyNow}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded shadow-lg hover:shadow-2xl transition-all duration-300"
+          >
+            Buy All Together
           </button>
         </div>
       </div>
@@ -84,4 +97,4 @@ const FrequentlyBought = ({ pids }) => {
   );
 };
 
-export default FrequentlyBought;
+export default FrequentlyBoughtTogether;
