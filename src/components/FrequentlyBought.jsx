@@ -97,4 +97,4 @@ const FrequentlyBought = ({ pids }) => {
   );
 };
 
-export default FrequentlyBoughtTogether;
+export default FrequentlyBought;

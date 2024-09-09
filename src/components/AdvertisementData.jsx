@@ -57,11 +57,11 @@ const AdContainer = () => {
             ))}
           </div>
           {/* view more button */}
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <button className="text-center mt-10 cursor-pointer bg-orange-500 hover:bg-orange-600 text-white py-2 px-6 rounded-md shadow-lg transition duration-300">
               View More
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

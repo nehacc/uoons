@@ -18,6 +18,7 @@ const ListComponentHome = () => {
           }
         });
         setCategories(response.data.Data.categories);
+        console.log(response.data.Data.categories)
       } catch (error) {
         setError('Error fetching categories');
         console.error('Error fetching categories:', error);
