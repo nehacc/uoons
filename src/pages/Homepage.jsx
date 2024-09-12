@@ -7,7 +7,7 @@ import LowerNavbar from '../components/LowerNavbar';
 import Slideshow from '../components/Slideshow';
 import ProductsContainer from '../components/ProductsContainer';
 import ProductsContainerMII from '../components/ProductsContainerMII';
-import Banner from '../components/Banner';
+// import Banner from '../components/Banner';
 // import Footer from '../components/Footer'
 import BrandContainer from '../components/BrandContainer';
 import { ToastContainer, toast } from 'react-toastify';
@@ -91,7 +91,7 @@ const Homepage = () => {
 
       {/* additional */}
       <ProductsContainer heading={headings.newArrival} data={HomePageData.Data[3].items}/>
-      <Banner />
+      {/* <Banner /> */}
       <ProductsContainerMII heading={headings.madeInIndia} data={HomePageData.Data[3].items}/>
       <ProductsContainer heading={headings.bestSeller} data={HomePageData.Data[3].items}/>
 
