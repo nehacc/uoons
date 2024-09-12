@@ -83,7 +83,7 @@ const Homepage = () => {
       <ProductsContainer heading={HomePageData.Data[3].name} data={HomePageData.Data[3].items}/>
       <PriceStore priceStoreData={HomePageData.Data[2]}/>
       <ProductsContainer heading={HomePageData.Data[5].name} data={HomePageData.Data[5].items}/>
-      <AdvertisementData />
+      <AdvertisementData advertisementData={HomePageData.Data[6]} />
       <ProductsContainer heading={HomePageData.Data[9].name} data={HomePageData.Data[9].items}/>
       <ProductsContainer heading={HomePageData.Data[10].name} data={HomePageData.Data[10].items}/>
       <ProductsContainer heading={HomePageData.Data[11].name} data={HomePageData.Data[11].items}/>

@@ -65,12 +65,13 @@ const ListComponentHome = () => {
               id={`sub-category-list-${category.c_id}`} 
               className="absolute left-0 right-0 z-50 border hidden group-hover:flex w-screen justify-center items-center rounded-md bg-white p-2 text-black shadow-md"
             >
-              <ul className="w-full category-list container grid grid-cols-3 justify-center items-center gap-2">
+              {/* <ul className="w-full category-list container grid grid-cols-3 justify-center items-center gap-2"> */}
+              <ul className="w-full category-list container grid grid-rows-6 grid-flow-col justify-start items-center gap-1 gap-x-10 h-fit">
                 {category.sub_categories.map(subCategory => (
                   subCategory.show === "1" && (
                     <li 
                       key={subCategory.c_id} 
-                      className="py-1 hover:text-orange-600 cursor-pointer text-center" 
+                      className="py-1 hover:text-orange-600 cursor-pointer text-left" 
                       onClick={() => handleSubCategoryClick(subCategory.c_id)}
                     >
                       {subCategory.category}

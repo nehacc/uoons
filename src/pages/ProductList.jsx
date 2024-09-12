@@ -7,7 +7,8 @@ import { FaThLarge, FaList } from 'react-icons/fa';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import Navbar from '../components/Navbar';
 import LowerNavbar from '../components/LowerNavbar'
-import Footer from '../components/Footer';
+// import Footer from '../components/Footer';
+import Test345 from '../pages/Test345'
 import { useParams } from 'react-router-dom';
 import PriceFilter from '../components/PriceFilter';
 import RatingFilter from '../components/RatingsFilter';
@@ -182,7 +183,7 @@ const ShopPage = () => {
         </div>
       </div>
       <ToastContainer />
-      <Footer />
+      <Test345 />
     </>
   );
 };

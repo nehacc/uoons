@@ -4,7 +4,7 @@ import axios from 'axios';
 import Logo from '../assets/uoonsLogoXl.png';
 import Navbar from '../components/Navbar';
 import LowerNavbar from '../components/LowerNavbar';
-import Footer from '../components/Footer';
+import Test345 from '../pages/Test345'
 import { useNavigate, Link } from 'react-router-dom';
 import UserSession from '../user';
 
@@ -111,7 +111,8 @@ const LoginSignup = () => {
     return (
       <>
         <Navbar />
-        <div className="flex items-center justify-center my-9 bg-gray-100">
+        <LowerNavbar />
+        <div className="flex items-center justify-center my-9">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">You are already logged in</h2>
             <p className="text-gray-600 mb-6">You can go back to the homepage to continue browsing.</p>
@@ -123,7 +124,7 @@ const LoginSignup = () => {
             </Link>
           </div>
         </div>
-        <Footer />
+        <Test345 />
       </>
     );
   } else {
@@ -151,7 +152,7 @@ const LoginSignup = () => {
           {/* Login Form */}
           {loginForm ? (
             <form onSubmit={handleSubmit(handleLogin)}>
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="name">
                   Name
                 </label>
@@ -165,7 +166,7 @@ const LoginSignup = () => {
                 {errors.name && (
                   <p className="bg-red-100 w-fit text-red-700 text-xs italic mt-1 p-2 rounded">{errors.name.message}</p>
                 )}
-              </div>
+              </div> */}
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="mobileNumber1">
                   Mobile Number
@@ -178,7 +179,7 @@ const LoginSignup = () => {
                   {...register('mobileNumber', { required: 'Mobile number is required' })}
                 />
                 {errors.mobileNumber && (
-                  <p className="bg-red-100 w-fit text-red-700 text-xs italic mt-1 p-2 rounded">{errors.mobileNumber.message}</p>
+                  <p className="bg-red-100 w-fit text-red-700 text-xs font-semibold italic mt-1 p-2 rounded">{errors.mobileNumber.message}</p>
                 )}
               </div>
               <div className="flex items-center justify-between mb-6">
@@ -214,7 +215,7 @@ const LoginSignup = () => {
                       {...register('otp', { required: 'OTP is required' })}
                     />
                     {errors.otp && (
-                      <p className="bg-red-100 w-fit text-red-700 text-xs italic mt-1 p-2 rounded">{errors.otp.message}</p>
+                      <p className="bg-red-100 w-fit text-red-700 text-xs font-semibold italic mt-1 p-2 rounded">{errors.otp.message}</p>
                     )}
                   </div>
                   <div className="flex items-center justify-center mb-6">
@@ -229,7 +230,7 @@ const LoginSignup = () => {
                 </>
               )}
               {message && (
-                <p className="bg-yellow-100 w-fit text-yellow-700 text-xs italic mt-1 mb-4 p-2 rounded">{message}</p>
+                <p className="bg-yellow-100 w-fit text-yellow-700 text-xs font-semibold italic mt-1 mb-4 p-2 rounded">{message}</p>
               )}
               <div className="flex items-center justify-between mb-4">
                 <label className="block text-gray-700 text-sm font-medium mb-2">
@@ -334,7 +335,7 @@ const LoginSignup = () => {
             </form>
           )}
         </div>
-        <Footer />
+        <Test345 />
       </>
     );
   }
