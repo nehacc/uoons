@@ -45,7 +45,7 @@ const ListComponentHome = () => {
   }
 
   return (
-    <div className='w-screen bg-blue-100'>
+    <div className='w-screen bg-blue-50'>
     <div className="container mx-auto px-4 py-8">
       <div className="space-y-4">
         {categories.map((category) => (

@@ -32,6 +32,7 @@ import MyOrders from './pages/MyOrders.jsx';
 import MyOrders2 from './pages/MyOrders2.jsx';
 import OrderDetails from './pages/OrderDetails.jsx';
 import Test345 from './pages/Test345.jsx'
+import ProductListPriceStore from './pages/ProductListPriceStore.jsx'
 
 
 const router = createBrowserRouter([
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: "/ProductList/:c_id",
     element: <ProductList />,
+  },
+  {
+    path: "/ProductListPriceStore/:priceId",
+    element: <ProductListPriceStore />,
   },
   
   {

@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <>
     <Test344 />
-    <div className="bg-blue-700 text-white">
+    <div className="bg-blue-600 text-white">
 
       {/* Links Section */}
       <div className="container mx-auto px-4 py-5">
@@ -86,7 +86,7 @@ const Footer = () => {
       </div> */}
 
       {/* Contact Email */}
-      <div className="text-center text-orange-600 font-bold text-lg">
+      <div className="text-center text-red-600 font-semibold  text-lg">
         care@Uoons.com
       </div>
 
