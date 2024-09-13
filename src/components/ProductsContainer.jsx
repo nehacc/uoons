@@ -98,8 +98,8 @@ const ProductsContainer = (props) => {
   }
 
   return (
-    <div className="mt-7 mb-12">
-      <div className="container mx-auto relative">
+    <div className="mt-7 mb-12 container">
+      <div className="mx-auto relative w-fit max-w-full">
         {/* Header section */}
         <div className="text-center mb-6 max-w-[600px] mx-auto">
           <h1 className="text-3xl font-bold text-orange-600">{heading}</h1>
@@ -109,19 +109,19 @@ const ProductsContainer = (props) => {
         </div>
         {/* Scroll buttons for large screens */}
         <button
-          className="z-30 absolute top-1/2 transform -translate-y-1/2 left-0 p-[0.1rem] sm:p-[0.4rem] text-[3rem] border-[5px] border-white bg-blue-100 text-orange-600 rounded-full"
+          className="z-30 absolute top-1/2 transform -translate-y-1/2 left-[-38px] p-[0.1rem] sm:p-[0.4rem] text-[3rem] border-[5px] border-white bg-blue-100 text-orange-600 rounded-full"
           onClick={() => handleScroll(-300)}
         >
           <MdOutlineKeyboardArrowLeft />
         </button>
         <button
-          className="z-30 absolute top-1/2 transform -translate-y-1/2 right-0 p-[0.1rem] sm:p-[0.4rem] text-[3rem] border-[5px] border-white bg-blue-100 text-orange-600 rounded-full"
+          className="z-30 absolute top-1/2 transform -translate-y-1/2 right-[-38px] p-[0.1rem] sm:p-[0.4rem] text-[3rem] border-[5px] border-white bg-blue-100 text-orange-600 rounded-full"
           onClick={() => handleScroll(300)}
         >
           <MdOutlineKeyboardArrowRight />
         </button>
         {/* Body section */}
-        <div ref={containerRef}className="relative w-full overflow-x-scroll flex flex-col ">
+        <div ref={containerRef} className="relative w-full overflow-x-scroll flex flex-col ">
           
           <div
             className="flex py-2 w-fit rounded-lg justify-center gap-6 overflow-x-scroll scrollbar-hide"

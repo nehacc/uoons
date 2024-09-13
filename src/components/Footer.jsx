@@ -1,133 +1,106 @@
 import React from 'react';
-import { FaApple, FaGooglePlay, FaWhatsapp, FaInstagram, FaTwitter, FaYoutube, FaLinkedin, FaBlogger, FaInstagramSquare, FaRegCopyright } from 'react-icons/fa';
-import { FiTruck, FiPhone, FiMessageCircle, FiGift } from 'react-icons/fi';
-import Logo from '../assets/uoonsLogoXl.png';
+import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube, FaRegCopyright } from 'react-icons/fa';
+import Test344 from '../pages/Test344';
 
 const Footer = () => {
   return (
-    <div className="bg-gray-100 py-8">
-      {/* Top Section */}
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center text-sm">
-          <div className="footer-icon mb-4">
-            <FiTruck className="text-2xl mb-2 text-blue-500 mx-auto" />
-            <div>Free Shipping</div>
-            <div>When you spend ₹50,000+</div>
+    <>
+      <Test344 />
+      <footer className="bg-[#1863a9] text-white">
+        <div className="container mx-auto px-4 py-8">
+
+          {/* Links Section */}
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 text-center sm:text-left mb-6">
+            
+            {/* Information */}
+            <div>
+              <h2 className="text-white text-lg mb-3">INFORMATION</h2>
+              <ul className="text-sm space-y-3">
+                <li><a href="#about" className="hover:text-orange-500 transition">About Us</a></li>
+                <li><a href="/ContactUs" className="hover:text-orange-500 transition">Contact Us</a></li>
+                <li><a href="#privacy" className="hover:text-orange-500 transition">Privacy Policy</a></li>
+                <li><a href="/T&c" className="hover:text-orange-500 transition">Terms & Conditions</a></li>
+                <li><a href="/Faq" className="hover:text-orange-500 transition">FAQ</a></li>
+                <li><a href="#returns" className="hover:text-orange-500 transition">Returns</a></li>
+                <li><a href="#gifts" className="hover:text-orange-500 transition">Gift Certificates</a></li>
+                <li><a href="#blogs" className="hover:text-orange-500 transition">Blogs</a></li>
+              </ul>
+            </div>
+
+            {/* My Account */}
+            <div>
+              <h2 className="text-white text-lg mb-3">MY ACCOUNT</h2>
+              <ul className="text-sm space-y-3">
+                <li><a href="/Profile" className="hover:text-orange-500 transition">User Profile</a></li>
+                <li><a href="/MyOrders2" className="hover:text-orange-500 transition">Order History</a></li>
+                <li><a href="/wishlist" className="hover:text-orange-500 transition">Wish List</a></li>
+                <li><a href="#newsletter" className="hover:text-orange-500 transition">Newsletter</a></li>
+                <li><a href="#affiliate" className="hover:text-orange-500 transition">Affiliate</a></li>
+                <li><a href="#international" className="hover:text-orange-500 transition">International Orders</a></li>
+              </ul>
+            </div>
+
+            {/* Services */}
+            <div>
+              <h2 className="text-white text-lg mb-3">SERVICES</h2>
+              <ul className="text-sm space-y-3">
+                <li><a href="#franchise" className="hover:text-orange-500 transition">Franchise</a></li>
+                <li><a href="#kiosk" className="hover:text-orange-500 transition">Kiosk</a></li>
+                <li><a href="#repair" className="hover:text-orange-500 transition">Phone Repairing</a></li>
+                <li><a href="#sales" className="hover:text-orange-500 transition">Sales & Services</a></li>
+              </ul>
+            </div>
+
+            {/* Office Address */}
+            <div>
+              <h2 className="text-white text-lg mb-3">Office Address:</h2>
+              <p className="text-sm">
+                Vershama Tech Pvt. Ltd.<br />
+                304 Capital Tower, Sapna Sangeeta Road,<br />
+                Indore, Madhya Pradesh - 452001
+              </p>
+              <p className="text-sm mt-4">
+                Email: <a href="mailto:care@uoons.com" className="hover:text-orange-500 transition">care@uoons.com</a>
+              </p>
+              <p className="text-sm mt-4">
+                Please Note that you are accessing the BETA version of www.uoons.com.
+                Should you encounter any bugs, lack of functionality, glitches, delayed deliveries, billing errors or any other problems, please write to us at <a href="mailto:care@uoons.com" className="hover:text-orange-500 transition">care@uoons.com</a>.
+              </p>
+            </div>
           </div>
-          <div className="footer-icon mb-4">
-            <FiPhone className="text-2xl mb-2 text-blue-500 mx-auto" />
-            <div>Call Us Anytime</div>
-            <div>+34 555 5555</div>
+
+          {/* Divider */}
+          <hr className="border-gray-400 w-4/5 mx-auto my-6" />
+
+          {/* Contact Email */}
+          <div className="text-center text-lg font-semibold text-red-600">care@uoons.com</div>
+
+          {/* Social Media Icons */}
+          <div className="container mx-auto text-center mt-4 pb-6">
+            <div className="flex justify-center space-x-6">
+              <a href="https://www.facebook.com/uoons/" className="text-2xl p-4 rounded-full bg-white text-blue-600 shadow-md transition-all hover:bg-blue-600 hover:text-white hover:scale-110">
+                <FaFacebookF />
+              </a>
+              <a href="https://twitter.com/uoonsIndia/" className="text-2xl p-4 rounded-full bg-white text-blue-400 shadow-md transition-all hover:bg-blue-400 hover:text-white hover:scale-110">
+                <FaTwitter />
+              </a>
+              <a href="https://www.instagram.com/uoonsindia/" className="text-2xl p-4 rounded-full bg-white text-pink-500 shadow-md transition-all hover:bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:text-white hover:scale-110">
+                <FaInstagram />
+              </a>
+              <a href="https://www.youtube.com/channel/UCCmdMR5T5nm6rwM-trKSeMQ" className="text-2xl p-4 rounded-full bg-white text-red-600 shadow-md transition-all hover:bg-red-600 hover:text-white hover:scale-110">
+                <FaYoutube />
+              </a>
+            </div>
           </div>
-          <div className="footer-icon mb-4">
-            <FiMessageCircle className="text-2xl mb-2 text-blue-500 mx-auto" />
-            <div>Chat With Us</div>
-            <div>We offer 24-hour chat support</div>
-          </div>
-          <div className="footer-icon mb-4">
-            <FiGift className="text-2xl mb-2 text-blue-500 mx-auto" />
-            <div>Gift Cards</div>
-            <div>For your loved one, in any amount</div>
+
+          {/* Footer Bottom */}
+          <div className="text-center text-sm text-white py-4">
+            <FaRegCopyright className="inline-block mb-1" /> 2024 Uoons (INDIA) PRIVATE LIMITED. All rights reserved.
           </div>
         </div>
-      </div>
-
-      {/* Divider */}
-      <hr className="my-8 mx-auto w-4/5 border-gray-300" />
-
-      {/* Links Section */}
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-          <div className="footer-section mb-4">
-            <img src={Logo} alt="Uoons Logo" className="footer-logo mb-4 mx-auto" style={{ maxWidth: '100px' }} />
-            <p className="text-gray-700 text-sm">
-              <strong>Registered Office Address:</strong><br />
-              171 Devi Ahilya Marg, GFL 12, Jail Road, Indore - 452007, Madhya Pradesh, India.<br />
-              Email: <a href="mailto:care@uoons.com" className="text-blue-600">care@uoons.com</a><br />
-              Please note that you are accessing the BETA version of www.uoons.com. Should you encounter any bugs, lack of functionality, glitches, delayed deliveries, billing errors, or any other problems on this beta website, please write to us at <a href="mailto:care@uoons.com" className="text-blue-600">care@uoons.com</a>.
-            </p>
-          </div>
-          <div className="footer-section mb-4">
-            <h2 className="text-gray-800 text-lg mb-4">INFORMATION</h2>
-            <ul className="text-gray-700 text-sm">
-              <li><a href="#about" className="text-blue-600">About Us</a></li>
-              <li><a href="#contact" className="text-blue-600">Contact Us</a></li>
-              <li><a href="#privacy" className="text-blue-600">Privacy Policy</a></li>
-              <li><a href="#terms" className="text-blue-600">Terms & Conditions</a></li>
-              <li><a href="#faq" className="text-blue-600">FAQ</a></li>
-              <li><a href="#returns" className="text-blue-600">Returns</a></li>
-              <li><a href="#gifts" className="text-blue-600">Gift Certificates</a></li>
-              <li><a href="#blogs" className="text-blue-600">Blogs</a></li>
-            </ul>
-          </div>
-          <div className="footer-section mb-4">
-            <h2 className="text-gray-800 text-lg mb-4">MY ACCOUNT</h2>
-            <ul className="text-gray-700 text-sm">
-              <li><a href="#profile" className="text-blue-600">User Profile</a></li>
-              <li><a href="#orders" className="text-blue-600">Order History</a></li>
-              <li><a href="#wishlist" className="text-blue-600">Wish List</a></li>
-              <li><a href="#newsletter" className="text-blue-600">Newsletter</a></li>
-              <li><a href="#affiliate" className="text-blue-600">Affiliate</a></li>
-              <li><a href="#international" className="text-blue-600">International Orders</a></li>
-            </ul>
-          </div>
-          <div className="footer-section mb-4">
-            <h2 className="text-gray-800 text-lg mb-4">SERVICES</h2>
-            <ul className="text-gray-700 text-sm">
-              <li><a href="#franchise" className="text-blue-600">Franchise</a></li>
-              <li><a href="#kiosk" className="text-blue-600">Kiosk</a></li>
-              <li><a href="#repair" className="text-blue-600">Phone Repairing</a></li>
-              <li><a href="#sales" className="text-blue-600">Sales & Services</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Divider */}
-      <hr className="my-8 mx-auto w-4/5 border-gray-300" />
-
-      {/* App Download Section */}
-      <div className="container mx-auto px-4 text-center">
-        <div className="grid grid-cols-2 gap-4 w-fit mx-auto">
-          <a href="https://apps.apple.com" target="_blank" rel="noopener noreferrer">
-            <FaApple className="footer-app-icon text-4xl text-gray-600 hover:text-blue-600" />
-          </a>
-          <a href="https://play.google.com" target="_blank" rel="noopener noreferrer">
-            <FaGooglePlay className="footer-app-icon text-4xl text-gray-600 hover:text-blue-600" />
-          </a>
-        </div>
-      </div>
-
-      {/* Contact Email */}
-      <div className="container mx-auto px-4 text-center mt-4">
-        <span className="footer-contact text-base text-orange-600 font-bold">care@Uoons.com</span>
-      </div>
-
-      {/* Social Media Icons */}
-      <div className="container mx-auto px-4 text-center mt-4">
-        <div className="grid grid-cols-7 gap-7 w-fit mx-auto">
-          <FaWhatsapp className="footer-social-icon text-2xl text-gray-600 hover:text-blue-600" />
-          <FaInstagram className="footer-social-icon text-2xl text-gray-600 hover:text-blue-600" />
-          <FaTwitter className="footer-social-icon text-2xl text-gray-600 hover:text-blue-600" />
-          <FaYoutube className="footer-social-icon text-2xl text-gray-600 hover:text-blue-600" />
-          <FaLinkedin className="footer-social-icon text-2xl text-gray-600 hover:text-blue-600" />
-          <FaBlogger className="footer-social-icon text-2xl text-gray-600 hover:text-blue-600" />
-          <FaInstagramSquare className="footer-social-icon text-2xl text-gray-600 hover:text-blue-600" />
-        </div>
-      </div>
-
-      {/* Divider */}
-      <hr className="my-8 mx-auto w-4/5 border-gray-300" />
-
-      {/* Footer Bottom */}
-      <div className="container mx-auto px-4 text-center py-4">
-        <span className="text-sm text-gray-700">Terms of Use | Copyright | Privacy Policy | Compliance</span>
-        <div className="text-sm text-gray-700 mt-2">
-          <FaRegCopyright className="inline-block mb-1 text-base text-gray-700" /> 2024 Uoons (INDIA) PRIVATE LIMITED. All rights reserved.
-        </div>
-      </div>
-    </div>
+      </footer>
+    </>
   );
-}
+};
 
 export default Footer;

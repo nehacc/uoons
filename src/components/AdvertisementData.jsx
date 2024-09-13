@@ -12,21 +12,21 @@ const AdContainer = ({ advertisementData }) => {
         </div>
         {/* Body section */}
         <div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="flex justify-center gap-8">
             {/* ad images */}
             {advertisementData.items.map((ad) => (
               <div
                 key={ad.id}
-                className="relative flex flex-col justify-center items-center rounded-lg transition duration-300 shadow-md"
+                className="w-fit relative flex flex-col justify-center items-center rounded-lg transition duration-300 shadow-md"
               >
                 <img
                   src={"https://uoons.com/" + ad.image}
                   alt={ad.title}
-                  className="h-auto w-full object-contain rounded-lg"
+                  className="h-full object-contain rounded-lg"
                 />
                 
-                  <p className="text-sm text-white absolute bottom-0 left-2">
-                    Sponsored by: {ad.sponsored_by}
+                  <p className="text-sm text-white absolute top-0 right-3">
+                    Sponsored
                   </p>
                 
               </div>

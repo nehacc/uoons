@@ -16,8 +16,8 @@ const PriceStore = ({priceStoreData}) => {
     AOS.refresh();
   }, []);
 
-  const handlePriceRangeClick = (maxPrice) => {
-    navigate(`/ProductListPriceStore/${2}`); //somewhere
+  const handlePriceRangeClick = (num) => {
+    navigate(`/ProductListPriceStore/${num}`); //somewhere
   };
 
   return (
@@ -27,12 +27,12 @@ const PriceStore = ({priceStoreData}) => {
         <p className="text-xs text-gray-400 mb-6">Find the best deals within your budget.</p>
         
         <div className="flex justify-center gap-6 flex-wrap">
-          {[1,2,3,4].map((item) => (
+          {[1,2,3,4].map((num) => (
             <div
-              key={item.id}
-              onClick={() => handlePriceRangeClick()}
+              key={num}
+              onClick={() => handlePriceRangeClick(num)}
 
-              className="cursor-pointer border rounded-lg shadow-lg w-[350px] hover:shadow-2xl flex flex-col items-center relative overflow-hidden bg-blue-100"
+              className="cursor-pointer border rounded-lg shadow-lg w-[300px] hover:shadow-2xl flex flex-col items-center relative overflow-hidden bg-blue-100"
               data-aos="fade-up"
             >
               <img src="/sampleUnder.jpg" alt="priceStoreImage" />
