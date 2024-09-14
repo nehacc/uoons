@@ -29,7 +29,8 @@ const Navbar = () => {
     }
   };
   const search = () => {
-    navigate('/ProductListSearch')
+    // navigate('/ProductListSearch')
+    window.location.href = "/ProductListSearch"; // This forces a full page reload
   }
   
   

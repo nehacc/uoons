@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import LowerNavbar from '../components/LowerNavbar';
 import Footer from '../components/Footer';
+import UserSession from '../user';
 
 const MyOrders = () => {
   const [orderData, setOrderData] = useState([]);
@@ -27,7 +28,7 @@ const MyOrders = () => {
             'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
             'Accept': '*/*',
             'channel-code': 'ANDROID',
-            'auth': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Ijc0MCIsInByb2ZpbGVpZCI6IjE5NzUyNzAwMzgiLCJuYW1lIjoiQWJoaXNoZWsgU2hhcm1hIiwiZW1haWwiOiJzaXRlbnR3ZWJAZ21haWwuY29tIiwibW9iaWxlX25vIjoiOTY5MTQwNzQ1NSIsImZ0b2tlbiI6ImFkZmxqamZhc2xkZmprYSIsIm90cCI6NjA1Mn0.e36R2OF9THNrMBB0b4VlDa-1G1Z0TuMGLEGhbbfRKSU', // Replace with your auth token
+            'auth': UserSession.getAuth()
           },
         });
 
