@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import SpecificCategorieProduct2 from '../components/SpecificCategorieProduct2';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import Navbar from '../components/Navbar';
-import LowerNavbar from '../components/LowerNavbar';
+import "aos/dist/aos.css";
+import "react-toastify/dist/ReactToastify.css";
+import AOS from "aos";
+import DiscountFilter from "../components/DiscountFilter";
+import LowerNavbar from "../components/LowerNavbar";
+import Navbar from "../components/Navbar";
+import PriceFilter from "../components/PriceFilter";
+import React, { useEffect, useState } from "react";
+import SpecificCategorieProduct2 from "../components/SpecificCategorieProduct2";
+import Test345 from "../pages/Test345";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
 // import Footer from '../components/Footer';
-import Test345 from '../pages/Test345'
-import { useParams } from 'react-router-dom';
-import PriceFilter from '../components/PriceFilter';
-import DiscountFilter from '../components/DiscountFilter';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const ShopPage = () => {
   const { priceId } = useParams();

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import SpecificCategorieProduct from '../components/SpecificCategorieProduct';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import Navbar from '../components/Navbar';
-import LowerNavbar from '../components/LowerNavbar'
-import Footer from '../components/Footer';
-import PriceFilter from '../components/PriceFilter';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import DiscountFilter from '../components/DiscountFilter';
+import "aos/dist/aos.css";
+import "react-toastify/dist/ReactToastify.css";
+import AOS from "aos";
+import DiscountFilter from "../components/DiscountFilter";
+import Footer from "../components/Footer";
+import LowerNavbar from "../components/LowerNavbar";
+import Navbar from "../components/Navbar";
+import PriceFilter from "../components/PriceFilter";
+import React, { useEffect, useState } from "react";
+import SpecificCategorieProduct from "../components/SpecificCategorieProduct";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const ShopPage = () => {
   const [data, setData] = useState([]);
@@ -32,7 +32,7 @@ const ShopPage = () => {
           setError('No products found.');
         }
       } catch (err) {
-        setError('Failed to fetch data.');
+        setError(`Failed to fetch data.`);
       } finally {
         setLoading(false);
       }

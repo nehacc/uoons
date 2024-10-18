@@ -1,20 +1,50 @@
-import React from "react";
-import { useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import "./Search.css";
+import AOS from "aos";
 import Logo from "../assets/uoonsLogoXl.png";
+import React from "react";
+import UserSession from "../user";
+import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
+import { FaBoxOpen, FaSignInAlt, FaSignOutAlt, FaUser, FaUserPlus } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { IoMdHeart } from "react-icons/io";
-import { useNavigate } from "react-router-dom"
-import UserSession from "../user";
-import { FaUser, FaBoxOpen, FaSignOutAlt, FaSignInAlt, FaUserPlus } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
+ 
 
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+ 
 
 const Navbar = () => {
   const navigate = useNavigate();
+ const [showPopup, setShowPopup] = useState(false);
+  const modalRef = useRef(null);
+
+ 
+
+
+
+
+
+ 
+ 
+  // Show popup when search bar or modal gets focused
+  const handleFocus = () => {
+    setShowPopup(true);
+  };
+
+  // Hide popup when the modal or input loses focus
+  const handleBlur = (event) => {
+    // Check if the modal contains the focused element
+    if (modalRef.current && modalRef.current.contains(event.relatedTarget)) {
+      return;
+    }
+    setShowPopup(false);
+  };
+
+
 
   // for a button
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -33,10 +63,11 @@ const Navbar = () => {
     window.location.href = "/ProductListSearch"; // This forces a full page reload
   }
   
-  
+ 
 
 
   return (
+    <>
     <div className="shadow-md bg-white duration-200 z-50 sticky top-[0px]">
 
       {/* upper Navbar */}
@@ -48,6 +79,11 @@ const Navbar = () => {
             </a>
           </div>
 
+
+
+
+
+
           <div className="flex flex-col md:flex-row  items-center gap-3">
             {/* search bar */}
             <div className="relative border rounded-full">
@@ -55,13 +91,19 @@ const Navbar = () => {
                 type="text"
                 placeholder="Search your favorite products and brands"
                 className="w-[400px] lg:w-[500px] lg:hover:w-[550px] transition-all duration-300 rounded-full border-none px-4 py-2 shadow-lg focus:outline-none focus:ring-1 focus:ring-orange-600"
-                onKeyDown={handleKeyDown}
+                // onKeyDown={handleKeyDown}
+                 
+               onFocus={handleFocus}  // Show popup when the input gets focused
+               onBlur={handleBlur}   
               />
               <button onClick={search} className="absolute top-1/2 right-0 w-10 h-10 bg-orange-600 text-white rounded-full flex items-center justify-center transform -translate-y-1/2">
                 <BiSearchAlt className="text-xl" />
               </button>
-            </div>
+             </div>
+            
 
+
+               
             {/* old search bar */}
             {/* <div className="relative">
               <input
@@ -180,7 +222,59 @@ const Navbar = () => {
         </ul>
       </div> */}
     </div>
+
+      
+              {showPopup && (
+                 <div 
+                        // Reference the modal for focus checks
+                  tabIndex={0}         // Make the modal focusable
+                 onBlur={handleBlur} 
+                   ref={modalRef} 
+
+                 className="popup-modal searchPopup">
+                  <div className="grid grid-rows-3 grid-flow-col gap-4">
+                       <div className="scroll-container row-span-3">
+                      <div className="scroll-content">
+                   <p>This is some content that is scrollable.</p>
+                   <p>More content to scroll through...</p>
+                   <p>Even more content...</p>
+                   <p>Keep scrolling...</p>
+                   <p>Almost there...</p>
+                   <p>You made it to the end!</p>
+                  <p>This is some content that is scrollable.</p>
+                  <p>More content to scroll through...</p>
+                  <p>Even more content...</p>
+                  <p>Keep scrolling...</p>
+                  <p>Almost there...</p>
+                   <p>You made it to the end!</p>
+                    </div>
+                     </div>
+                     <div className="productSlider col-span-2 ">
+                     <p style={{ fontSize: '20px', fontStyle: 'bold', fontFamily:'Trebuchet MS' }}> Products</p>
+ 
+                     </div>
+                     </div>
+                      <div className="row-span">
+                      <div className=""> 
+                            <p  style={{ fontSize: '20px', fontStyle: 'normal', fontFamily:'Trebuchet MS' }}> Categories</p>
+                           
+                <p> scrolling..gggggggggggggggggggggggggggggggggggggggggggggggggggg.</p>
+                <p>Almost there...gggggggggggggggggggggggggggggg</p>
+                      </div>
+                     <div className="">
+                            <p style={{ fontSize: '20px', fontStyle: 'normal' , fontFamily:'Trebuchet MS' }}>Brands</p>
+                               <p> scrolling..gggggggggggggggggggggggggggggggggggggggggggggggggggg.</p>
+                <p>Almost there...gggggggggggggggggggggggggggggg</p>
+                 
+                     </div>
+                   </div>
+                     
+               </div> )}
+              
+
+    </>
   );
+
 };
 
 export default Navbar;

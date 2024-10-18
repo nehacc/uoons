@@ -1,18 +1,16 @@
-
-
-import React, { useState, useRef, useEffect } from "react";
-import axios from 'axios';
-import AOS from "aos";
 import "aos/dist/aos.css";
-import { FaStar } from "react-icons/fa";
-import { IoMdHeart } from "react-icons/io";
-import { FaCartPlus } from "react-icons/fa";
-import '../components/ProductsContainer.css';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import "../components/ProductsContainer.css";
+import AOS from "aos";
+import React, { useEffect, useRef, useState } from "react";
 import UserSession from "../user";
-import { useNavigate } from 'react-router-dom';
-import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight, MdAddShoppingCart } from "react-icons/md";
+import axios from "axios";
+import { FaStar } from "react-icons/fa";
+import { FaCartPlus } from "react-icons/fa";
+import { IoMdHeart } from "react-icons/io";
+import { MdAddShoppingCart, MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const ProductsContainer = (props) => {
   const navigate = useNavigate();
@@ -137,7 +135,7 @@ const ProductsContainer = (props) => {
                 onClick={() => { navigate(`/PdTest/${item.pid}`) }}
                 key={item.pid}
                 id="product-container"
-                className=" bg-white cursor-pointer border p-3 rounded-lg shadow-lg w-[200px] space-y-2 hover:shadow-2xl flex flex-col items-center relative overflow-hidden"
+                className=" bg-white cursor-pointer border p-3 rounded-lg shadow-lg w-[200px] space-y-2 hover:shadow-2xl flex flex-col items-center relative overflow-hidden  bg-indigo-50 opacity-0.5 "
                 data-aos="fade-up"
               >
                 <button

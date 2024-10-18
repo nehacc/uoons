@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import AOS from "aos";
 import "aos/dist/aos.css";
-import Navbar from '../components/Navbar'
-import LowerNavbar from '../components/LowerNavbar';
-import Slideshow from '../components/Slideshow';
-import ProductsContainer from '../components/ProductsContainer';
-import ProductsContainerMII from '../components/ProductsContainerMII';
+import "react-toastify/dist/ReactToastify.css";
+import AOS from "aos";
+import AdvertisementData from "../components/AdvertisementData.jsx";
+import BrandContainer from "../components/BrandContainer";
+import LoadingComponent from "../components/LoadingComponent.jsx";
+import LowerNavbar from "../components/LowerNavbar";
+import Navbar from "../components/Navbar";
+import PriceStore from "../components/PriceStore.jsx";
+import ProductsContainer from "../components/ProductsContainer";
+import ProductsContainerMII from "../components/ProductsContainerMII";
+import React, { useEffect, useState } from "react";
+import Slideshow from "../components/Slideshow";
+import Test345 from "../pages/Test345.jsx";
+import UserSession from "../user";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+
+ 
+
 // import Banner from '../components/Banner';
 // import Footer from '../components/Footer'
-import BrandContainer from '../components/BrandContainer';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import UserSession from '../user';
-import PriceStore from '../components/PriceStore.jsx';
-import AdvertisementData from '../components/AdvertisementData.jsx'
-import Test345 from '../pages/Test345.jsx'
 
 
 
@@ -26,7 +30,7 @@ const Homepage = () => {
   const [HomePageData, setHomePageData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+ 
   // additional
   const headings = {
     newArrival: "New Arrival",
@@ -59,9 +63,7 @@ const Homepage = () => {
   }, []);
 
   
-  console.log(HomePageData)
-    
-  
+
   useEffect(() => {
     AOS.init({
       offset: 100,
@@ -72,13 +74,16 @@ const Homepage = () => {
     AOS.refresh();
   }, []);
   
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div><LoadingComponent/></div>;
   if (error) return <div>Error: {error.message}</div>;
+
   return (
     <>
     <div className="bg-white duration-200">
       <Navbar />
+     
       <LowerNavbar />
+        
       <Slideshow />
       <ProductsContainer heading={HomePageData.Data[3].name} data={HomePageData.Data[3].items}/>
       <PriceStore priceStoreData={HomePageData.Data[2]}/>
@@ -102,8 +107,9 @@ const Homepage = () => {
       {/* <Footer /> */}
       <Test345 />
       <ToastContainer />
-
+      
     </div>
+      
     </>
   )
   

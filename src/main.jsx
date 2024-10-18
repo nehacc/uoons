@@ -1,38 +1,39 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import "./index.css";
+import AddToCart from "./pages/AddToCart.jsx";
+import Checkout from "./pages/Checkout.jsx";
+import Checkout1 from "./pages/Checkout1.jsx";
+import CheckoutMulti from "./pages/CheckoutMulti.jsx";
+import ContactUs from "./pages/ContactUs.jsx";
+import Faq from "./pages/Faq.jsx";
+import Homepage from "./pages/Homepage.jsx";
+import HomepageAds from "./pages/HomepageAds.jsx";
+import LoginSignup from "./pages/LoginSignup.jsx";
+import MyOrders from "./pages/MyOrders.jsx";
+import MyOrders2 from "./pages/MyOrders2.jsx";
+import NewProfile from "./pages/NewProfile.jsx";
+import OrderDetails from "./pages/OrderDetails.jsx";
+import PdTest from "./pages/PdTest.jsx";
+import ProductDescription from "./pages/ProductDescription";
+import ProductDescriptionTest from "./pages/ProductDescriptionTest";
+import ProductList from "./pages/ProductList.jsx";
+import ProductListPriceStore from "./pages/ProductListPriceStore.jsx";
+import ProductListSearch from "./pages/ProductListSearch.jsx";
+import Profile from "./pages/Profile.jsx";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import SpecificCategorieProduct from "./components/SpecificCategorieProduct.jsx";
+import TermsAndConditions from "./pages/TermsAndConditions.jsx";
+import Test from "./pages/Test.jsx";
+import Test345 from "./pages/Test345.jsx";
+import ThankYouPage from "./pages/ThankyouPage.jsx";
+import Timeline from "./pages/Timeline.jsx";
+import ToastContainer from "./components/ToastContainer";
+import WishList from "./pages/Wishlist.jsx";
+
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import './index.css'
-import Homepage from './pages/Homepage.jsx';
-import ProductList from './pages/ProductList.jsx'
-import ProductDescription from './pages/ProductDescription'
-import ProductDescriptionTest from './pages/ProductDescriptionTest'
-import Faq from './pages/Faq.jsx';
-import TermsAndConditions from './pages/TermsAndConditions.jsx';
-import Timeline from './pages/Timeline.jsx'
-import WishList from './pages/Wishlist.jsx';
-import ContactUs from './pages/ContactUs.jsx';
-import AddToCart from './pages/AddToCart.jsx';
-import LoginSignup from './pages/LoginSignup.jsx'
-import HomepageAds from './pages/HomepageAds.jsx';
-import Test from './pages/Test.jsx';
-import Profile from './pages/Profile.jsx';
-import SpecificCategorieProduct from './components/SpecificCategorieProduct.jsx';
-import ToastContainer from './components/ToastContainer'
-import PdTest from './pages/PdTest.jsx'
-import NewProfile from './pages/NewProfile.jsx';
-import Checkout from './pages/Checkout.jsx'
-import Checkout1 from './pages/Checkout1.jsx'
-import CheckoutMulti from './pages/CheckoutMulti.jsx'
-import ThankYouPage from './pages/ThankyouPage.jsx';
-import ProductListSearch from './pages/ProductListSearch.jsx'
-import MyOrders from './pages/MyOrders.jsx';
-import MyOrders2 from './pages/MyOrders2.jsx';
-import OrderDetails from './pages/OrderDetails.jsx';
-import Test345 from './pages/Test345.jsx'
-import ProductListPriceStore from './pages/ProductListPriceStore.jsx'
 
 
 const router = createBrowserRouter([

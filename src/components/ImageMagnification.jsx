@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from "react";
 
 const ImageMagnification = ({ mainImage, thumbnailImages }) => {
   const [selectedImage, setSelectedImage] = useState(mainImage);
@@ -61,9 +61,11 @@ const ImageMagnification = ({ mainImage, thumbnailImages }) => {
           ></div>
         </div>
         <div
-          className={`absolute right-[-845px] top-[-24px] z-50 w-[800px] h-[800px] bg-no-repeat bg-cover ml-4 border border-gray-300 rounded-lg shadow-lg ${lensVisible ? 'block' : 'hidden'}`}
-          style={{
-            ...zoomStyle
+          className={`absolute  right-[-845px] top-[-24px] z-50 w-[700px] h-[500px] bg-no-repeat bg-cover ml-4 border border-gray-300 rounded-lg shadow-lg ${lensVisible ? 'block' : 'hidden'}`}
+          style={
+            
+            {
+            ...zoomStyle ,backgroundColor: 'white'
           }}
         ></div>
       </div>

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { FaCaretDown } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { FaCaretDown } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const ListComponentHome = () => {
   const [categories, setCategories] = useState([]);

@@ -1,23 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FaStar, FaStarHalfAlt, FaRegStar, FaTag, } from 'react-icons/fa';
-import EmiLogo from '../assets/emi-logo.png'
-import { FaMapMarkerAlt, FaCheckCircle, FaTimesCircle, FaTruck, FaDollarSign, FaBoxOpen } from 'react-icons/fa';
-import { BsFillCartPlusFill, BsFillBagFill } from 'react-icons/bs';
-import { AiOutlineHome, AiOutlineShop } from 'react-icons/ai';
-import { FaExchangeAlt, FaClipboardCheck, FaShieldAlt } from 'react-icons/fa';
-import FrequentlyBought from '../components/FrequentlyBought';
-import RatingsReview from '../components/RatingsReview';
-import FaqsProduct from '../components/FaqsProduct'
-import ImageMagnification from '../components/ImageMagnification';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import { useParams } from 'react-router-dom';
-import UserSession from '../user';
-
-
-
-
+import EmiLogo from "../assets/emi-logo.png";
+import FaqsProduct from "../components/FaqsProduct";
+import Footer from "../components/Footer";
+import FrequentlyBought from "../components/FrequentlyBought";
+import ImageMagnification from "../components/ImageMagnification";
+import Navbar from "../components/Navbar";
+import RatingsReview from "../components/RatingsReview";
+import React, { useEffect, useState } from "react";
+import UserSession from "../user";
+import axios from "axios";
+import { AiOutlineHome, AiOutlineShop } from "react-icons/ai";
+import { BsFillBagFill, BsFillCartPlusFill } from "react-icons/bs";
+import { FaRegStar, FaStar, FaStarHalfAlt, FaTag } from "react-icons/fa";
+import { FaBoxOpen, FaCheckCircle, FaDollarSign, FaMapMarkerAlt, FaTimesCircle, FaTruck } from "react-icons/fa";
+import { FaClipboardCheck, FaExchangeAlt, FaShieldAlt } from "react-icons/fa";
+import { useParams } from "react-router-dom";
 
 const product = {
   specifications: {
@@ -101,6 +97,7 @@ const addToRecentlyViewed = async () => {
 };
 
   useEffect(() => {
+      window.scrollTo(0, 0);
     const fetchProductData = async () => {
       try {
         const response = await axios.get(`/api/productDetail?pid=${pid}`, {
@@ -111,7 +108,7 @@ const addToRecentlyViewed = async () => {
           }
         });
         setProductData(response.data);
-        addToRecentlyViewed()
+        addToRecentlyViewed() 
         setLoading(false);
       } catch (err) {
         setError(err);
@@ -119,6 +116,8 @@ const addToRecentlyViewed = async () => {
       }
     };
     fetchProductData();
+   
+
   }, []); 
 
   console.log(ProductData)
@@ -170,6 +169,7 @@ const displayedSpecifications = showAllSpecs ? Object.entries(product.specificat
 const baseURL = "https://uoons.com/";
   return (
     <>
+     
     <Navbar />
     {loading?(<div>Loading...</div>):
     (
@@ -465,6 +465,7 @@ const baseURL = "https://uoons.com/";
     )
     }
     <Footer />
+   
     </>
   )
 }

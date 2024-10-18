@@ -1,13 +1,14 @@
-import React from 'react'
-// import './SlideShow.css'
-import { Slide } from 'react-slideshow-image'
-import img1 from '../assets/slide1.jpg'
-import img2 from '../assets/slide2.jpg'
-import img3 from '../assets/slide3.jpg'
-import img4 from '../assets/slide4.jpg'
-import 'react-slideshow-image/dist/styles.css';
+import "react-slideshow-image/dist/styles.css";
+import React from "react";
+import img1 from "../assets/slide1.jpg";
+import img2 from "../assets/slide2.jpg";
+import img3 from "../assets/slide3.jpg";
+import img4 from "../assets/slide4.jpg";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { Slide } from "react-slideshow-image";
+
+// import './SlideShow.css'
 
 const buttonStyleLeft = {
     // fontSize: "3rem",
@@ -44,24 +45,24 @@ const proprietes = {
 
 const Slideshow = () => {
     return (
-        <div className="containerSlide w-[95%] px-2 mx-auto rounded-md mt-5">
+        <div className="containerSlide w-[95%] px-2 mx-auto rounded-md mt-5 ">
             <Slide {...proprietes}>
-                <div className="each-slide rounded-md overflow-hidden">
+                <div className="each-slide rounded-md overflow-hidden border border-[#FF5900]">
                     <div>
                         <img src={img1} alt="img1"/>
                     </div>
                 </div>
-                <div className="each-slide rounded-md overflow-hidden">
+                <div className="each-slide rounded-md overflow-hidden border border-[#FF5900]">
                     <div>
                         <img src={img2} alt="img2" />
                     </div>
                 </div>
-                <div className="each-slide rounded-md overflow-hidden">
+                <div className="each-slide rounded-md overflow-hidden border border-[#FF5900]">
                     <div>
                         <img src={img3} alt="img3" />
                     </div>
                 </div>
-                <div className="each-slide rounded-md overflow-hidden">
+                <div className="each-slide rounded-md overflow-hidden border border-[#FF5900]">
                     <div>
                         <img src={img4} alt="img4" />
                     </div>

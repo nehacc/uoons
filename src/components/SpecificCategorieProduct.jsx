@@ -1,13 +1,12 @@
-import React from 'react';
-import { FaStar } from 'react-icons/fa';
-import { IoMdHeart } from 'react-icons/io';
+import "react-toastify/dist/ReactToastify.css";
+import React from "react";
+import UserSession from "../user";
+import axios from "axios";
+import { FaStar } from "react-icons/fa";
 import { FaCartPlus } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import UserSession from '../user';
-import axios from 'axios';
-
+import { IoMdHeart } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const SpecificCategorieProduct = ({ data, sortOrder, limit, priceRange, selectedDiscount }) => {
   const navigate = useNavigate();
@@ -62,8 +61,7 @@ const SpecificCategorieProduct = ({ data, sortOrder, limit, priceRange, selected
     }
   };
 
-  const filteredData = data
-  .filter(product => {
+  const filteredData = data.filter(product => {
     // Filter by price range
     const inPriceRange = product.product_sale_price >= priceRange[0] && product.product_sale_price <= priceRange[1];
 
@@ -99,16 +97,16 @@ const SpecificCategorieProduct = ({ data, sortOrder, limit, priceRange, selected
 
   return (
     <>
-      <div className="text-gray-600 mb-4">
+      <div className="text-gray-600 mb-4  ">
         Showing {1} to {Math.min(limit, data.length)} of {data.length} results
       </div>
-      <div className="flex flex-wrap py-2 justify-evenly gap-6">
+      <div className="flex flex-wrap py-2 justify-evenly gap-6 ">
         {filteredData.map((item) => (
           <div
             onClick={() => { navigate(`/PdTest/${item.pid}`); }}
             key={item.pid}
             id="product-container"
-            className="border p-3 rounded-lg shadow-lg w-[200px] space-y-2 hover:shadow-2xl flex flex-col items-center relative overflow-hidden bg-white"
+            className="border p-3 rounded-lg shadow-lg w-[200px] space-y-2 hover:shadow-2xl flex flex-col items-center relative overflow-hidden bg-white border border-[#FF5900] "
             data-aos="fade-up"
           >
             <button

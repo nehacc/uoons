@@ -1,41 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Navbar from '../components/Navbar';
-import LowerNavbar from '../components/LowerNavbar'
-import Footer from '../components/Footer';
-import { useParams } from 'react-router-dom';
-import UserSession from '../user';
-import ImageMagnification from '../components/ImageMagnification';
-import { FaStar, FaStarHalfAlt, FaRegStar, FaTag, } from 'react-icons/fa';
-import EmiLogo from '../assets/emi-logo.png'
+import "react-toastify/dist/ReactToastify.css";
+import AvailabilityCheck from "../components/AvailabilityCheck";
+import EmiLogo from "../assets/emi-logo.png";
+import FaqsProduct from "../components/FaqsProduct";
+import Footer from "../components/Footer";
+import FrequentlyBought from "../components/FrequentlyBought";
+import ImageMagnification from "../components/ImageMagnification";
+import LowerNavbar from "../components/LowerNavbar";
+import Navbar from "../components/Navbar";
+import ProductsContainer from "../components/ProductsContainer";
+import RatingsReview from "../components/RatingsReview";
+import React, { useEffect, useState } from "react";
+import ShareComponent from "../components/ShareComponent";
+import UserSession from "../user";
+import axios from "axios";
+import { AiOutlineHome, AiOutlineShop } from "react-icons/ai";
+import { BsFillBagFill, BsFillCartPlusFill } from "react-icons/bs";
+import { FaRegStar, FaStar, FaStarHalfAlt, FaTag } from "react-icons/fa";
 import { FaCartPlus } from "react-icons/fa";
+import { FaBoxOpen, FaCheckCircle, FaDollarSign, FaMapMarkerAlt, FaTimesCircle, FaTruck } from "react-icons/fa";
+import { FaClipboardCheck, FaExchangeAlt, FaShieldAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
-import { FaMapMarkerAlt, FaCheckCircle, FaTimesCircle, FaTruck, FaDollarSign, FaBoxOpen } from 'react-icons/fa';
-import AvailabilityCheck from '../components/AvailabilityCheck';
-import { BsFillCartPlusFill, BsFillBagFill } from 'react-icons/bs';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { FaExchangeAlt, FaClipboardCheck, FaShieldAlt } from 'react-icons/fa';
-import { AiOutlineHome, AiOutlineShop } from 'react-icons/ai';
-import FrequentlyBought from '../components/FrequentlyBought';
-import RatingsReview from '../components/RatingsReview';
-import FaqsProduct from '../components/FaqsProduct'
-import ProductsContainer from '../components/ProductsContainer';
-import { useNavigate } from 'react-router-dom';
+ 
 
 
-
-
+ 
 
 
 const PdTest = () => {
+     
   const navigate = useNavigate();
-
+ 
   const notify = (msg) => toast(msg);
 
     const { p_id } = useParams();
 
-    const [productData, setProductData] = useState(null);
+    const [productData, setProductData] = useState();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [similarProductData, setsimilarProductData] = useState([])
@@ -69,6 +71,7 @@ const PdTest = () => {
                   'auth': UserSession.getAuth(),
               },
           });
+          
           setProductData(response.data);
           addToRecentlyViewed(p_id);
           setLoading(false);
@@ -171,10 +174,17 @@ const PdTest = () => {
             const name = await whatBrand(productData.Data.brand);
             setBrandName(name || ''); // Set the brand name or an empty string if none is found
         };
+ 
 
-        
 
-        
+         const divStyle = {
+    width: "100%",
+    height: "750px",
+    window:scrollTo(0, 0),
+    overflowY: "scroll",  // Enable vertical scroll
+    overflowX: "hidden",  // Disable horizontal scroll
+    padding: "10px",
+  };
         
         
 
@@ -197,10 +207,15 @@ const PdTest = () => {
                             />
                             </div>
                         </div>
+
+                        <div style={divStyle}>
                         {/* main-description */}
-                        <div className='flex items-start'>
+                        <div className='flex items-start'   >
                             {/* mid-section */}
                             <div className="flex flex-col p-4 gap-2 lg:w-custom">
+                                
+                                
+                                
                                 {/* headings */}
                                 <div>
 
@@ -213,16 +228,22 @@ const PdTest = () => {
                                     <div className="flex items-center text-yellow-400">
                                         {[...Array(Math.floor(productData.Data.rating.rating))].map((_, index) => <FaStar key={index} />)}
                                         {productData.Data.rating.rating % 1 !== 0 && <FaStarHalfAlt />}
-                                        {[...Array(5 - Math.ceil(productData.Data.rating.rating))].map((_, index) => <FaRegStar key={index} />)}
+                                        {[...Array(10 - Math.ceil(productData.Data.rating.rating))].map((_, index) => <FaRegStar key={index} />)}   
+                                        {/* here I change */}
                                     </div>
                                     <span className="ml-2 text-gray-600">({productData.Data.reviews.length} reviews)</span>
                                 </div>
+                              
+                                 
                                 {/* pricing */}
-                                <div className="flex flex-row items-center gap-3 mt-3">
+                                <div className="flex flex-row items-center gap-3 mt-3"> 
+                                   
                                     <h6 className="text-2xl font-semibold">₹{productData.Data.product_sale_price}</h6>
                                     <span className="line-through text-gray-500">₹{productData.Data.product_price}</span>
                                     <span className="bg-green-300 p-2 py-1 rounded-lg">({productData.Data.discount}% OFF)</span>
+                                       <ShareComponent/>
                                 </div>
+                               
                                  {/* Emi option */}
                                 <div className="text-gray-600 flex items-center gap-1">
                                     <img src={EmiLogo} alt="" className='w-10'/>
@@ -357,13 +378,16 @@ const PdTest = () => {
 
                                 <FrequentlyBought pids={productData.Data.freqvently_bought}/>
 
-                                {/* { pid, rating = { total: 0, rating: 0 }, reviews = []  */}
+                                 {/* pid, rating = { total: 0, rating: 0 }, reviews = []  */}
                                 <RatingsReview pid={p_id} rating={productData.Data.rating} reviews={productData.Data.reviews} fetchProductData={fetchProductData}/>
                                 <FaqsProduct pid={p_id} auth={UserSession.getAuth()}  fetchProductData={fetchProductData}/>
                                    
 
                             </div>
                         </div> 
+
+                      </div>
+
                     </div>
                 </div>
             )}
@@ -383,3 +407,233 @@ const PdTest = () => {
 
 export default PdTest;
 
+
+
+//  import "react-toastify/dist/ReactToastify.css";
+
+// const PdTest = () => {
+//   const navigate = useNavigate();
+//   const { p_id } = useParams();
+ 
+//   const [productData, setProductData] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const [similarProductData, setSimilarProductData] = useState([]);
+//   const [brandName, setBrandName] = useState('');
+//   const [coupon, setCoupon] = useState('');
+//   const [amount, setAmount] = useState(1);
+//   const baseURL = "https://uoons.com/";
+//   // Fetch product data and brand name
+//   const fetchProductData = async () => {
+//     setLoading(true);
+//     setError(null);
+
+//     try {
+//       const response = await axios.get(`/api/productDetail?pid=${p_id}`, {
+//         headers: {
+//           'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+//           'Accept': '*/*',
+//           'channel-code': 'ANDROID',
+//           'auth': UserSession.getAuth(),
+//         },
+//       });
+
+//       const fetchedProductData = response.data;
+//       setProductData(fetchedProductData);
+//       setSimilarProductData(fetchedProductData.Data.similar_products);
+
+//       // Fetch brand name after product data is available
+//       const brandNameResponse = await whatBrand(fetchedProductData.Data.brand);
+//       setBrandName(brandNameResponse || '');
+
+//       // Add product to recently viewed
+//       await addToRecentlyViewed(p_id);
+
+//     } catch (err) {
+//       setError("Failed to load product data.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchProductData();
+//   }, [p_id]);
+
+  
+
+
+//   const addToRecentlyViewed = async (p_id) => {
+//     try {
+//       await axios.post('/api/addRecentyViewedProduct', {
+//         product_id: p_id,
+//       }, {
+//         headers: {
+//           'Channel-Code': 'ANDROID',
+//           'auth': UserSession.getAuth(),
+//         },
+//       });
+//     } catch (error) {
+//       console.error('Error adding to recently viewed:', error);
+//     }
+//   };
+
+//   const whatBrand = async (id) => {
+//     try {
+//       const response = await axios.post(
+//         `/api/getBrandNameById?Brand_id=${id}`,
+//         {
+//           headers: {
+//             'Channel-Code': 'ANDROID',
+//           },
+//         }
+//       );
+
+//       if (response.data && response.data.status === "success") {
+//         return response.data.data.name;
+//       }
+//       return null;
+
+//     } catch (error) {
+//       console.error('Error retrieving brand name:', error);
+//       return null;
+//     }
+//   };
+
+//   const handleApplyCoupon = () => {
+//     alert(`Coupon "${coupon}" applied!`);
+//   };
+
+//   const addToCart = async (event, pid) => {
+//     event.stopPropagation();
+
+//     if (UserSession.getSession()) {
+//       try {
+//         const response = await axios.post('/api/addItemToCart', {
+//           pid: pid,
+//           qty: amount,
+//         }, {
+//           headers: {
+//             'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+//             'Accept': '*/*',
+//             'Channel-Code': 'ANDROID',
+//             'auth': UserSession.getAuth(),
+//           },
+//         });
+
+//         if (response.data.status === 'success') {
+//           toast.success("Product added to Cart");
+//         }
+//       } catch (err) {
+//         toast.error("An error occurred while adding the item to the cart");
+//       }
+//     } else {
+//       toast.info("Please log in to add items to your cart.");
+//     }
+//   };
+
+//   const parseReturnPolicy = (policy) => {
+//     const summaryMatch = policy.match(/Warranty Summary\s*:\s*(.+?)\s*Service Type\s*:/s);
+//     const serviceTypeMatch = policy.match(/Service Type\s*:\s*(.+?)\s*Covered in Warranty\s*:/s);
+//     const coveredMatch = policy.match(/Covered in Warranty\s*:\s*(.+)$/s);
+
+//     return {
+//       summary: summaryMatch ? summaryMatch[1].trim() : '',
+//       serviceType: serviceTypeMatch ? serviceTypeMatch[1].trim() : '',
+//       covered: coveredMatch ? coveredMatch[1].trim() : '',
+//     };
+//   };
+
+//   return (
+//     <>
+//       <Navbar />
+//       <LowerNavbar />
+//       {error && <p>{error}</p>}
+//       {loading ? (
+//         <div>Loading...</div>
+//       ) : (
+//         <div className="p-2 bg-white w-screen">
+//           <div className="flex flex-col items-center lg:flex-row lg:items-start gap-6">
+//             {/* Product Image */}
+//             <div className="flex flex-col items-center justify-center">
+//               <div className="bg-white p-6 rounded-lg shadow-lg lg:w-[500px]">
+//                 <ImageMagnification
+//                   mainImage={baseURL + productData.Data.images[0].product_image}
+//                   thumbnailImages={productData.Data.images.map(image => baseURL + image.product_image)}
+//                 />
+//               </div>
+//             </div>
+
+//             {/* Product Details */}
+//             <div className="flex items-start">
+//               <div className="flex flex-col p-4 gap-2 lg:w-custom">
+//                 {/* Brand and Name */}
+//                 <div>
+//                   <span className="text-grey-100 font-semibold">{brandName}</span>
+//                   <h1 className="text-3xl font-bold">{productData.Data.product_name}</h1>
+//                 </div>
+
+//                 {/* Ratings */}
+//                 <div className="flex items-center mt-1 pb-1 border-b border-gray-400">
+//                   <div className="flex items-center text-yellow-400">
+//                     {[...Array(Math.floor(productData.Data.rating.rating))].map((_, index) => <FaStar key={index} />)}
+//                     {productData.Data.rating.rating % 1 !== 0 && <FaStarHalfAlt />}
+//                     {[...Array(5 - Math.ceil(productData.Data.rating.rating))].map((_, index) => <FaRegStar key={index} />)}
+//                   </div>
+//                   <span className="ml-2 text-gray-600">({productData.Data.reviews.length} reviews)</span>
+//                 </div>
+
+//                 {/* Pricing */}
+//                 <div className="flex flex-row items-center gap-3 mt-3">
+//                   <h6 className="text-2xl font-semibold">₹{productData.Data.product_sale_price}</h6>
+//                   <span className="line-through text-gray-500">₹{productData.Data.product_price}</span>
+//                   <span className="bg-green-300 p-2 py-1 rounded-lg">({productData.Data.discount}% OFF)</span>
+//                 </div>
+
+//                 {/* EMI Option */}
+//                 <div className="text-gray-600 flex items-center gap-1">
+//                   <img src={EmiLogo} alt="" className="w-10" />
+//                   <span>Starts at ₹1209.91/- per month</span>
+//                 </div>
+
+//                 {/* Apply Coupon */}
+//                 <div className="mt-1 flex items-center gap-2">
+//                   <FaTag className="text-green-600" />
+//                   <input
+//                     type="text"
+//                     placeholder="Apply coupon code"
+//                     value={coupon}
+//                     onChange={(e) => setCoupon(e.target.value)}
+//                     className="border border-gray-300 rounded-l-lg py-2 px-4 transition duration-300 ease-in-out transform hover:scale-105 outline-0"
+//                   />
+//                   <button onClick={handleApplyCoupon} className="bg-green-600 text-white font-semibold py-2 px-4 rounded-r-lg">
+//                     Apply
+//                   </button>
+//                 </div>
+
+//                 {/* Add to Cart Button */}
+//                 <div className="flex flex-col lg:flex-row items-start gap-3 mt-4">
+//                   <button onClick={(e) => addToCart(e, productData.Data.product_id)} className="bg-orange-400 flex items-center gap-2 py-2 px-3 text-white font-semibold text-lg rounded-lg">
+//                     <FaCartPlus />
+//                     ADD TO CART
+//                   </button>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+
+//           {/* Other Components */}
+//           <AvailabilityCheck />
+//           <RatingsReview reviews={productData.Data.reviews} />
+//           <FaqsProduct />
+//           <FrequentlyBought />
+//           <ProductsContainer />
+//         </div>
+//       )}
+
+//       <Footer />
+//     </>
+//   );
+// };
+
+// export default PdTest;

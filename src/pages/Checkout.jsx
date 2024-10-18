@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { FiCreditCard } from 'react-icons/fi';
-import axios from 'axios';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import { useParams } from 'react-router-dom';
-import UserSession from '../user';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import Footer from "../components/Footer";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import LoadingComponent from "../components/LoadingComponent";
+import Navbar from "../components/Navbar";
+import React, { useEffect, useState } from "react";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Stepper from "@mui/material/Stepper";
+import UserSession from "../user";
+import axios from "axios";
+import { FiCreditCard } from "react-icons/fi";
+import { useParams } from "react-router-dom";
 
 const Checkout = () => {
   const { p_id } = useParams();
@@ -138,7 +139,9 @@ const Checkout = () => {
   };
 
   if (isProductDataLoading || isAddressLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading... <LoadingComponent/></div>
+    
+    ;
   }
 
   const selectedAddress = addresses[selectedAddressIndex];

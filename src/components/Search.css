@@ -1,0 +1,33 @@
+.searchPopup {
+
+    position: fixed;
+    left: 45%;
+    width: 600px;
+    height: auto;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #FF5900;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 10px;
+    margin-top: 10px;
+
+}
+
+
+.scroll-container {
+    width: 200px;
+    height: 280px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+
+}
+
+.scroll-content {
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.productSlider {
+    width: 600px;
+}

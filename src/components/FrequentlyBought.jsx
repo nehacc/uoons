@@ -1,8 +1,7 @@
-
-import React, { useState, useEffect } from 'react';
-import { FaShoppingCart, FaCreditCard, FaTags } from 'react-icons/fa';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
 import UserSession from "../user";
+import axios from "axios";
+import { FaCreditCard, FaShoppingCart, FaTags } from "react-icons/fa";
 
 const FrequentlyBought = ({ pids }) => {
   const [products, setProducts] = useState([]);

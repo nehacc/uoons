@@ -1,31 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import SpecificCategorieProduct from '../components/SpecificCategorieProduct';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { FaThLarge, FaList } from 'react-icons/fa';
-import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
-import Navbar from '../components/Navbar';
-import LowerNavbar from '../components/LowerNavbar'
+import "aos/dist/aos.css";
+import "react-toastify/dist/ReactToastify.css";
+import AOS from "aos";
+import DiscountFilter from "../components/DiscountFilter";
+import LoadingComponent from "../components/LoadingComponent";
+import LowerNavbar from "../components/LowerNavbar";
+import Navbar from "../components/Navbar";
+import PriceFilter from "../components/PriceFilter";
+import RatingFilter from "../components/RatingsFilter";
+import React, { useEffect, useState } from "react";
+import SpecificCategorieProduct from "../components/SpecificCategorieProduct";
+import Test345 from "../pages/Test345";
+import axios from "axios";
+import { FaList, FaThLarge } from "react-icons/fa";
+import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
+import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+
 // import Footer from '../components/Footer';
-import Test345 from '../pages/Test345'
-import { useParams } from 'react-router-dom';
-import PriceFilter from '../components/PriceFilter';
-import RatingFilter from '../components/RatingsFilter';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import DiscountFilter from '../components/DiscountFilter';
 
 const ShopPage = () => {
-  const { c_id } = useParams();
-
+  const {c_id}  = useParams();
+ 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+ 
   useEffect(() => {
     AOS.init();
-    const fetchData = async () => {
+    const fetchData = async ( ) => {
+       
         try {
             const response = await axios.get(`/api/getAllProductsByCategories?cat_id=${c_id}`, {
                 headers: {
@@ -34,9 +38,12 @@ const ShopPage = () => {
                     'channel-code': 'ANDROID',
                 },
             });
-            setData(response.data.Data.products);
+            setData(response.data.Data.products) ;
+             
         } catch (err) {
-            setError('Failed to fetch data.');
+            setError(`Failed to fetch data. ${error} `);
+               
+            
         } finally {
             setLoading(false);
         }
@@ -68,7 +75,7 @@ const ShopPage = () => {
 
   
   if (loading) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    return <div className="flex justify-center items-center h-screen"><LoadingComponent/> </div>;
   }
 
   if (error) {
@@ -78,10 +85,10 @@ const ShopPage = () => {
     <>
       <Navbar />
       <LowerNavbar />
-      <div className="bg-blue-50 flex">
+      <div className="bg-blue-50 flex ">
 
-        {/* Sidebar */}
-        <aside className="w-64 bg-white p-4 shadow-lg n ">
+        {/* Sidebar */} 
+        <aside className="w-64 bg-white p-4 shadow-lg n border border-[#FF5900] ">
           <h2 className="text-xl font-bold mb-6">Filter By</h2>
 
           {/* Brand Filter */}
@@ -125,7 +132,7 @@ const ShopPage = () => {
           </div> */}
 
           {/* Price Filter */}
-          <PriceFilter onPriceChange={handlePriceChange} />
+          <PriceFilter onPriceChange={handlePriceChange}   />
 
           {/* Discount Filter */}
           <DiscountFilter onDiscountChange={handleDiscountChange} />
@@ -149,10 +156,10 @@ const ShopPage = () => {
                 onClick={() => setViewType('list')}
                 aria-label="List view"
               /> */}
-              <div className="flex items-center ml-4">
+              <div className="flex items-center ml-4 ">
                 <span className="mr-2">Sort by:</span>
                 <select
-                  className="border border-gray-300 rounded p-1 outline-0"
+                  className="border border-gray-300 rounded p-1 outline-0 "
                   value={sortOption}
                   onChange={(e) => setSortOption(e.target.value)}
                 >
