@@ -1,4 +1,6 @@
 import React from 'react'
+
+// component
 import ListComponentHome from "./ListComponentHome";
 
 
@@ -8,9 +10,8 @@ const LowerNavbar = () => {
       {/* lower Navbar */}
       <div className="flex justify-center items-center">
           
-          <ListComponentHome/>
+        <ListComponentHome/>
               
-     
       </div>
     </div>
   )
