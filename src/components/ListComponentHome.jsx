@@ -69,7 +69,7 @@ const ListComponentHome = () => {
           </button>
 
           {/* i think the data is modified, its no more including subcategories */}
-          {/* {category.sub_categories?.length > 0 && (
+          {category.sub_categories?.length > 0 && (
             <div className="absolute left-0 right-0 z-50 border hidden group-hover:flex w-screen bg-white p-2 text-black shadow-md">
               <ul className="container mx-auto grid grid-rows-6 grid-flow-col justify-start gap-1 md:gap-x-16 lg:gap-x-40 gap-y-2 h-fit">
                 {category.sub_categories.map(
@@ -86,7 +86,7 @@ const ListComponentHome = () => {
                 )}
               </ul>
             </div>
-          )} */}
+          )}
         </li>
       ))}
     </ul>

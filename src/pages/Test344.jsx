@@ -47,8 +47,8 @@ const ListComponentHome = () => {
   return (
     <div className='w-screen bg-blue-50'>
     <div className="container mx-auto px-4 py-8">
-    Categories API no longer includes the sub_categories field, which is why it isn't functioning as expected.
-      {/* 
+    
+      
         <div className="space-y-4">
         {categories.map((category) => (
           <div key={category.c_id} className="category-section">
@@ -76,7 +76,7 @@ const ListComponentHome = () => {
           </div>
         ))}
       </div>      
-      */}
+      
     </div>
     </div>
   );
