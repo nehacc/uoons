@@ -1,21 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import AOS from "aos";
-import "aos/dist/aos.css";
+import { useState, useEffect } from 'react';
+
+// components
 import Navbar from '../components/Navbar'
 import LowerNavbar from '../components/LowerNavbar';
 import Slideshow from '../components/Slideshow';
 import ProductsContainer from '../components/ProductsContainer';
 import ProductsContainerMII from '../components/ProductsContainerMII';
-// import Banner from '../components/Banner';
-// import Footer from '../components/Footer'
-import BrandContainer from '../components/BrandContainer';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import UserSession from '../user';
 import PriceStore from '../components/PriceStore.jsx';
 import AdvertisementData from '../components/AdvertisementData.jsx'
-import Test345 from '../pages/Test345.jsx'
+import FooterN from '../components/FooterN';
+// import Banner from '../components/Banner';
+import BrandContainer from '../components/BrandContainer';
+
+// for api calls
+import axios from 'axios';
+
+// for animation
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+// for popup notification
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -36,32 +42,33 @@ const Homepage = () => {
     smartphonesTablets: "SmartPhones & Tablets"
   };
 
-  useEffect(() => {
-    const fetchHomePageData = async () => {
-      try {
-        const response = await axios.get('/api/homepageData', {
-          headers: {
-            'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-            'Accept': '*/*',
-            'channel-code': 'ANDROID'
-          }
-        });
-        setHomePageData(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.log('error');
-        setError(err);
-        setLoading(false);
-      }
-    };
+  // fetchHomePageData();
+  const fetchHomePageData = async () => {
+    try {
+      const response = await axios.get('/api/homepageData', {
+        headers: {
+          'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+          'Accept': '*/*',
+          'channel-code': 'ANDROID'
+        }
+      });
+      setHomePageData(response.data);
+      setLoading(false);
+    } catch (err) {
+      console.log('error in fetching homepage data', err);
+      setError(err);
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchHomePageData();
   }, []);
 
   
-  console.log(HomePageData)
+  console.log("just checking!!",HomePageData)
     
-  
+  // for animation
   useEffect(() => {
     AOS.init({
       offset: 100,
@@ -72,7 +79,7 @@ const Homepage = () => {
     AOS.refresh();
   }, []);
   
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className='flex justify-center items-center h-screen'>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   return (
     <>
@@ -100,7 +107,9 @@ const Homepage = () => {
       <ProductsContainer heading={headings.smartphonesTablets} data={HomePageData.Data[3].items}/>
       
       {/* <Footer /> */}
-      <Test345 />
+      <FooterN />
+
+      {/* for popup notification */}
       <ToastContainer />
 
     </div>
