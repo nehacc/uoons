@@ -7,6 +7,7 @@ import LowerNavbar from '../components/LowerNavbar';
 import Test345 from '../pages/Test345'
 import { useNavigate, Link } from 'react-router-dom';
 import UserSession from '../user';
+import { useEffect } from 'react';
 
 const LoginSignup = () => {
   const [loginForm, setIsLoginForm] = useState(true);
@@ -54,6 +55,7 @@ const LoginSignup = () => {
     }
   };
 
+
   const handleVerifyOtp = async (data) => {
     try {
       const formData = {
@@ -73,6 +75,7 @@ const LoginSignup = () => {
       if (response.data.status === 'success') {
         setMessage('OTP Verified Successfully');
         setOtpVerified(true);
+        startSession(); // Call startSession function directly after OTP verification
       } else {
         setMessage('Failed to verify OTP. Please try again.');
       }
@@ -80,6 +83,14 @@ const LoginSignup = () => {
       setMessage('Error verifying OTP. Please try again.');
     }
   };
+
+  // Use `useEffect` to trigger `startSession` after `otpVerified` state changes
+  useEffect(() => {
+    if (otpVerified) {
+      startSession(); // Calls startSession after otpVerified becomes true
+    }
+  }, [otpVerified]); // This hook runs whenever `otpVerified` changes
+
 
   const handleRegister = (data) => {
     if (!otpFieldVisible) {
@@ -238,7 +249,9 @@ const LoginSignup = () => {
                   Remember Me
                 </label>
               </div>
-              <div className="flex items-center justify-center">
+
+              {/* No need for this login button */}
+              {/* <div className="flex items-center justify-center">
                 <button
                   type="button"
                   onClick={startSession}
@@ -247,7 +260,8 @@ const LoginSignup = () => {
                   <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-32 group-hover:h-32 opacity-10"></span>
                   <span className="relative">Login</span>
                 </button>
-              </div>
+              </div> */}
+              
             </form>
           ) : (
             // Register Form
